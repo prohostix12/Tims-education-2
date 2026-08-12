@@ -1,0 +1,256 @@
+.footer {
+  --footer-bg: #0b2342;
+  --footer-ink: #b7c2d6;
+  --footer-heading: #ffffff;
+  --footer-border: rgba(255, 255, 255, 0.12);
+  --red: #ed1c24;
+
+  position: relative;
+  background: var(--footer-bg);
+  color: var(--footer-ink);
+  font-family: var(--font-body, "Segoe UI", sans-serif);
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3rem) 1.5rem clamp(1.5rem, 4vw, 2rem);
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logoLink {
+  display: inline-flex;
+}
+
+.logoImage {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.socialIcon:hover {
+  background: var(--red);
+  transform: translateY(-2px);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--footer-border);
+  margin: clamp(1.5rem, 4vw, 2.25rem) 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.1fr 1.1fr 1.1fr;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.columnTitle {
+  margin: 0 0 1.1rem;
+  color: var(--footer-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.companyText {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--footer-ink);
+}
+
+.readMore {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+}
+
+.column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.column a {
+  color: var(--footer-ink);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.column a:hover {
+  color: var(--red);
+}
+
+.activeLink {
+  color: var(--red) !important;
+  font-weight: 600;
+}
+
+.contactList {
+  gap: 0.85rem !important;
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contactRow svg {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  background: var(--red);
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.address {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--footer-ink);
+}
+
+.bottomInner {
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--footer-border);
+}
+
+.copyright {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--footer-ink);
+}
+
+/* ---------- Floating widgets ---------- */
+
+.contactBubble {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #ffffff;
+  color: #0b2342;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  box-shadow: 0 10px 24px rgba(11, 35, 66, 0.25);
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 40;
+}
+
+.contactBubbleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: var(--red);
+  color: #ffffff;
+}
+
+.scrollTopButton {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--red);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(237, 28, 36, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+  z-index: 40;
+}
+
+.scrollTopButton:hover {
+  background: #c8151c;
+  transform: translateY(-2px);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+
+  .column:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .column:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brandRow {
+    justify-content: flex-start;
+  }
+
+  .contactBubbleLabel {
+    display: none;
+  }
+
+  .contactBubble {
+    padding: 0.4rem;
+  }
+}

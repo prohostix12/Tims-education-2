@@ -1,0 +1,565 @@
+.header {
+  --navy: #0b2342;
+  --navy-ink: #0b2342;
+  --red: #ed1c24;
+  --red-dark: #c8151c;
+  --muted: #6b7686;
+  --border: #e9edf3;
+  --top-ink: #dbe3ef;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+}
+
+/* ---------- Top information bar ---------- */
+
+.topBar {
+  background: var(--navy);
+  color: var(--top-ink);
+  font-size: 0.8125rem;
+}
+
+.topBarInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.topBarItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--top-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.topBarItem:hover {
+  color: #ffffff;
+}
+
+.topBarDivider {
+  width: 1px;
+  height: 14px;
+  background: rgba(219, 227, 239, 0.35);
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.followLabel {
+  color: rgba(219, 227, 239, 0.85);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--top-ink);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.socialIcon:hover {
+  background: var(--red);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ---------- Main nav (floating card) ---------- */
+
+.navWrap {
+  background: var(--navy);
+  padding: 0 1.25rem 1.1rem;
+}
+
+.mainNavCard {
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(11, 35, 66, 0.16);
+  border-bottom: 3px solid var(--red);
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  transition: box-shadow 0.2s ease, padding 0.2s ease;
+}
+
+.headerScrolled .navWrap {
+  padding-bottom: 0.75rem;
+}
+
+.headerScrolled .mainNavCard {
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 18px 34px rgba(11, 35, 66, 0.22);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.25rem 0;
+}
+
+.logoImage {
+  height: 46px;
+  width: auto;
+  display: block;
+}
+
+.primaryNav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--navy-ink);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0.6rem 0.1rem;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  width: 100%;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.navLink:hover {
+  color: var(--red);
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+
+.navLinkActive {
+  color: var(--red);
+}
+
+.navLinkActive::after {
+  transform: scaleX(1);
+}
+
+.chevron {
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+
+.navItem:hover .chevron,
+.navItem:focus-within .chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 230px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.14);
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.dropdownOpen,
+.navItem:focus-within > .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem {
+  position: relative;
+}
+
+.dropdownLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--navy-ink);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.dropdownLink:hover {
+  background: #fdecec;
+  color: var(--red);
+}
+
+.subChevron {
+  color: var(--muted);
+  transform: rotate(-90deg);
+}
+
+.subDropdown {
+  position: absolute;
+  top: -0.5rem;
+  left: 100%;
+  min-width: 260px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.14);
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.subDropdownOpen,
+.dropdownItem:focus-within > .subDropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* ---------- Actions: phone + CTA ---------- */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.phoneInline {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--navy-ink);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: color 0.15s ease;
+}
+
+.phoneInline:hover {
+  color: var(--red);
+}
+
+.phoneIcon {
+  display: inline-flex;
+  color: var(--red);
+}
+
+.enquireButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.enquireButton:hover {
+  background: var(--red-dark);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 22px rgba(237, 28, 36, 0.32);
+}
+
+.mobilePhoneButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  background: #f3f5f9;
+  color: var(--red);
+}
+
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.mobileToggle span {
+  display: block;
+  height: 2px;
+  background: var(--navy-ink);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobileToggleOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobileToggleOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobileToggleOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- Mobile drawer ---------- */
+
+.mobileDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 86vw);
+  background: #ffffff;
+  z-index: 60;
+  box-shadow: -18px 0 40px rgba(11, 35, 66, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 5.5rem 0 1.5rem;
+}
+
+.mobileDrawerOpen {
+  transform: translateX(0);
+}
+
+.mobileDrawer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.5rem;
+}
+
+.mobileDrawer > ul > li {
+  border-bottom: 1px solid var(--border);
+}
+
+.mobileDrawer a {
+  display: block;
+  padding: 0.75rem 0;
+  color: var(--navy-ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mobileLinkActive {
+  color: var(--red) !important;
+}
+
+.mobileSubList {
+  padding-left: 1rem !important;
+}
+
+.mobileSubList a {
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.mobileDrawerFooter {
+  margin-top: auto;
+  padding: 1.25rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobileDrawerPhone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--navy-ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mobileDrawerPhone svg {
+  color: var(--red);
+}
+
+.mobileDrawerFooter .enquireButton {
+  justify-content: center;
+}
+
+.mobileScrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 35, 66, 0.45);
+  z-index: 55;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  .navList {
+    gap: 1.1rem;
+  }
+
+  .phoneNumber {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .topBarLeft span:last-child {
+    display: none;
+  }
+
+  .followLabel {
+    display: none;
+  }
+
+  .primaryNav {
+    display: none;
+  }
+
+  .phoneInline {
+    display: none;
+  }
+
+  .mobilePhoneButton {
+    display: inline-flex;
+  }
+
+  .mobileToggle {
+    display: flex;
+  }
+
+  .navWrap {
+    padding: 0 1rem 0.85rem;
+  }
+
+  .mainNavCard {
+    gap: 1rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 16px;
+  }
+
+  .logoImage {
+    height: 38px;
+  }
+
+  .actions {
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .enquireButtonHeader {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .logoImage {
+    height: 32px;
+  }
+
+  .mainNavCard {
+    padding: 0.5rem 0.85rem;
+    gap: 0.6rem;
+  }
+
+  .mobilePhoneButton,
+  .mobileToggle {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .topBarInner {
+    padding: 0.45rem 1rem;
+  }
+
+  .topBarItem span {
+    display: none;
+  }
+
+  .topBarItem svg {
+    display: inline-flex;
+  }
+
+  .topBarDivider {
+    display: none;
+  }
+}
