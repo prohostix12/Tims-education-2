@@ -421,7 +421,7 @@ export default function Header() {
                 <span className={styles.phoneNumber}>+91 7736 1115 88</span>
               </a>
 
-              <Link href="/enquire" className={`${styles.enquireButton} ${styles.enquireButtonHeader}`}>
+              <Link href="#" className={`${styles.enquireButton} ${styles.enquireButtonHeader}`}>
                 <span>Enquire Now</span>
                 <ArrowRightIcon />
               </Link>
@@ -476,7 +476,7 @@ export default function Header() {
             <span>+91 7736 1115 88</span>
           </a>
           <Link
-            href="/enquire"
+            href="#"
             className={styles.enquireButton}
             onClick={() => setMobileOpen(false)}
           >

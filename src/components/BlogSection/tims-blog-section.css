@@ -1,0 +1,224 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-blog-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-blog-section {
+  --tb-navy: #0b2342;
+  --tb-red: #ed1c24;
+  --tb-text-muted: #5f6b7a;
+
+  background: #ffffff;
+  color: var(--tb-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-blog-section *,
+.tims-blog-section *::before,
+.tims-blog-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-blog-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-blog-header {
+  text-align: center;
+  margin-bottom: clamp(2.25rem, 5vw, 3.25rem);
+}
+
+.tims-blog-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tb-red);
+  margin-bottom: 0.6rem;
+}
+
+.tims-blog-title {
+  margin: 0 auto;
+  max-width: 30ch;
+  font-size: clamp(1.75rem, 3.6vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--tb-navy);
+}
+
+/* ---------- Grid ---------- */
+
+.tims-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+/* ---------- Card: image with text overlay ---------- */
+
+.tims-blog-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.tims-blog-card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  background: linear-gradient(135deg, #e7ecf4 0%, #d7dfec 100%);
+}
+
+.tims-blog-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tims-blog-card:hover .tims-blog-card-image {
+  transform: scale(1.06);
+}
+
+.tims-blog-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 35, 66, 0) 40%,
+    rgba(11, 35, 66, 0.55) 78%,
+    rgba(11, 35, 66, 0.88) 100%
+  );
+}
+
+.tims-blog-card-date {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--tb-red);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0.4rem 0.75rem;
+  line-height: 1.15;
+  box-shadow: 0 8px 18px rgba(11, 35, 66, 0.25);
+}
+
+.tims-blog-card-date-day {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.tims-blog-card-date-month {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.tims-blog-card-title {
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+/* ---------- Footer: author / comments / read more ---------- */
+
+.tims-blog-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+.tims-blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--tb-text-muted);
+}
+
+.tims-blog-card-author {
+  font-weight: 700;
+  color: var(--tb-navy);
+}
+
+.tims-blog-card-meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--tb-text-muted);
+}
+
+.tims-blog-card-comments {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tims-blog-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  color: var(--tb-red);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.tims-blog-card-arrow {
+  transition: transform 0.25s ease;
+}
+
+.tims-blog-card-link:hover .tims-blog-card-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .tims-blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .tims-blog-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .tims-blog-card-media {
+    aspect-ratio: 16 / 11;
+  }
+}
+
+@media (max-width: 380px) {
+  .tims-blog-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

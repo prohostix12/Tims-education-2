@@ -1,0 +1,137 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-distance-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-distance-section {
+  --td2-navy: #0b2342;
+  --td2-red: #ed1c24;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 640px;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  box-sizing: border-box;
+}
+
+.tims-distance-section *,
+.tims-distance-section *::before,
+.tims-distance-section *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- Left: full-bleed photo, edge to edge ---------- */
+
+.tims-distance-media {
+  position: relative;
+  background: linear-gradient(135deg, #1c3459 0%, #0b2342 100%);
+  min-height: 320px;
+}
+
+.tims-distance-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Right: solid navy content panel ---------- */
+
+.tims-distance-panel {
+  background: var(--td2-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.tims-distance-panel-inner {
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4rem);
+  max-width: 640px;
+}
+
+.tims-distance-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--td2-red);
+  margin-bottom: 0.85rem;
+}
+
+.tims-distance-heading {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+.tims-distance-text {
+  margin: 0 0 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.tims-distance-highlight {
+  font-weight: 700;
+  color: #ffffff;
+  border-bottom: 2px solid var(--td2-red);
+}
+
+/* ---------- Highlight chips ---------- */
+
+.tims-distance-highlight-list {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.tims-distance-highlight-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.tims-distance-highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: var(--td2-red);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .tims-distance-section {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .tims-distance-media {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tims-distance-highlight-list {
+    grid-template-columns: 1fr;
+  }
+}

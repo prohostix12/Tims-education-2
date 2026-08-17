@@ -1,0 +1,231 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-universities-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-universities-section {
+  --tu-navy: #0b2342;
+  --tu-red: #ed1c24;
+  --tu-text-muted: #5f6b7a;
+  --tu-bg: #ffffff;
+  --tu-border: rgba(11, 35, 66, 0.08);
+
+  position: relative;
+  background: var(--tu-bg);
+  color: var(--tu-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tims-universities-section *,
+.tims-universities-section *::before,
+.tims-universities-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-universities-section::before,
+.tims-universities-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tims-universities-section::before {
+  width: 340px;
+  height: 340px;
+  background: rgba(237, 28, 36, 0.05);
+  top: -120px;
+  right: -100px;
+}
+
+.tims-universities-section::after {
+  width: 260px;
+  height: 260px;
+  background: rgba(11, 35, 66, 0.05);
+  bottom: -90px;
+  left: -80px;
+}
+
+.tims-universities-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- Heading ---------- */
+
+.tims-universities-heading-block {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.tims-universities-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tu-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-universities-title {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--tu-navy);
+}
+
+/* ---------- Grid ---------- */
+
+.tims-universities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2rem);
+  align-items: stretch;
+}
+
+/* ---------- Card ---------- */
+
+.tims-uni-card {
+  --tu-card-accent: var(--tu-red);
+
+  display: flex;
+  flex-direction: column;
+  background: var(--tu-bg);
+  border: 1px solid var(--tu-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(11, 35, 66, 0.07);
+  height: 100%;
+}
+
+.tims-uni-card--navy {
+  --tu-card-accent: var(--tu-navy);
+}
+
+.tims-uni-card-image {
+  position: relative;
+  width: 100%;
+  height: clamp(180px, 22vw, 220px);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #eef1f6 0%, #e3e8f1 100%);
+  overflow: hidden;
+}
+
+.tims-uni-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tims-uni-card-divider {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin-top: -19px;
+  color: var(--tu-bg);
+  position: relative;
+  z-index: 1;
+}
+
+.tims-uni-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: 0.25rem 1.75rem 1.75rem;
+}
+
+.tims-uni-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--tu-card-accent);
+  color: #ffffff;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.tims-uni-card-title {
+  margin: 0 0 0.65rem;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--tu-navy);
+}
+
+.tims-uni-card-description {
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--tu-text-muted);
+  flex: 1;
+}
+
+.tims-uni-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--tu-card-accent);
+  color: var(--tu-card-accent);
+  background: transparent;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+}
+
+.tims-uni-card-button:hover {
+  background: var(--tu-card-accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(11, 35, 66, 0.18);
+}
+
+.tims-uni-card-button svg {
+  transition: transform 0.3s ease;
+}
+
+.tims-uni-card-button:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 960px) {
+  .tims-universities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .tims-universities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-uni-card-body {
+    padding: 0.25rem 1.35rem 1.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .tims-universities-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

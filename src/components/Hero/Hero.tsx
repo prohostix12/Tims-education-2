@@ -17,10 +17,10 @@ export default function Hero() {
         </p>
 
         <div className={styles.actions}>
-          <Link href="/enquire" className={styles.primaryButton}>
+          <Link href="#" className={styles.primaryButton}>
             Enquire Now
           </Link>
-          <Link href="/courses" className={styles.secondaryButton}>
+          <Link href="#" className={styles.secondaryButton}>
             Explore Courses
           </Link>
         </div>

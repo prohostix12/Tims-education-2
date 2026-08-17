@@ -1,5 +1,13 @@
 import Hero from "@/components/Hero/Hero";
 import NewAboutSection from "@/components/NewAboutSection/NewAboutSection";
+import CoursesSection from "@/components/CoursesSection/CoursesSection";
+import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSection";
+import FindCourseSection from "@/components/FindCourseSection/FindCourseSection";
+import TestimonialsSection from "@/components/TestimonialsSection/TestimonialsSection";
+import PartnersSection from "@/components/PartnersSection/PartnersSection";
+import DreamSection from "@/components/DreamSection/DreamSection";
+import BlogSection from "@/components/BlogSection/BlogSection";
+import DistanceEducationSection from "@/components/DistanceEducationSection/DistanceEducationSection";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -7,11 +15,17 @@ export default function Home() {
     <main>
       <Hero />
       <NewAboutSection />
+      <CoursesSection />
+      <UniversitiesSection />
+      <FindCourseSection />
+      <PartnersSection />
+      <TestimonialsSection />
+      <DreamSection />
+      <BlogSection />
+      <DistanceEducationSection />
       <div className={styles.hero}>
         <h2 className={styles.title}>More content coming soon</h2>
-        <p className={styles.subtitle}>
-          Courses, universities, and services sections will go here.
-        </p>
+        <p className={styles.subtitle}>Services section will go here.</p>
       </div>
     </main>
   );

@@ -1,0 +1,228 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-find-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-find-section {
+  --tf-navy: #0b2342;
+  --tf-red: #ed1c24;
+  --tf-text-muted: #5f6b7a;
+  --tf-bg: #eef2f9;
+  --tf-card-bg: #ffffff;
+  --tf-border: rgba(11, 35, 66, 0.08);
+
+  background: var(--tf-bg);
+  color: var(--tf-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-find-section *,
+.tims-find-section *::before,
+.tims-find-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-find-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- Heading ---------- */
+
+.tims-find-heading {
+  margin: 0 0 clamp(2.5rem, 6vw, 3.5rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tims-find-heading-line {
+  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--tf-navy);
+}
+
+.tims-find-heading-line--accent {
+  color: var(--tf-red);
+}
+
+.tims-find-column-title-accent {
+  color: var(--tf-red);
+}
+
+/* ---------- Layout: one shared table + image ---------- */
+
+.tims-find-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: stretch;
+}
+
+.tims-find-table {
+  background: var(--tf-card-bg);
+  border: 1px solid var(--tf-border);
+  border-radius: 20px;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.5rem, 3vw, 2rem);
+  box-shadow: 0 10px 28px rgba(11, 35, 66, 0.06);
+}
+
+.tims-find-table-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 2px solid var(--tf-navy);
+}
+
+.tims-find-table-head-cell {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--tf-navy);
+}
+
+/* ---------- Paired rows: course <-> university ---------- */
+
+.tims-find-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--tf-border);
+}
+
+.tims-find-row:last-child {
+  border-bottom: none;
+}
+
+.tims-find-course-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--tf-navy);
+}
+
+.tims-find-course-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--tf-navy);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.tims-find-uni-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tf-navy);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.tims-find-uni-arrow {
+  flex-shrink: 0;
+  color: var(--tf-red);
+  transition: transform 0.25s ease;
+}
+
+.tims-find-uni-link:hover {
+  color: var(--tf-red);
+  padding-left: 0.35rem;
+}
+
+.tims-find-uni-link:hover .tims-find-uni-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Image ---------- */
+
+.tims-find-image-wrap {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(11, 35, 66, 0.14);
+  min-height: 260px;
+  background: linear-gradient(135deg, #dfe6f1 0%, #ccd6e6 100%);
+}
+
+.tims-find-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Tablet: keep table + image side by side, tighten spacing */
+@media (max-width: 1024px) {
+  .tims-find-layout {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+/* Below this, the two-up row (course | university) gets cramped */
+@media (max-width: 780px) {
+  .tims-find-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-find-image-wrap {
+    order: 2;
+    min-height: 220px;
+  }
+
+  .tims-find-image {
+    min-height: 220px;
+  }
+}
+
+/* Mobile: each row stacks course above its matching university */
+@media (max-width: 560px) {
+  .tims-find-heading-line {
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
+  }
+
+  .tims-find-table {
+    padding: 1.25rem 1.25rem 0.5rem;
+  }
+
+  .tims-find-table-head {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .tims-find-table-head-cell:first-child {
+    display: none;
+  }
+
+  .tims-find-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.9rem 0;
+  }
+
+  .tims-find-uni-link {
+    padding-left: 2.65rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .tims-find-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
