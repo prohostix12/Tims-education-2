@@ -17,17 +17,17 @@ const navItems: NavLink[] = [
     label: "About",
     href: "/about",
     children: [
-      { label: "Directors", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "News", href: "#" },
+      { label: "Directors", href: "/directors" },
+      { label: "Blog", href: "/blog" },
+      { label: "News", href: "/news" },
     ],
   },
   {
     label: "Courses",
     href: "/courses",
     children: [
-      { label: "SSLC / PLUS TWO", href: "#" },
-      { label: "Online Degree", href: "#" },
+      { label: "SSLC / PLUS TWO", href: "/courses/sslc-plus-two" },
+      { label: "Online Degree", href: "/courses/online-degree" },
       { label: "Post Graduation", href: "#" },
       { label: "Btech / Mtech", href: "#" },
       { label: "Diploma", href: "#" },

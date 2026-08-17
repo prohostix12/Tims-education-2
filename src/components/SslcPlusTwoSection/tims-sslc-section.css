@@ -1,0 +1,184 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-sslc-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-sslc-section {
+  --ss-navy: #0b2342;
+  --ss-red: #ed1c24;
+  --ss-text-muted: #5f6b7a;
+  --ss-bg: #f8fafd;
+  --ss-card-bg: #ffffff;
+  --ss-border: rgba(11, 35, 66, 0.08);
+
+  position: relative;
+  background: var(--ss-bg);
+  color: var(--ss-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tims-sslc-section *,
+.tims-sslc-section *::before,
+.tims-sslc-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-sslc-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  background: rgba(237, 28, 36, 0.06);
+  width: 360px;
+  height: 360px;
+  top: -140px;
+  right: -100px;
+}
+
+.tims-sslc-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-sslc-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-sslc-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ss-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-sslc-heading {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.6vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ss-navy);
+}
+
+/* ---------- Intro card ---------- */
+
+.tims-sslc-intro {
+  background: var(--ss-card-bg);
+  border: 1px solid var(--ss-border);
+  border-radius: 20px;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  box-shadow: 0 12px 30px rgba(11, 35, 66, 0.06);
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-sslc-text {
+  margin: 0 0 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--ss-text-muted);
+}
+
+.tims-sslc-text:last-child {
+  margin-bottom: 0;
+}
+
+.tims-sslc-highlight {
+  font-weight: 700;
+  color: var(--ss-navy);
+}
+
+/* ---------- Mission cards ---------- */
+
+.tims-sslc-mission-label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--ss-navy);
+  margin-bottom: 1.1rem;
+}
+
+.tims-sslc-mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-sslc-mission-card {
+  background: var(--ss-card-bg);
+  border: 1px solid var(--ss-border);
+  border-radius: 16px;
+  padding: 1.5rem 1.35rem;
+  box-shadow: 0 8px 22px rgba(11, 35, 66, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tims-sslc-mission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.1);
+}
+
+.tims-sslc-mission-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: rgba(237, 28, 36, 0.1);
+  color: var(--ss-red);
+  margin-bottom: 0.9rem;
+}
+
+.tims-sslc-mission-title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ss-navy);
+}
+
+/* ---------- Learning strategies strip ---------- */
+
+.tims-sslc-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.tims-sslc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ss-navy);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.tims-sslc-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ss-red);
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .tims-sslc-mission-grid {
+    grid-template-columns: 1fr;
+  }
+}

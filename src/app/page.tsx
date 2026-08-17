@@ -23,10 +23,6 @@ export default function Home() {
       <DreamSection />
       <BlogSection />
       <DistanceEducationSection />
-      <div className={styles.hero}>
-        <h2 className={styles.title}>More content coming soon</h2>
-        <p className={styles.subtitle}>Services section will go here.</p>
-      </div>
     </main>
   );
 }

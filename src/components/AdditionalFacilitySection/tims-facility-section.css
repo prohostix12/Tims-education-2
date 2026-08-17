@@ -1,0 +1,176 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-facility-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-facility-section {
+  --fc-navy: #0b2342;
+  --fc-red: #ed1c24;
+  --fc-text-muted: #5f6b7a;
+  --fc-border: rgba(11, 35, 66, 0.1);
+
+  background: #ffffff;
+  color: var(--fc-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-facility-section *,
+.tims-facility-section *::before,
+.tims-facility-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-facility-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-facility-eyebrow {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fc-red);
+  margin-bottom: 0.65rem;
+}
+
+.tims-facility-heading {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--fc-navy);
+}
+
+.tims-facility-subtitle {
+  margin: 0 0 clamp(2rem, 5vw, 2.75rem);
+  max-width: 60ch;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--fc-text-muted);
+}
+
+/* ---------- Facility cards ---------- */
+
+.tims-facility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.tims-facility-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--fc-border);
+  border-left: 3px solid var(--fc-red);
+  border-radius: 10px;
+  padding: 1.75rem 1.85rem;
+  box-shadow: 0 1px 2px rgba(11, 35, 66, 0.04);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tims-facility-card:hover {
+  box-shadow: 0 10px 24px rgba(11, 35, 66, 0.08);
+  border-left-color: var(--fc-navy);
+}
+
+.tims-facility-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.85rem;
+}
+
+.tims-facility-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 8px;
+  background: rgba(11, 35, 66, 0.06);
+  color: var(--fc-navy);
+  flex-shrink: 0;
+}
+
+.tims-facility-card-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--fc-navy);
+}
+
+.tims-facility-card-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--fc-text-muted);
+}
+
+/* ---------- Documents checklist ---------- */
+
+.tims-facility-docs {
+  background: #f8fafd;
+  border: 1px solid var(--fc-border);
+  border-radius: 12px;
+  padding: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.tims-facility-docs-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--fc-navy);
+}
+
+.tims-facility-docs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.tims-facility-docs-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #ffffff;
+  border: 1px solid var(--fc-border);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fc-navy);
+}
+
+.tims-facility-docs-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--fc-red);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .tims-facility-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-facility-docs-list {
+    grid-template-columns: 1fr;
+  }
+}

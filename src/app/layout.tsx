@@ -14,6 +14,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "TIMS Education",
   description: "TIMS Education - Learning Without Boundaries",
+  icons: {
+    icon: "/images/tims_logo/tims_favicon.png",
+    shortcut: "/images/tims_logo/tims_favicon.png",
+    apple: "/images/tims_logo/tims_favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

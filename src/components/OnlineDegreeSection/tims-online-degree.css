@@ -1,0 +1,225 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-online-degree-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-online-degree-section {
+  --od-navy: #0b2342;
+  --od-red: #ed1c24;
+  --od-text-muted: #5f6b7a;
+  --od-bg: #f8fafd;
+  --od-card-bg: #ffffff;
+  --od-border: rgba(11, 35, 66, 0.08);
+
+  background: var(--od-bg);
+  color: var(--od-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-online-degree-section *,
+.tims-online-degree-section *::before,
+.tims-online-degree-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-online-degree-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-online-degree-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(2.5rem, 6vw, 3.25rem);
+}
+
+.tims-online-degree-eyebrow {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--od-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-online-degree-heading {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.75rem, 3.6vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--od-navy);
+}
+
+.tims-online-degree-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--od-text-muted);
+}
+
+/* ---------- Layout ---------- */
+
+.tims-online-degree-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  align-items: start;
+}
+
+/* ---------- Left: category buttons ---------- */
+
+.tims-online-degree-nav {
+  background: var(--od-card-bg);
+  border: 1px solid var(--od-border);
+  border-radius: 18px;
+  padding: 0.75rem;
+  box-shadow: 0 10px 26px rgba(11, 35, 66, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tims-online-degree-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--od-navy);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tims-online-degree-nav-btn:hover {
+  background: rgba(11, 35, 66, 0.05);
+}
+
+.tims-online-degree-nav-btn--active {
+  background: var(--od-navy);
+  color: #ffffff;
+}
+
+.tims-online-degree-nav-btn--active:hover {
+  background: var(--od-navy);
+}
+
+.tims-online-degree-nav-arrow {
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tims-online-degree-nav-btn--active .tims-online-degree-nav-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--od-red);
+}
+
+/* ---------- Right: table panel ---------- */
+
+.tims-online-degree-panel {
+  background: var(--od-card-bg);
+  border: 1px solid var(--od-border);
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(11, 35, 66, 0.05);
+  overflow: hidden;
+}
+
+.tims-online-degree-panel-title {
+  margin: 0;
+  padding: 1.35rem 1.75rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--od-navy);
+  border-bottom: 1px solid var(--od-border);
+}
+
+.tims-online-degree-table-wrap {
+  overflow-x: auto;
+}
+
+.tims-online-degree-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tims-online-degree-table th {
+  text-align: left;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--od-navy);
+  padding: 0.9rem 1.75rem;
+  background: rgba(11, 35, 66, 0.03);
+  border-bottom: 1px solid var(--od-border);
+  white-space: nowrap;
+}
+
+.tims-online-degree-table td {
+  padding: 0.95rem 1.75rem;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--od-border);
+}
+
+.tims-online-degree-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tims-online-degree-table tr:hover td {
+  background: rgba(11, 35, 66, 0.02);
+}
+
+.tims-online-degree-course-name {
+  font-weight: 700;
+  color: var(--od-navy);
+}
+
+.tims-online-degree-eligibility {
+  color: #2f8f4e;
+  font-weight: 600;
+}
+
+.tims-online-degree-empty {
+  padding: 2.5rem 1.75rem;
+  text-align: center;
+  color: var(--od-text-muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .tims-online-degree-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-online-degree-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .tims-online-degree-nav-btn {
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .tims-online-degree-table th,
+  .tims-online-degree-table td {
+    padding: 0.85rem 1.1rem;
+  }
+}

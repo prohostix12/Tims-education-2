@@ -1,0 +1,138 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-career-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-career-section {
+  --ca-navy: #0b2342;
+  --ca-navy-deep: #071a33;
+  --ca-red: #ed1c24;
+
+  background: #ffffff;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-career-section *,
+.tims-career-section *::before,
+.tims-career-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-career-card {
+  position: relative;
+  max-width: 1140px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--ca-navy) 0%, var(--ca-navy-deep) 100%);
+  border-radius: 28px;
+  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.75rem, 5vw, 3.5rem) clamp(2.5rem, 5vw, 3.5rem);
+  overflow: visible;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+/* ---------- Floating image, breaks out of the card edge ---------- */
+
+.tims-career-media {
+  position: relative;
+  margin-top: clamp(-4.5rem, -8vw, -3.5rem);
+}
+
+.tims-career-media-placeholder {
+  aspect-ratio: 1 / 1;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #1c3459 0%, #0b2342 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.tims-career-media-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.tims-career-media-hint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.tims-career-media-badge {
+  position: absolute;
+  right: -0.75rem;
+  bottom: -1rem;
+  background: var(--ca-red);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  box-shadow: 0 14px 28px rgba(237, 28, 36, 0.4);
+  max-width: 180px;
+  line-height: 1.35;
+}
+
+/* ---------- Content ---------- */
+
+.tims-career-eyebrow {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ca-red);
+  margin-bottom: 0.9rem;
+}
+
+.tims-career-title {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+.tims-career-text {
+  margin: 0 0 1.05rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.tims-career-text:last-child {
+  margin-bottom: 0;
+}
+
+.tims-career-highlight {
+  font-weight: 700;
+  color: #ffffff;
+  border-bottom: 2px solid var(--ca-red);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .tims-career-card {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-career-media {
+    margin-top: 0;
+    max-width: 320px;
+  }
+}
