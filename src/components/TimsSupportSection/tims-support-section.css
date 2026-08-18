@@ -3,12 +3,12 @@
    existing styles on the site. */
 
 .tims-support-section {
-  --sp-navy: #0b2342;
-  --sp-red: #ed1c24;
+  --sp-navy: #14161c;
+  --sp-red: #ff5a4e;
   --sp-text-muted: #5f6b7a;
-  --sp-bg: #f8fafd;
+  --sp-bg: #f6f2e7;
   --sp-card-bg: #ffffff;
-  --sp-border: rgba(11, 35, 66, 0.08);
+  --sp-border: #14161c;
 
   background: var(--sp-bg);
   color: var(--sp-navy);
@@ -50,10 +50,10 @@
 
 .tims-support-intro {
   background: var(--sp-card-bg);
-  border: 1px solid var(--sp-border);
+  border: 3px solid var(--sp-border);
   border-radius: 18px;
   padding: clamp(1.5rem, 3.5vw, 2.25rem);
-  box-shadow: 0 10px 26px rgba(11, 35, 66, 0.05);
+  box-shadow: 6px 6px 0 #14161c;
   margin-bottom: clamp(2.25rem, 5vw, 3rem);
 }
 
@@ -85,19 +85,19 @@
   align-items: flex-start;
   gap: 0.85rem;
   background: var(--sp-card-bg);
-  border: 1px solid var(--sp-border);
+  border: 3px solid var(--sp-border);
   border-radius: 14px;
   padding: 1.35rem 1.25rem;
   text-decoration: none;
   color: var(--sp-navy);
-  box-shadow: 0 6px 18px rgba(11, 35, 66, 0.04);
+  box-shadow: 5px 5px 0 #14161c;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .tims-support-doc:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(11, 35, 66, 0.1);
-  border-color: rgba(237, 28, 36, 0.35);
+  box-shadow: 6px 6px 0 #14161c;
+  border-color: rgba(255, 90, 78, 0.35);
 }
 
 .tims-support-doc-icon {
@@ -107,7 +107,7 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 10px;
-  background: rgba(237, 28, 36, 0.1);
+  background: rgba(255, 90, 78, 0.1);
   color: var(--sp-red);
   flex-shrink: 0;
 }

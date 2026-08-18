@@ -3,12 +3,12 @@
    existing styles on the site. */
 
 .tims-new-courses-section {
-  --tncs-navy: #0b2342;
-  --tncs-red: #ed1c24;
+  --tncs-navy: #14161c;
+  --tncs-red: #ff5a4e;
   --tncs-text: #172033;
   --tncs-text-muted: #5f6b7a;
   --tncs-bg: #ffffff;
-  --tncs-bg-soft: #f8fafd;
+  --tncs-bg-soft: #f6f2e7;
 
   background-color: var(--tncs-bg-soft);
   background-image: linear-gradient(
@@ -85,7 +85,7 @@
   display: block;
   width: 42px;
   height: 3px;
-  border-radius: 999px;
+  border-radius: 12px;
   background: var(--tncs-red);
   margin-bottom: 1.5rem;
 }
@@ -108,7 +108,7 @@
   width: 64px;
   height: 4px;
   margin: 1.5rem 0;
-  border-radius: 999px;
+  border-radius: 12px;
   background: linear-gradient(90deg, var(--tncs-navy) 0%, var(--tncs-navy) 55%, var(--tncs-red) 55%, var(--tncs-red) 100%);
 }
 
@@ -133,7 +133,7 @@
   position: relative;
   flex: 1;
   height: 1px;
-  background: rgba(11, 35, 66, 0.15);
+  background: rgba(20, 22, 28, 0.15);
 }
 
 .tims-new-courses-links-heading-line::after {
@@ -177,19 +177,19 @@
   align-items: center;
   gap: 0.9rem;
   background: var(--tncs-bg);
-  border: 1px solid rgba(11, 35, 66, 0.1);
+  border: 1px solid rgba(20, 22, 28, 0.1);
   border-radius: 16px;
   padding: 1.1rem 1.25rem;
   text-decoration: none;
   color: var(--tncs-text);
-  box-shadow: 0 4px 14px rgba(11, 35, 66, 0.05);
+  box-shadow: 4px 4px 0 #14161c;
   transition: all 0.3s ease;
 }
 
 .tims-new-course-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 34px rgba(11, 35, 66, 0.14);
-  border-color: rgba(237, 28, 36, 0.35);
+  box-shadow: 7px 7px 0 #14161c;
+  border-color: rgba(255, 90, 78, 0.35);
 }
 
 .tims-new-course-icon {

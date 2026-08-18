@@ -3,12 +3,12 @@
    existing styles on the site. */
 
 .tims-online-degree-section {
-  --od-navy: #0b2342;
-  --od-red: #ed1c24;
+  --od-navy: #14161c;
+  --od-red: #ff5a4e;
   --od-text-muted: #5f6b7a;
-  --od-bg: #f8fafd;
+  --od-bg: #f6f2e7;
   --od-card-bg: #ffffff;
-  --od-border: rgba(11, 35, 66, 0.08);
+  --od-border: #14161c;
 
   background: var(--od-bg);
   color: var(--od-navy);
@@ -74,10 +74,10 @@
 
 .tims-online-degree-nav {
   background: var(--od-card-bg);
-  border: 1px solid var(--od-border);
+  border: 3px solid var(--od-border);
   border-radius: 18px;
   padding: 0.75rem;
-  box-shadow: 0 10px 26px rgba(11, 35, 66, 0.05);
+  box-shadow: 6px 6px 0 #14161c;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -103,7 +103,7 @@
 }
 
 .tims-online-degree-nav-btn:hover {
-  background: rgba(11, 35, 66, 0.05);
+  background: rgba(20, 22, 28, 0.05);
 }
 
 .tims-online-degree-nav-btn--active {
@@ -132,9 +132,9 @@
 
 .tims-online-degree-panel {
   background: var(--od-card-bg);
-  border: 1px solid var(--od-border);
+  border: 3px solid var(--od-border);
   border-radius: 18px;
-  box-shadow: 0 10px 26px rgba(11, 35, 66, 0.05);
+  box-shadow: 6px 6px 0 #14161c;
   overflow: hidden;
 }
 
@@ -144,7 +144,7 @@
   font-size: 1.0625rem;
   font-weight: 800;
   color: var(--od-navy);
-  border-bottom: 1px solid var(--od-border);
+  border-bottom: 3px solid var(--od-border);
 }
 
 .tims-online-degree-table-wrap {
@@ -164,15 +164,15 @@
   text-transform: uppercase;
   color: var(--od-navy);
   padding: 0.9rem 1.75rem;
-  background: rgba(11, 35, 66, 0.03);
-  border-bottom: 1px solid var(--od-border);
+  background: rgba(20, 22, 28, 0.03);
+  border-bottom: 3px solid var(--od-border);
   white-space: nowrap;
 }
 
 .tims-online-degree-table td {
   padding: 0.95rem 1.75rem;
   font-size: 0.9375rem;
-  border-bottom: 1px solid var(--od-border);
+  border-bottom: 3px solid var(--od-border);
 }
 
 .tims-online-degree-table tr:last-child td {
@@ -180,7 +180,7 @@
 }
 
 .tims-online-degree-table tr:hover td {
-  background: rgba(11, 35, 66, 0.02);
+  background: rgba(20, 22, 28, 0.02);
 }
 
 .tims-online-degree-course-name {

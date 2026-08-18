@@ -3,8 +3,8 @@
    styles on the site. */
 
 .tims-blog-section {
-  --tb-navy: #0b2342;
-  --tb-red: #ed1c24;
+  --tb-navy: #14161c;
+  --tb-red: #ff5a4e;
   --tb-text-muted: #5f6b7a;
 
   background: #ffffff;
@@ -94,9 +94,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(11, 35, 66, 0) 40%,
-    rgba(11, 35, 66, 0.55) 78%,
-    rgba(11, 35, 66, 0.88) 100%
+    rgba(20, 22, 28, 0) 40%,
+    rgba(20, 22, 28, 0.55) 78%,
+    rgba(20, 22, 28, 0.88) 100%
   );
 }
 
@@ -112,7 +112,7 @@
   border-radius: 10px;
   padding: 0.4rem 0.75rem;
   line-height: 1.15;
-  box-shadow: 0 8px 18px rgba(11, 35, 66, 0.25);
+  box-shadow: 5px 5px 0 #14161c;
 }
 
 .tims-blog-card-date-day {

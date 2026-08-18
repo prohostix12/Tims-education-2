@@ -3,10 +3,10 @@
    existing styles on the site. */
 
 .tims-partners-section {
-  --tp-navy: #0b2342;
-  --tp-red: #ed1c24;
+  --tp-navy: #14161c;
+  --tp-red: #ff5a4e;
 
-  background: #f8fafd;
+  background: #f6f2e7;
   color: var(--tp-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(2.75rem, 7vw, 4.5rem) 0;
@@ -52,7 +52,7 @@
   transform: translateX(-50%);
   width: 40px;
   height: 3px;
-  border-radius: 999px;
+  border-radius: 12px;
   background: var(--tp-red);
 }
 

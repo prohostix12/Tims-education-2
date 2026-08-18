@@ -3,12 +3,12 @@
    styles on the site. */
 
 .tims-find-section {
-  --tf-navy: #0b2342;
-  --tf-red: #ed1c24;
+  --tf-navy: #14161c;
+  --tf-red: #ff5a4e;
   --tf-text-muted: #5f6b7a;
-  --tf-bg: #eef2f9;
+  --tf-bg: #f6f2e7;
   --tf-card-bg: #ffffff;
-  --tf-border: rgba(11, 35, 66, 0.08);
+  --tf-border: #14161c;
 
   background: var(--tf-bg);
   color: var(--tf-navy);
@@ -64,10 +64,10 @@
 
 .tims-find-table {
   background: var(--tf-card-bg);
-  border: 1px solid var(--tf-border);
+  border: 3px solid var(--tf-border);
   border-radius: 20px;
   padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.5rem, 3vw, 2rem);
-  box-shadow: 0 10px 28px rgba(11, 35, 66, 0.06);
+  box-shadow: 6px 6px 0 #14161c;
 }
 
 .tims-find-table-head {
@@ -93,7 +93,7 @@
   gap: 1rem;
   align-items: center;
   padding: 0.7rem 0;
-  border-bottom: 1px solid var(--tf-border);
+  border-bottom: 3px solid var(--tf-border);
 }
 
 .tims-find-row:last-child {
@@ -152,7 +152,7 @@
 .tims-find-image-wrap {
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 36px rgba(11, 35, 66, 0.14);
+  box-shadow: 7px 7px 0 #14161c;
   min-height: 260px;
   background: linear-gradient(135deg, #dfe6f1 0%, #ccd6e6 100%);
 }

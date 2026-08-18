@@ -3,11 +3,11 @@
    existing styles on the site. */
 
 .tims-universities-section {
-  --tu-navy: #0b2342;
-  --tu-red: #ed1c24;
+  --tu-navy: #14161c;
+  --tu-red: #ff5a4e;
   --tu-text-muted: #5f6b7a;
   --tu-bg: #ffffff;
-  --tu-border: rgba(11, 35, 66, 0.08);
+  --tu-border: #14161c;
 
   position: relative;
   background: var(--tu-bg);
@@ -36,7 +36,7 @@
 .tims-universities-section::before {
   width: 340px;
   height: 340px;
-  background: rgba(237, 28, 36, 0.05);
+  background: rgba(255, 90, 78, 0.05);
   top: -120px;
   right: -100px;
 }
@@ -44,7 +44,7 @@
 .tims-universities-section::after {
   width: 260px;
   height: 260px;
-  background: rgba(11, 35, 66, 0.05);
+  background: rgba(20, 22, 28, 0.05);
   bottom: -90px;
   left: -80px;
 }
@@ -99,10 +99,10 @@
   display: flex;
   flex-direction: column;
   background: var(--tu-bg);
-  border: 1px solid var(--tu-border);
+  border: 3px solid var(--tu-border);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(11, 35, 66, 0.07);
+  box-shadow: 6px 6px 0 #14161c;
   height: 100%;
 }
 
@@ -180,7 +180,7 @@
   gap: 0.5rem;
   width: 100%;
   padding: 0.85rem 1.25rem;
-  border-radius: 999px;
+  border-radius: 12px;
   border: 1.5px solid var(--tu-card-accent);
   color: var(--tu-card-accent);
   background: transparent;
@@ -194,7 +194,7 @@
   background: var(--tu-card-accent);
   color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 12px 22px rgba(11, 35, 66, 0.18);
+  box-shadow: 5px 5px 0 #14161c;
 }
 
 .tims-uni-card-button svg {

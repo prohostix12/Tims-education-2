@@ -1,7 +1,7 @@
 :root {
-  --font-body: var(--font-nav), "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --color-bg: #ffffff;
-  --color-ink: #1c2541;
+  --font-body: var(--font-nav), "Space Mono", "Courier New", monospace;
+  --color-bg: #f6f2e7;
+  --color-ink: #14161c;
 }
 
 * {
@@ -24,7 +24,9 @@ body {
 body {
   font-family: var(--font-body);
   color: var(--color-ink);
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: radial-gradient(rgba(20, 22, 28, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 a {

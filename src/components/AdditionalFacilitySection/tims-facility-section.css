@@ -3,10 +3,10 @@
    existing styles on the site. */
 
 .tims-facility-section {
-  --fc-navy: #0b2342;
-  --fc-red: #ed1c24;
+  --fc-navy: #14161c;
+  --fc-red: #ff5a4e;
   --fc-text-muted: #5f6b7a;
-  --fc-border: rgba(11, 35, 66, 0.1);
+  --fc-border: #14161c;
 
   background: #ffffff;
   color: var(--fc-navy);
@@ -66,16 +66,16 @@
 .tims-facility-card {
   position: relative;
   background: #ffffff;
-  border: 1px solid var(--fc-border);
+  border: 3px solid var(--fc-border);
   border-left: 3px solid var(--fc-red);
   border-radius: 10px;
   padding: 1.75rem 1.85rem;
-  box-shadow: 0 1px 2px rgba(11, 35, 66, 0.04);
+  box-shadow: 3px 3px 0 #14161c;
   transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .tims-facility-card:hover {
-  box-shadow: 0 10px 24px rgba(11, 35, 66, 0.08);
+  box-shadow: 6px 6px 0 #14161c;
   border-left-color: var(--fc-navy);
 }
 
@@ -93,7 +93,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 8px;
-  background: rgba(11, 35, 66, 0.06);
+  background: rgba(20, 22, 28, 0.06);
   color: var(--fc-navy);
   flex-shrink: 0;
 }
@@ -116,8 +116,8 @@
 /* ---------- Documents checklist ---------- */
 
 .tims-facility-docs {
-  background: #f8fafd;
-  border: 1px solid var(--fc-border);
+  background: #f6f2e7;
+  border: 3px solid var(--fc-border);
   border-radius: 12px;
   padding: clamp(1.75rem, 4vw, 2.25rem);
 }
@@ -143,7 +143,7 @@
   align-items: center;
   gap: 0.65rem;
   background: #ffffff;
-  border: 1px solid var(--fc-border);
+  border: 3px solid var(--fc-border);
   border-radius: 8px;
   padding: 0.8rem 1rem;
   font-size: 0.875rem;

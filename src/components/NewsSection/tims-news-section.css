@@ -3,10 +3,10 @@
    styles on the site. */
 
 .tims-news-section {
-  --nw-navy: #0b2342;
-  --nw-red: #ed1c24;
+  --nw-navy: #14161c;
+  --nw-red: #ff5a4e;
   --nw-text-muted: #5f6b7a;
-  --nw-border: rgba(11, 35, 66, 0.08);
+  --nw-border: #14161c;
 
   background: #ffffff;
   color: var(--nw-navy);
@@ -71,7 +71,7 @@
   grid-template-columns: 88px 1fr;
   gap: clamp(1.25rem, 3vw, 2rem);
   padding: clamp(1.5rem, 3vw, 2rem) 0;
-  border-bottom: 1px solid var(--nw-border);
+  border-bottom: 3px solid var(--nw-border);
   transition: padding-left 0.25s ease;
 }
 
@@ -125,8 +125,8 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--nw-red);
-  background: rgba(237, 28, 36, 0.08);
-  border-radius: 999px;
+  background: rgba(255, 90, 78, 0.08);
+  border-radius: 12px;
   padding: 0.25rem 0.7rem;
   margin-bottom: 0.65rem;
 }

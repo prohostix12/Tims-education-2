@@ -3,10 +3,10 @@
    existing styles on the site. */
 
 .tims-article-section {
-  --ai-navy: #0b2342;
-  --ai-red: #ed1c24;
+  --ai-navy: #14161c;
+  --ai-red: #ff5a4e;
   --ai-text-muted: #5f6b7a;
-  --ai-border: rgba(11, 35, 66, 0.08);
+  --ai-border: #14161c;
 
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 7vw, 5rem) 1.5rem;
@@ -20,7 +20,7 @@
 }
 
 .tims-article-section--alt {
-  background: #f8fafd;
+  background: #f6f2e7;
 }
 
 .tims-article-inner {
@@ -50,25 +50,25 @@
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 36px rgba(11, 35, 66, 0.1);
+  box-shadow: 7px 7px 0 #14161c;
 }
 
 .tims-article-media-placeholder {
   aspect-ratio: 4 / 3;
   background: repeating-linear-gradient(
     135deg,
-    #eef2f9,
-    #eef2f9 10px,
+    #f6f2e7,
+    #f6f2e7 10px,
     #e5ebf3 10px,
     #e5ebf3 20px
   );
-  border: 1px dashed rgba(11, 35, 66, 0.2);
+  border: 3px dashed #14161c;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: rgba(11, 35, 66, 0.32);
+  color: rgba(20, 22, 28, 0.32);
 }
 
 .tims-article-media-hint {
@@ -76,7 +76,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(11, 35, 66, 0.4);
+  color: rgba(20, 22, 28, 0.4);
 }
 
 /* ---------- Text content ---------- */
@@ -111,9 +111,14 @@
 }
 
 .tims-article-highlight {
+  display: inline-block;
   font-weight: 700;
   color: var(--ai-navy);
-  border-bottom: 2px solid var(--ai-red);
+  background: #ffcf3f;
+  border: 2px solid var(--ai-navy);
+  border-radius: 6px;
+  padding: 0 0.3em;
+  transform: rotate(-1deg);
 }
 
 .tims-article-cta {
@@ -126,7 +131,7 @@
   font-weight: 700;
   font-size: 0.875rem;
   padding: 0.7rem 1.5rem;
-  border-radius: 999px;
+  border-radius: 12px;
   cursor: default;
 }
 

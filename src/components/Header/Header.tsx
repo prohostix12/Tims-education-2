@@ -28,7 +28,7 @@ const navItems: NavLink[] = [
     children: [
       { label: "SSLC / PLUS TWO", href: "/courses/sslc-plus-two" },
       { label: "Online Degree", href: "/courses/online-degree" },
-      { label: "Post Graduation", href: "#" },
+      { label: "Post Graduation", href: "/courses/post-graduation" },
       { label: "Btech / Mtech", href: "#" },
       { label: "Diploma", href: "#" },
       { label: "Apprenticeship Program", href: "#" },

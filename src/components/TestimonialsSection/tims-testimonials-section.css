@@ -3,15 +3,15 @@
    existing styles on the site. */
 
 .tims-testimonials-section {
-  --tt-navy: #0b2342;
-  --tt-red: #ed1c24;
+  --tt-navy: #14161c;
+  --tt-red: #ff5a4e;
   --tt-gold: #d9a441;
   --tt-text-muted: #5f6b7a;
   --tt-card-bg: #fbf5e9;
-  --tt-border: rgba(11, 35, 66, 0.08);
+  --tt-border: #14161c;
 
   position: relative;
-  background: #f8fafd;
+  background: #f6f2e7;
   color: var(--tt-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;
@@ -59,7 +59,7 @@
   transform: translateX(-50%);
   width: 40px;
   height: 3px;
-  border-radius: 999px;
+  border-radius: 12px;
   background: var(--tt-red);
 }
 
@@ -81,9 +81,9 @@
   margin: 0 auto 3rem;
   padding: 0.85rem 1.5rem;
   max-width: fit-content;
-  border-radius: 999px;
+  border-radius: 12px;
   background: #ffffff;
-  border: 1px solid var(--tt-border);
+  border: 3px solid var(--tt-border);
 }
 
 .tims-testimonials-rating-score {
@@ -114,7 +114,7 @@
 .tims-testimonials-write-btn {
   margin-left: 0.25rem;
   padding: 0.45rem 1rem;
-  border-radius: 999px;
+  border-radius: 12px;
   border: 1.5px solid var(--tt-red);
   color: #ffffff;
   background: var(--tt-red);
@@ -126,7 +126,7 @@
 }
 
 .tims-testimonials-write-btn:hover {
-  background: #c8151c;
+  background: #e0473c;
   transform: translateY(-1px);
 }
 
@@ -146,13 +146,13 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 50%;
-  border: 1px solid var(--tt-border);
+  border: 3px solid var(--tt-border);
   background: #ffffff;
   color: var(--tt-navy);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(11, 35, 66, 0.08);
+  box-shadow: 4px 4px 0 #14161c;
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
 }
 
@@ -213,7 +213,7 @@
   background: var(--tt-card-bg);
   border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 16px 34px rgba(11, 35, 66, 0.1);
+  box-shadow: 7px 7px 0 #14161c;
   transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.55s ease;
   cursor: pointer;
 }
@@ -221,7 +221,7 @@
 .tims-testimonials-review-card--active {
   opacity: 1;
   transform: scale(1);
-  box-shadow: 0 22px 44px rgba(11, 35, 66, 0.16);
+  box-shadow: 8px 8px 0 #14161c;
   cursor: default;
   z-index: 2;
 }
@@ -304,7 +304,7 @@
   font-weight: 700;
   font-size: 1.0625rem;
   border: 3px solid var(--tt-card-bg);
-  box-shadow: 0 10px 20px rgba(11, 35, 66, 0.18);
+  box-shadow: 5px 5px 0 #14161c;
 }
 
 /* ---------- Dots ---------- */
@@ -320,9 +320,9 @@
 .tims-testimonials-dot {
   width: 8px;
   height: 8px;
-  border-radius: 999px;
+  border-radius: 12px;
   border: none;
-  background: rgba(11, 35, 66, 0.18);
+  background: rgba(20, 22, 28, 0.18);
   cursor: pointer;
   padding: 0;
   transition: background 0.25s ease, width 0.25s ease;

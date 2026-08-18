@@ -1,10 +1,10 @@
 .header {
-  --navy: #0b2342;
-  --navy-ink: #0b2342;
-  --red: #ed1c24;
-  --red-dark: #c8151c;
+  --navy: #14161c;
+  --navy-ink: #14161c;
+  --red: #ff5a4e;
+  --red-dark: #e0473c;
   --muted: #6b7686;
-  --border: #e9edf3;
+  --border: #14161c;
   --top-ink: #dbe3ef;
 
   position: sticky;
@@ -19,6 +19,7 @@
   background: var(--navy);
   color: var(--top-ink);
   font-size: 0.8125rem;
+  border-bottom: 3px solid #14161c;
 }
 
 .topBarInner {
@@ -80,7 +81,7 @@ a.topBarItem:hover {
   justify-content: center;
   width: 1.7rem;
   height: 1.7rem;
-  border-radius: 999px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--top-ink);
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
@@ -92,41 +93,39 @@ a.topBarItem:hover {
   transform: translateY(-1px);
 }
 
-/* ---------- Main nav (floating card) ---------- */
+/* ---------- Main nav (flat bar, no floating card) ---------- */
 
 .navWrap {
-  background: var(--navy);
-  padding: 0 1.25rem 1.1rem;
+  background: #ffffff;
 }
 
 .mainNavCard {
   max-width: 1280px;
   margin: 0 auto;
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 14px 30px rgba(11, 35, 66, 0.16);
-  border-bottom: 3px solid var(--red);
-  padding: 0.65rem 1.5rem;
+  border-radius: 0;
+  border: none;
+  border-bottom: 4px solid #14161c;
+  box-shadow: none;
+  padding: 0.85rem 1.5rem;
   display: flex;
   align-items: center;
   gap: 2rem;
-  transition: box-shadow 0.2s ease, padding 0.2s ease;
-}
-
-.headerScrolled .navWrap {
-  padding-bottom: 0.75rem;
+  transition: padding 0.2s ease;
 }
 
 .headerScrolled .mainNavCard {
-  padding: 0.5rem 1.5rem;
-  box-shadow: 0 18px 34px rgba(11, 35, 66, 0.22);
+  padding: 0.55rem 1.5rem;
+  box-shadow: 0 6px 0 rgba(20, 22, 28, 0.06);
 }
 
 .logoLink {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0.25rem 0;
+  padding: 0.25rem 0.6rem 0.25rem 0;
+  border-right: 3px solid #14161c;
+  margin-right: 0.4rem;
 }
 
 .logoImage {
@@ -161,9 +160,16 @@ a.topBarItem:hover {
   gap: 0.3rem;
   color: var(--navy-ink);
   text-decoration: none;
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   padding: 0.6rem 0.1rem;
+}
+
+.navLink::before {
+  content: "_";
+  color: var(--red);
 }
 
 .navLink::after {
@@ -211,9 +217,9 @@ a.topBarItem:hover {
   left: 0;
   min-width: 230px;
   background: #ffffff;
-  border: 1px solid var(--border);
+  border: 3px solid var(--border);
   border-radius: 0.75rem;
-  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.14);
+  box-shadow: 6px 6px 0 #14161c;
   list-style: none;
   margin: 0.6rem 0 0;
   padding: 0.5rem;
@@ -262,9 +268,9 @@ a.topBarItem:hover {
   left: 100%;
   min-width: 260px;
   background: #ffffff;
-  border: 1px solid var(--border);
+  border: 3px solid var(--border);
   border-radius: 0.75rem;
-  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.14);
+  box-shadow: 6px 6px 0 #14161c;
   list-style: none;
   margin: 0;
   padding: 0.5rem;
@@ -320,21 +326,25 @@ a.topBarItem:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--red);
-  color: #ffffff;
+  background: #ffffff;
+  color: #14161c;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.7rem 1.35rem;
-  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  border: 3px solid #14161c;
+  box-shadow: 3px 3px 0 #14161c;
   white-space: nowrap;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
 .enquireButton:hover {
-  background: var(--red-dark);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 22px rgba(237, 28, 36, 0.32);
+  background: #14161c;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--red);
 }
 
 .mobilePhoneButton {
@@ -343,7 +353,7 @@ a.topBarItem:hover {
   justify-content: center;
   width: 2.2rem;
   height: 2.2rem;
-  border-radius: 999px;
+  border-radius: 12px;
   background: #f3f5f9;
   color: var(--red);
 }
@@ -389,8 +399,9 @@ a.topBarItem:hover {
   bottom: 0;
   width: min(320px, 86vw);
   background: #ffffff;
+  border-left: 4px solid #14161c;
   z-index: 60;
-  box-shadow: -18px 0 40px rgba(11, 35, 66, 0.2);
+  box-shadow: -18px 0 40px rgba(20, 22, 28, 0.2);
   transform: translateX(100%);
   transition: transform 0.28s ease;
   display: flex;
@@ -410,7 +421,17 @@ a.topBarItem:hover {
 }
 
 .mobileDrawer > ul > li {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 3px solid var(--border);
+}
+
+.mobileDrawer > ul > li > a {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.mobileDrawer > ul > li > a::before {
+  content: "_";
+  color: var(--red);
 }
 
 .mobileDrawer a {
@@ -418,7 +439,7 @@ a.topBarItem:hover {
   padding: 0.75rem 0;
   color: var(--navy-ink);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .mobileLinkActive {
@@ -463,7 +484,7 @@ a.topBarItem:hover {
 .mobileScrim {
   position: fixed;
   inset: 0;
-  background: rgba(11, 35, 66, 0.45);
+  background: rgba(20, 22, 28, 0.45);
   z-index: 55;
 }
 
@@ -504,14 +525,9 @@ a.topBarItem:hover {
     display: flex;
   }
 
-  .navWrap {
-    padding: 0 1rem 0.85rem;
-  }
-
   .mainNavCard {
     gap: 1rem;
     padding: 0.6rem 1.1rem;
-    border-radius: 16px;
   }
 
   .logoImage {

@@ -3,12 +3,12 @@
    styles on the site. */
 
 .tims-dream-section {
-  --td-navy: #0b2342;
-  --td-red: #ed1c24;
+  --td-navy: #14161c;
+  --td-red: #ff5a4e;
   --td-text-muted: #5f6b7a;
 
   position: relative;
-  background: #f8fafd;
+  background: #f6f2e7;
   color: var(--td-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3.5rem, 9vw, 7rem) 1.5rem;
@@ -35,7 +35,7 @@
 .tims-dream-blob--navy {
   width: 300px;
   height: 300px;
-  background: rgba(11, 35, 66, 0.08);
+  background: rgba(20, 22, 28, 0.08);
   bottom: -100px;
   left: -60px;
   animation: tims-dream-float-b 16s ease-in-out infinite;
@@ -111,14 +111,14 @@
   font-weight: 600;
   font-size: 0.9375rem;
   padding: 0.85rem 1.75rem;
-  border-radius: 999px;
+  border-radius: 12px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .tims-dream-cta:hover {
-  background: #c8151c;
+  background: #e0473c;
   transform: translateY(-2px);
-  box-shadow: 0 14px 26px rgba(237, 28, 36, 0.3);
+  box-shadow: 6px 6px 0 #ff5a4e;
 }
 
 /* ---------- Timeline (right) ---------- */
@@ -138,9 +138,9 @@
   width: 2px;
   background: linear-gradient(
     180deg,
-    rgba(11, 35, 66, 0.14) 0%,
-    rgba(237, 28, 36, 0.28) 50%,
-    rgba(11, 35, 66, 0.14) 100%
+    rgba(20, 22, 28, 0.14) 0%,
+    rgba(255, 90, 78, 0.28) 50%,
+    rgba(20, 22, 28, 0.14) 100%
   );
 }
 
@@ -178,7 +178,7 @@
   border-radius: 50%;
   background: #ffffff;
   color: var(--td-red);
-  box-shadow: 0 10px 24px rgba(11, 35, 66, 0.1);
+  box-shadow: 6px 6px 0 #14161c;
   z-index: 1;
 }
 

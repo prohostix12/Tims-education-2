@@ -3,12 +3,12 @@
    styles on the site. */
 
 .tims-sslc-section {
-  --ss-navy: #0b2342;
-  --ss-red: #ed1c24;
+  --ss-navy: #14161c;
+  --ss-red: #ff5a4e;
   --ss-text-muted: #5f6b7a;
-  --ss-bg: #f8fafd;
+  --ss-bg: #f6f2e7;
   --ss-card-bg: #ffffff;
-  --ss-border: rgba(11, 35, 66, 0.08);
+  --ss-border: #14161c;
 
   position: relative;
   background: var(--ss-bg);
@@ -31,7 +31,7 @@
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
-  background: rgba(237, 28, 36, 0.06);
+  background: rgba(255, 90, 78, 0.06);
   width: 360px;
   height: 360px;
   top: -140px;
@@ -73,10 +73,10 @@
 
 .tims-sslc-intro {
   background: var(--ss-card-bg);
-  border: 1px solid var(--ss-border);
+  border: 3px solid var(--ss-border);
   border-radius: 20px;
   padding: clamp(1.75rem, 4vw, 2.5rem);
-  box-shadow: 0 12px 30px rgba(11, 35, 66, 0.06);
+  box-shadow: 6px 6px 0 #14161c;
   margin-bottom: clamp(2rem, 5vw, 2.75rem);
 }
 
@@ -92,8 +92,14 @@
 }
 
 .tims-sslc-highlight {
+  display: inline-block;
   font-weight: 700;
   color: var(--ss-navy);
+  background: #35e0f2;
+  border: 2px solid var(--ss-navy);
+  border-radius: 6px;
+  padding: 0 0.3em;
+  transform: rotate(1deg);
 }
 
 /* ---------- Mission cards ---------- */
@@ -115,16 +121,16 @@
 
 .tims-sslc-mission-card {
   background: var(--ss-card-bg);
-  border: 1px solid var(--ss-border);
+  border: 3px solid var(--ss-border);
   border-radius: 16px;
   padding: 1.5rem 1.35rem;
-  box-shadow: 0 8px 22px rgba(11, 35, 66, 0.05);
+  box-shadow: 5px 5px 0 #14161c;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .tims-sslc-mission-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 30px rgba(11, 35, 66, 0.1);
+  box-shadow: 6px 6px 0 #14161c;
 }
 
 .tims-sslc-mission-icon {
@@ -134,7 +140,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 10px;
-  background: rgba(237, 28, 36, 0.1);
+  background: rgba(255, 90, 78, 0.1);
   color: var(--ss-red);
   margin-bottom: 0.9rem;
 }
@@ -161,7 +167,7 @@
   gap: 0.5rem;
   background: var(--ss-navy);
   color: #ffffff;
-  border-radius: 999px;
+  border-radius: 12px;
   padding: 0.55rem 1.1rem;
   font-size: 0.8125rem;
   font-weight: 600;

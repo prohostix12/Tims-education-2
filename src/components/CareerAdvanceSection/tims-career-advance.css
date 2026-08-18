@@ -3,9 +3,9 @@
    existing styles on the site. */
 
 .tims-career-section {
-  --ca-navy: #0b2342;
-  --ca-navy-deep: #071a33;
-  --ca-red: #ed1c24;
+  --ca-navy: #14161c;
+  --ca-navy-deep: #0c0d11;
+  --ca-red: #ff5a4e;
 
   background: #ffffff;
   font-family: var(--font-nav, "Segoe UI", sans-serif);
@@ -43,7 +43,7 @@
 .tims-career-media-placeholder {
   aspect-ratio: 1 / 1;
   border-radius: 22px;
-  background: linear-gradient(160deg, #1c3459 0%, #0b2342 100%);
+  background: linear-gradient(160deg, #22242c 0%, #14161c 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
   display: flex;
@@ -82,7 +82,7 @@
   padding: 0.75rem 1.1rem;
   font-size: 0.8125rem;
   font-weight: 700;
-  box-shadow: 0 14px 28px rgba(237, 28, 36, 0.4);
+  box-shadow: 6px 6px 0 #ff5a4e;
   max-width: 180px;
   line-height: 1.35;
 }
@@ -119,9 +119,14 @@
 }
 
 .tims-career-highlight {
+  display: inline-block;
   font-weight: 700;
-  color: #ffffff;
-  border-bottom: 2px solid var(--ca-red);
+  color: #14161c;
+  background: #35e0f2;
+  border: 2px solid #14161c;
+  border-radius: 6px;
+  padding: 0 0.3em;
+  transform: rotate(1deg);
 }
 
 /* ---------- Responsive ---------- */
