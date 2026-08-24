@@ -1,0 +1,231 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-credit-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-credit-section {
+  --ct-navy: #14161c;
+  --ct-red: #ff5a4e;
+  --ct-text-muted: #5f6b7a;
+  --ct-bg: #f6f2e7;
+  --ct-card-bg: #ffffff;
+  --ct-border: #14161c;
+
+  position: relative;
+  background: var(--ct-bg);
+  color: var(--ct-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-credit-section *,
+.tims-credit-section *::before,
+.tims-credit-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-credit-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-credit-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-credit-rule {
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: var(--ct-red);
+  margin-bottom: 1rem;
+}
+
+.tims-credit-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ct-red);
+  margin-bottom: 0.85rem;
+}
+
+.tims-credit-heading {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 3.2vw, 2.125rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--ct-navy);
+}
+
+.tims-credit-subheading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.125rem, 2.4vw, 1.5rem);
+  font-weight: 800;
+  color: var(--ct-red);
+}
+
+.tims-credit-intro {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ct-text-muted);
+}
+
+/* ---------- Cards ---------- */
+
+.tims-credit-card {
+  background: var(--ct-card-bg);
+  border: 3px solid var(--ct-border);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.tims-credit-card:last-child {
+  margin-bottom: 0;
+}
+
+.tims-credit-card-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ct-navy);
+}
+
+.tims-credit-text {
+  margin: 0 0 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--ct-text-muted);
+}
+
+.tims-credit-text:last-child {
+  margin-bottom: 0;
+}
+
+.tims-credit-highlight {
+  font-weight: 700;
+  color: var(--ct-navy);
+}
+
+/* ---------- Benefits grid ---------- */
+
+.tims-credit-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem 2.5rem;
+}
+
+.tims-credit-benefit {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.tims-credit-benefit-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--ct-red);
+  color: var(--ct-red);
+  margin-top: 0.15rem;
+}
+
+.tims-credit-benefit-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--ct-navy);
+}
+
+.tims-credit-benefit-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ct-text-muted);
+}
+
+/* ---------- Numbered process steps with sub-bullets ---------- */
+
+.tims-credit-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: credit-step;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tims-credit-step {
+  counter-increment: credit-step;
+}
+
+.tims-credit-step-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--ct-navy);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.tims-credit-step-title::before {
+  content: counter(credit-step);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background: var(--ct-navy);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.tims-credit-substeps {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tims-credit-substep {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ct-text-muted);
+}
+
+.tims-credit-substep::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ct-red);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .tims-credit-benefits {
+    grid-template-columns: 1fr;
+  }
+}

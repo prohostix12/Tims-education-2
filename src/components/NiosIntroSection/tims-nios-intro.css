@@ -1,0 +1,88 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-nios-intro-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-nios-intro-section {
+  --ni-navy: #14161c;
+  --ni-red: #ff5a4e;
+  --ni-text-muted: #5f6b7a;
+
+  background: #ffffff;
+  color: var(--ni-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem clamp(1.5rem, 4vw, 2rem);
+  box-sizing: border-box;
+}
+
+.tims-nios-intro-section *,
+.tims-nios-intro-section *::before,
+.tims-nios-intro-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-nios-intro-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.tims-nios-intro-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--ni-text-muted);
+}
+
+/* ---------- Logo placeholder ---------- */
+
+.tims-nios-intro-media {
+  display: flex;
+  justify-content: center;
+}
+
+.tims-nios-intro-media-placeholder {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  border: 3px dashed var(--ni-navy);
+  background: repeating-linear-gradient(
+    135deg,
+    #f6f2e7,
+    #f6f2e7 10px,
+    #ece6d6 10px,
+    #ece6d6 20px
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(20, 22, 28, 0.4);
+}
+
+.tims-nios-intro-media-hint {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(20, 22, 28, 0.45);
+  text-align: center;
+  padding: 0 0.75rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .tims-nios-intro-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .tims-nios-intro-media {
+    order: -1;
+  }
+}

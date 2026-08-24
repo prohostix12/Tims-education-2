@@ -1,0 +1,197 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-apprenticeship-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-apprenticeship-section {
+  --ap-navy: #14161c;
+  --ap-red: #ff5a4e;
+  --ap-text-muted: #5f6b7a;
+  --ap-bg: #f6f2e7;
+  --ap-card-bg: #ffffff;
+  --ap-border: #14161c;
+
+  position: relative;
+  background: var(--ap-bg);
+  color: var(--ap-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-apprenticeship-section *,
+.tims-apprenticeship-section *::before,
+.tims-apprenticeship-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-apprenticeship-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-apprenticeship-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-apprenticeship-rule {
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: var(--ap-red);
+  margin-bottom: 1rem;
+}
+
+.tims-apprenticeship-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ap-red);
+  margin-bottom: 0.85rem;
+}
+
+.tims-apprenticeship-heading {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--ap-navy);
+}
+
+.tims-apprenticeship-intro {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--ap-text-muted);
+}
+
+/* ---------- Cards ---------- */
+
+.tims-apprenticeship-card {
+  background: var(--ap-card-bg);
+  border: 3px solid var(--ap-border);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.tims-apprenticeship-card:last-child {
+  margin-bottom: 0;
+}
+
+.tims-apprenticeship-card-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ap-navy);
+}
+
+/* ---------- How it works: numbered steps ---------- */
+
+.tims-apprenticeship-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tims-apprenticeship-step {
+  counter-increment: step;
+  display: flex;
+  gap: 1rem;
+}
+
+.tims-apprenticeship-step-number {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--ap-navy);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.9375rem;
+}
+
+.tims-apprenticeship-step-number::before {
+  content: counter(step);
+}
+
+.tims-apprenticeship-step-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ap-navy);
+}
+
+.tims-apprenticeship-step-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--ap-text-muted);
+}
+
+/* ---------- Arrow-bullet lists ---------- */
+
+.tims-apprenticeship-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.tims-apprenticeship-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ap-text-muted);
+}
+
+.tims-apprenticeship-list-arrow {
+  flex-shrink: 0;
+  color: var(--ap-red);
+  font-weight: 800;
+  margin-top: 0.1rem;
+}
+
+.tims-apprenticeship-list-item strong {
+  color: var(--ap-navy);
+}
+
+.tims-apprenticeship-lead {
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--ap-text-muted);
+}
+
+.tims-apprenticeship-closing {
+  margin: 1.5rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--ap-text-muted);
+}
+
+.tims-apprenticeship-group-title {
+  margin: 1.75rem 0 0.85rem;
+  font-size: 1.1875rem;
+  font-weight: 800;
+  color: var(--ap-navy);
+}
+
+.tims-apprenticeship-group-title:first-child {
+  margin-top: 0;
+}

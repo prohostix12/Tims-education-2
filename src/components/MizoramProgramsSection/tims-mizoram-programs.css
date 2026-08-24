@@ -1,0 +1,122 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-mizoram-programs-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-mizoram-programs-section {
+  --mp-navy: #14161c;
+  --mp-red: #ff5a4e;
+  --mp-text-muted: #5f6b7a;
+  --mp-bg: #f6f2e7;
+  --mp-card-bg: #ffffff;
+  --mp-border: #14161c;
+
+  background: var(--mp-bg);
+  color: var(--mp-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-mizoram-programs-section *,
+.tims-mizoram-programs-section *::before,
+.tims-mizoram-programs-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-mizoram-programs-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-mizoram-programs-heading {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.375rem, 2.6vw, 1.75rem);
+  font-weight: 800;
+  color: var(--mp-navy);
+}
+
+/* ---------- Table panel ---------- */
+
+.tims-mizoram-programs-panel {
+  background: var(--mp-card-bg);
+  border: 3px solid var(--mp-border);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #14161c;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.tims-mizoram-programs-table-wrap {
+  overflow-x: auto;
+}
+
+.tims-mizoram-programs-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.tims-mizoram-programs-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mp-navy);
+  padding: 0.9rem 1.25rem;
+  background: rgba(20, 22, 28, 0.03);
+  border-bottom: 3px solid var(--mp-border);
+  white-space: nowrap;
+}
+
+.tims-mizoram-programs-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--mp-text-muted);
+  border-bottom: 3px solid var(--mp-border);
+  vertical-align: top;
+}
+
+.tims-mizoram-programs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tims-mizoram-programs-table tr:hover td {
+  background: rgba(20, 22, 28, 0.02);
+}
+
+.tims-mizoram-programs-sl {
+  font-weight: 800;
+  color: var(--mp-navy);
+  width: 3.5rem;
+}
+
+.tims-mizoram-programs-course {
+  font-weight: 700;
+  color: var(--mp-navy);
+  white-space: nowrap;
+}
+
+/* ---------- Download button ---------- */
+
+.tims-mizoram-programs-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--mp-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.9rem 1.75rem;
+  border: 3px solid var(--mp-navy);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--mp-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-mizoram-programs-download:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--mp-navy);
+}

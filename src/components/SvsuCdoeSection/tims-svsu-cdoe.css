@@ -1,0 +1,115 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-svsu-cdoe-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-svsu-cdoe-section {
+  --sc-navy: #14161c;
+  --sc-red: #ff5a4e;
+  --sc-text-muted: #5f6b7a;
+  --sc-bg: #f6f2e7;
+
+  background: var(--sc-bg);
+  color: var(--sc-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-svsu-cdoe-section *,
+.tims-svsu-cdoe-section *::before,
+.tims-svsu-cdoe-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-svsu-cdoe-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-svsu-cdoe-card {
+  background: #ffffff;
+  border: 3px solid var(--sc-navy);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+}
+
+.tims-svsu-cdoe-title {
+  margin: 0 0 1.1rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sc-navy);
+}
+
+.tims-svsu-cdoe-text {
+  margin: 0 0 1.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--sc-text-muted);
+}
+
+/* ---------- Gallery ---------- */
+
+.tims-svsu-cdoe-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.tims-svsu-cdoe-gallery-item {
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  border: 2px solid var(--sc-navy);
+  background: repeating-linear-gradient(
+    135deg,
+    #ece6d6,
+    #ece6d6 10px,
+    #e2dcc9 10px,
+    #e2dcc9 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(20, 22, 28, 0.4);
+}
+
+.tims-svsu-cdoe-gallery-hint {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+/* ---------- Download button ---------- */
+
+.tims-svsu-cdoe-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--sc-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.9rem 1.75rem;
+  border: 3px solid var(--sc-navy);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--sc-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-svsu-cdoe-download:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--sc-navy);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 560px) {
+  .tims-svsu-cdoe-gallery {
+    grid-template-columns: 1fr;
+  }
+}

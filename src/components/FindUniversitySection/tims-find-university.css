@@ -1,0 +1,284 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-fu-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-fu-section {
+  --fu-navy: #14161c;
+  --fu-red: #ff5a4e;
+  --fu-text-muted: #5f6b7a;
+  --fu-bg: #f6f2e7;
+  --fu-card-bg: #ffffff;
+  --fu-border: #14161c;
+
+  position: relative;
+  background: var(--fu-bg);
+  color: var(--fu-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-fu-section *,
+.tims-fu-section *::before,
+.tims-fu-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-fu-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-fu-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-fu-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fu-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-fu-heading {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--fu-navy);
+}
+
+.tims-fu-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--fu-text-muted);
+}
+
+.tims-fu-source {
+  margin: 1rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--fu-text-muted);
+}
+
+.tims-fu-source a {
+  color: var(--fu-navy);
+  font-weight: 700;
+}
+
+/* ---------- Stat strip ---------- */
+
+.tims-fu-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-fu-stat {
+  background: var(--fu-navy);
+  color: #ffffff;
+  border: 3px solid var(--fu-navy);
+  border-radius: 14px;
+  padding: 1.1rem 1rem;
+  text-align: center;
+  box-shadow: 5px 5px 0 var(--fu-red);
+}
+
+.tims-fu-stat-value {
+  display: block;
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+
+.tims-fu-stat-label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---------- Cards ---------- */
+
+.tims-fu-card {
+  background: var(--fu-card-bg);
+  border: 3px solid var(--fu-border);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.tims-fu-card-title {
+  margin: 0 0 1rem;
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--fu-navy);
+}
+
+.tims-fu-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--fu-text-muted);
+}
+
+.tims-fu-highlight {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--fu-navy);
+  background: #35e0f2;
+  border: 2px solid var(--fu-navy);
+  border-radius: 6px;
+  padding: 0 0.3em;
+  transform: rotate(1deg);
+}
+
+/* ---------- Chip lists (services, programs, universities) ---------- */
+
+.tims-fu-chip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.tims-fu-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--fu-bg);
+  border: 2px solid var(--fu-navy);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--fu-navy);
+}
+
+.tims-fu-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fu-red);
+  flex-shrink: 0;
+}
+
+/* ---------- Two-column group heading ---------- */
+
+.tims-fu-group {
+  margin-bottom: 1.5rem;
+}
+
+.tims-fu-group:last-child {
+  margin-bottom: 0;
+}
+
+.tims-fu-group-title {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--fu-navy);
+}
+
+/* ---------- Contact card ---------- */
+
+.tims-fu-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.tims-fu-contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tims-fu-contact-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fu-red);
+}
+
+.tims-fu-contact-value {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--fu-navy);
+}
+
+.tims-fu-contact-value a {
+  color: var(--fu-navy);
+  text-decoration: none;
+}
+
+.tims-fu-contact-value a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- CTA row ---------- */
+
+.tims-fu-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.tims-fu-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--fu-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  border: 3px solid var(--fu-navy);
+  box-shadow: 4px 4px 0 var(--fu-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-fu-cta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--fu-navy);
+}
+
+.tims-fu-cta--outline {
+  background: #ffffff;
+  color: var(--fu-navy);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px) {
+  .tims-fu-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tims-fu-chip-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tims-fu-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .tims-fu-chip-list {
+    grid-template-columns: 1fr;
+  }
+}

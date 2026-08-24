@@ -1,0 +1,300 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-btech-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-btech-section {
+  --bt-navy: #14161c;
+  --bt-red: #ff5a4e;
+  --bt-text-muted: #5f6b7a;
+  --bt-bg: #f6f2e7;
+  --bt-card-bg: #ffffff;
+  --bt-border: #14161c;
+
+  position: relative;
+  background: var(--bt-bg);
+  color: var(--bt-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-btech-section *,
+.tims-btech-section *::before,
+.tims-btech-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-btech-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-btech-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-btech-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bt-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-btech-heading {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.6vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--bt-navy);
+}
+
+/* ---------- Cards ---------- */
+
+.tims-btech-card {
+  background: var(--bt-card-bg);
+  border: 3px solid var(--bt-border);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.tims-btech-card-title {
+  margin: 0 0 1rem;
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--bt-navy);
+}
+
+.tims-btech-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--bt-text-muted);
+}
+
+.tims-btech-highlight {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--bt-navy);
+  background: #35e0f2;
+  border: 2px solid var(--bt-navy);
+  border-radius: 6px;
+  padding: 0 0.3em;
+  transform: rotate(1deg);
+}
+
+/* ---------- Branches list ---------- */
+
+.tims-btech-branches {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.tims-btech-branch {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bt-bg);
+  border: 2px solid var(--bt-navy);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--bt-navy);
+}
+
+.tims-btech-branch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bt-red);
+  flex-shrink: 0;
+}
+
+/* ---------- Two-up row: sticky notes ---------- */
+
+.tims-btech-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2rem, 5vw, 3rem);
+  margin: clamp(2rem, 5vw, 2.75rem) 0;
+  padding-top: 0.5rem;
+}
+
+.tims-btech-sticky {
+  position: relative;
+  border: 2px solid var(--bt-navy);
+  border-radius: 4px;
+  padding: clamp(1.5rem, 3.5vw, 2rem) 1.5rem 1.75rem;
+  box-shadow: 10px 14px 0 -2px rgba(20, 22, 28, 0.12), 4px 4px 10px rgba(20, 22, 28, 0.18);
+  transform: rotate(-2.5deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tims-btech-sticky:hover {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.tims-btech-sticky--yellow {
+  background: #ffcf3f;
+}
+
+.tims-btech-sticky--cyan {
+  background: #35e0f2;
+  transform: rotate(2.5deg);
+}
+
+.tims-btech-sticky--cyan:hover {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.tims-btech-sticky-pin {
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-8deg);
+  width: 2.5rem;
+  height: 1.1rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(20, 22, 28, 0.25);
+}
+
+.tims-btech-sticky .tims-btech-card-title,
+.tims-btech-sticky .tims-btech-text {
+  color: var(--bt-navy);
+}
+
+.tims-btech-sticky .tims-btech-highlight {
+  background: #ffffff;
+}
+
+/* ---------- Benefits numbered list ---------- */
+
+.tims-btech-benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: benefit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tims-btech-benefit {
+  counter-increment: benefit;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--bt-text-muted);
+}
+
+.tims-btech-benefit::before {
+  content: counter(benefit);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--bt-navy);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.8125rem;
+}
+
+/* ---------- Our University ---------- */
+
+.tims-btech-university-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tims-btech-university-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--bt-red);
+}
+
+.tims-btech-university-item::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bt-red);
+  flex-shrink: 0;
+}
+
+.tims-btech-approval-title {
+  margin: 0 0 1rem;
+  font-size: 1.1875rem;
+  font-weight: 800;
+  color: var(--bt-navy);
+}
+
+.tims-btech-approval-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tims-btech-approval-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--bt-text-muted);
+}
+
+.tims-btech-approval-item::before {
+  content: "";
+  margin-top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bt-navy);
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .tims-btech-branches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tims-btech-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .tims-btech-branches {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,131 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-amu-programs-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-amu-programs-section {
+  --ap2-navy: #14161c;
+  --ap2-red: #ff5a4e;
+  --ap2-text-muted: #5f6b7a;
+  --ap2-bg: #f6f2e7;
+  --ap2-card-bg: #ffffff;
+  --ap2-border: #14161c;
+
+  background: var(--ap2-bg);
+  color: var(--ap2-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-amu-programs-section *,
+.tims-amu-programs-section *::before,
+.tims-amu-programs-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-amu-programs-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-amu-programs-heading {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.375rem, 2.6vw, 1.75rem);
+  font-weight: 800;
+  color: var(--ap2-navy);
+}
+
+/* ---------- Table panel ---------- */
+
+.tims-amu-programs-panel {
+  background: var(--ap2-card-bg);
+  border: 3px solid var(--ap2-border);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #14161c;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.tims-amu-programs-table-wrap {
+  overflow-x: auto;
+}
+
+.tims-amu-programs-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.tims-amu-programs-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ap2-navy);
+  padding: 0.9rem 1.25rem;
+  background: rgba(20, 22, 28, 0.03);
+  border-bottom: 3px solid var(--ap2-border);
+  white-space: nowrap;
+}
+
+.tims-amu-programs-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ap2-text-muted);
+  border-bottom: 3px solid var(--ap2-border);
+  vertical-align: top;
+}
+
+.tims-amu-programs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tims-amu-programs-table tr:hover td {
+  background: rgba(20, 22, 28, 0.02);
+}
+
+.tims-amu-programs-sl {
+  font-weight: 800;
+  color: var(--ap2-navy);
+  width: 3.5rem;
+}
+
+.tims-amu-programs-course {
+  font-weight: 700;
+  color: var(--ap2-navy);
+  white-space: nowrap;
+}
+
+.tims-amu-programs-spec-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ---------- Download button ---------- */
+
+.tims-amu-programs-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ap2-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.9rem 1.75rem;
+  border: 3px solid var(--ap2-navy);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--ap2-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-amu-programs-download:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ap2-navy);
+}

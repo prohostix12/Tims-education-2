@@ -17,9 +17,9 @@ export default function Hero() {
         </p>
 
         <div className={styles.actions}>
-          <Link href="#" className={styles.primaryButton}>
-            Enquire Now
-          </Link>
+          <a href="https://findyouruniversity.com/" className={styles.primaryButton}>
+            Find Your Best University
+          </a>
           <Link href="#" className={styles.secondaryButton}>
             Explore Courses
           </Link>

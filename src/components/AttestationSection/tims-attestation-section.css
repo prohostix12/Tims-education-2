@@ -1,0 +1,173 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-attestation-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-attestation-section {
+  --at-navy: #14161c;
+  --at-red: #ff5a4e;
+  --at-text-muted: #5f6b7a;
+  --at-bg: #f6f2e7;
+  --at-card-bg: #ffffff;
+  --at-border: #14161c;
+
+  position: relative;
+  background: var(--at-bg);
+  color: var(--at-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-attestation-section *,
+.tims-attestation-section *::before,
+.tims-attestation-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-attestation-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-attestation-header {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-attestation-rule {
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: var(--at-red);
+  margin-bottom: 1rem;
+}
+
+.tims-attestation-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--at-red);
+  margin-bottom: 0.85rem;
+}
+
+.tims-attestation-heading {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.6vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--at-navy);
+}
+
+/* ---------- Cards ---------- */
+
+.tims-attestation-card {
+  background: var(--at-card-bg);
+  border: 3px solid var(--at-border);
+  border-radius: 18px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 6px 6px 0 #14161c;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.tims-attestation-card:last-child {
+  margin-bottom: 0;
+}
+
+.tims-attestation-card-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--at-navy);
+}
+
+.tims-attestation-text {
+  margin: 0 0 1.1rem;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--at-text-muted);
+}
+
+.tims-attestation-text:last-child {
+  margin-bottom: 0;
+}
+
+.tims-attestation-highlight {
+  font-weight: 700;
+  color: var(--at-navy);
+}
+
+/* ---------- Country chips ---------- */
+
+.tims-attestation-countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.tims-attestation-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--at-navy);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.tims-attestation-country-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--at-red);
+  flex-shrink: 0;
+}
+
+/* ---------- Certificate list ---------- */
+
+.tims-attestation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 3;
+  column-gap: 2rem;
+}
+
+.tims-attestation-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--at-text-muted);
+  break-inside: avoid;
+  padding: 0.35rem 0;
+}
+
+.tims-attestation-list-dot {
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--at-red);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .tims-attestation-list {
+    columns: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .tims-attestation-list {
+    columns: 1;
+  }
+}
