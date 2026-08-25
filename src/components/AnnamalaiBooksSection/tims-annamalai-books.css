@@ -1,0 +1,110 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-annamalai-books-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-annamalai-books-section {
+  --ab-navy: #14161c;
+  --ab-red: #ff5a4e;
+  --ab-text-muted: #5f6b7a;
+  --ab-bg: #f6f2e7;
+  --ab-card-bg: #ffffff;
+  --ab-border: #14161c;
+
+  background: var(--ab-bg);
+  color: var(--ab-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-annamalai-books-section *,
+.tims-annamalai-books-section *::before,
+.tims-annamalai-books-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-annamalai-books-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-annamalai-books-block {
+  margin-bottom: clamp(2rem, 5vw, 2.75rem);
+}
+
+.tims-annamalai-books-block:last-child {
+  margin-bottom: 0;
+}
+
+.tims-annamalai-books-heading {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.375rem, 2.6vw, 1.75rem);
+  font-weight: 800;
+  color: var(--ab-navy);
+}
+
+/* ---------- Table panel ---------- */
+
+.tims-annamalai-books-panel {
+  background: var(--ab-card-bg);
+  border: 3px solid var(--ab-border);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #14161c;
+  overflow: hidden;
+}
+
+.tims-annamalai-books-table-wrap {
+  overflow-x: auto;
+}
+
+.tims-annamalai-books-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tims-annamalai-books-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ab-navy);
+  padding: 0.9rem 1.5rem;
+  background: rgba(20, 22, 28, 0.03);
+  border-bottom: 3px solid var(--ab-border);
+  white-space: nowrap;
+}
+
+.tims-annamalai-books-table td {
+  padding: 0.95rem 1.5rem;
+  font-size: 0.9375rem;
+  border-bottom: 3px solid var(--ab-border);
+}
+
+.tims-annamalai-books-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tims-annamalai-books-table tr:hover td {
+  background: rgba(20, 22, 28, 0.02);
+}
+
+.tims-annamalai-books-course {
+  font-weight: 700;
+  color: var(--ab-navy);
+  white-space: nowrap;
+}
+
+.tims-annamalai-books-link {
+  color: var(--ab-red);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tims-annamalai-books-link:hover {
+  text-decoration: underline;
+}
+
+.tims-annamalai-books-empty {
+  color: rgba(20, 22, 28, 0.25);
+}

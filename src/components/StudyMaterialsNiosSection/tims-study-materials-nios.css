@@ -1,0 +1,83 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-nios-materials-section so this file cannot collide with any
+   existing styles on the site. */
+
+.tims-nios-materials-section {
+  --nm-navy: #14161c;
+  --nm-red: #ff5a4e;
+
+  background: #ffffff;
+  color: var(--nm-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-nios-materials-section *,
+.tims-nios-materials-section *::before,
+.tims-nios-materials-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-nios-materials-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-nios-materials-heading {
+  margin: 0 0 clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.25rem, 2.6vw, 1.625rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--nm-navy);
+}
+
+.tims-nios-materials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.tims-nios-materials-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--nm-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 1.1rem 1.35rem;
+  border: 3px solid var(--nm-navy);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--nm-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-nios-materials-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--nm-navy);
+}
+
+.tims-nios-materials-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .tims-nios-materials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .tims-nios-materials-grid {
+    grid-template-columns: 1fr;
+  }
+}
