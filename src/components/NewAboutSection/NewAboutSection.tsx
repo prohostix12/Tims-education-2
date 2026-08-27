@@ -270,7 +270,7 @@ export default function NewAboutSection() {
           </div>
         </div>
 
-        <div className="tims-new-about-center">
+        {/* <div className="tims-new-about-center">
           <div className="tims-new-about-image-wrap">
             <span className="tims-new-about-decor-blue" aria-hidden="true" />
 
@@ -311,7 +311,6 @@ export default function NewAboutSection() {
             </svg>
 
             <div className="tims-new-about-image-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/admission_partner.png"
                 alt="Tirur Institute of Management Studies award recognition"
@@ -335,7 +334,7 @@ export default function NewAboutSection() {
             <span>Discover More</span>
             <ArrowRightIcon />
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -1,0 +1,78 @@
+/* Isolated, standalone section. All selectors are scoped under
+   .tims-tma-section so this file cannot collide with any existing
+   styles on the site. */
+
+.tims-tma-section {
+  --tma-navy: #2e3192;
+  --tma-red: #ed1c24;
+  --tma-ink: #14161c;
+
+  background: #ffffff;
+  color: var(--tma-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  box-sizing: border-box;
+}
+
+.tims-tma-section *,
+.tims-tma-section *::before,
+.tims-tma-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-tma-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.tims-tma-heading {
+  margin: 0 0 clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  text-align: center;
+  color: var(--tma-navy);
+}
+
+.tims-tma-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.tims-tma-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--tma-red);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 1.35rem 1.5rem;
+  border-radius: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tims-tma-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(237, 28, 36, 0.35);
+}
+
+.tims-tma-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+  .tims-tma-grid {
+    grid-template-columns: 1fr;
+  }
+}

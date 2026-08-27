@@ -15,7 +15,7 @@ const navItems: NavLink[] = [
   { label: "Home", href: "/" },
   {
     label: "About",
-    href: "/about",
+    href: "",
     children: [
       { label: "Directors", href: "/directors" },
       { label: "Blog", href: "/blog" },
@@ -25,7 +25,7 @@ const navItems: NavLink[] = [
   { label: "Find University", href: "/find-university" },
   {
     label: "Courses",
-    href: "/courses",
+    href: "",
     children: [
       { label: "SSLC / PLUS TWO", href: "/courses/sslc-plus-two" },
       { label: "Online Degree", href: "/courses/online-degree" },
@@ -38,7 +38,7 @@ const navItems: NavLink[] = [
   },
   {
     label: "Service",
-    href: "/service",
+    href: "",
     children: [
       { label: "Attestation", href: "/service/attestation" },
       { label: "Credit Transfer", href: "/service/credit-transfer" },
@@ -46,11 +46,11 @@ const navItems: NavLink[] = [
   },
   {
     label: "Universities",
-    href: "/universities",
+    href: "",
     children: [
       {
         label: "10th/Plus Two",
-        href: "#",
+        href: "",
         children: [
           { label: "National Institute of Open Schooling", href: "/universities/10th-plus-two/national-institute-of-open-schooling" },
           { label: "Jamia Urdu Aligarh", href: "/universities/10th-plus-two/jamia-urdu-aligarh" },
@@ -59,7 +59,7 @@ const navItems: NavLink[] = [
       },
       {
         label: "Degree/PG",
-        href: "#",
+        href: "",
         children: [
           { label: "Aligarh Muslim University", href: "/universities/degree-pg/aligarh-muslim-university" },
           { label: "Mizoram University", href: "/universities/degree-pg/mizoram-university" },
@@ -69,7 +69,7 @@ const navItems: NavLink[] = [
           { label: "GLA", href: "https://www.gla.ac.in/" },
           {
             label: "More",
-            href: "#",
+            href: "",
             children: [
               { label: "Mangalyaan University", href: "https://www.mangalayatan.in/" },
               { label: "Suresh Gyan Vihar University", href: "/universities/degree-pg/suresh-gyan-vihar-university" },
@@ -81,21 +81,21 @@ const navItems: NavLink[] = [
       },
       {
         label: "Study Materials",
-        href: "#",
+        href: "",
         children: [
           { label: "NIOS", href: "/universities/study-materials/nios" },
           { label: "ANNAMALAI UNIVERSITY", href: "/universities/study-materials/annamalai-university" },
           { label: "BHARATHIYAR UNIVERSITY", href: "/universities/study-materials/bharathiyar-university" },
-          { label: "SVSU", href: "#" },
-          { label: "SVSU Online", href: "#" },
-          { label: "SVU", href: "#" },
-          { label: "AMU Online", href: "#" },
-          { label: "Tutor Mark Assignment", href: "#" },
+          { label: "SVSU", href: "/universities/study-materials/svsu" },
+          { label: "SVSU Online", href: "/universities/study-materials/svsu-online" },
+          { label: "SVU", href: "/universities/study-materials/svu" },
+          { label: "AMU Online", href: "/universities/study-materials/amu-online" },
+          { label: "Tutor Mark Assignment", href: "/universities/study-materials/tutor-mark-assignment" },
         ],
       },
       {
         label: "Examination",
-        href: "#",
+        href: "",
         children: [
           { label: "Time Table For SSLC And Plus Two", href: "#" },
           { label: "Results", href: "#" },
@@ -107,8 +107,8 @@ const navItems: NavLink[] = [
     label: "Students",
     href: "/students",
     children: [
-      { label: "Syllabus", href: "#" },
-      { label: "News", href: "#" },
+      { label: "Syllabus", href: "/students/syllabus" },
+      { label: "News", href: "/students/news" },
     ],
   },
   { label: "Contact", href: "/contact" },
@@ -125,15 +125,6 @@ function PhoneIcon() {
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
-      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="m20 20-4.3-4.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -252,12 +243,21 @@ export default function Header() {
   }, [mobileOpen]);
 
   const isActive = (href: string) =>
-    href !== "#" && (href === "/" ? pathname === "/" : pathname.startsWith(href));
+    href !== "" &&
+    href !== "#" &&
+    (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
+
+  const isSectionActive = (item: NavLink): boolean =>
+    isActive(item.href) || (item.children?.some(isSectionActive) ?? false);
+
+  const isHome = pathname === "/";
 
   return (
     <header
       ref={headerRef}
-      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
+      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""} ${
+        isHome ? styles.headerHero : ""
+      }`}
     >
       <div className={styles.navWrap}>
         <div className={styles.mainNavCard}>
@@ -281,7 +281,7 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`${styles.navLink} ${isActive(item.href) ? styles.navLinkActive : ""}`}
+                    className={`${styles.navLink} ${isSectionActive(item) ? styles.navLinkActive : ""}`}
                     aria-haspopup={item.children ? "true" : undefined}
                     aria-expanded={item.children ? openDropdown === item.label : undefined}
                   >
@@ -302,20 +302,6 @@ export default function Header() {
           </nav>
 
           <div className={styles.actions}>
-            <a href="tel:+917736111588" className={styles.phoneBlock}>
-              <span className={styles.phoneIcon}>
-                <PhoneIcon />
-              </span>
-              <span className={styles.phoneText}>
-                <span className={styles.phoneLabel}>Call anytime</span>
-                <span className={styles.phoneNumber}>+91 7736 1115 88</span>
-              </span>
-            </a>
-
-            <button type="button" className={styles.searchButton} aria-label="Search">
-              <SearchIcon />
-            </button>
-
             <a href="tel:+917736111588" className={styles.mobilePhoneButton} aria-label="Call TIMS Education">
               <PhoneIcon />
             </a>
@@ -345,7 +331,7 @@ export default function Header() {
               <Link
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={isActive(item.href) ? styles.mobileLinkActive : ""}
+                className={isSectionActive(item) ? styles.mobileLinkActive : ""}
               >
                 {item.label}
               </Link>

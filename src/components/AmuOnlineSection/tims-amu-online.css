@@ -1,0 +1,11 @@
+/* Isolated addition layered on top of the shared
+   .tims-annamalai-books-section styles (heading / panel / table).
+   Scoped under tims-amu-online-* so it cannot collide with any
+   existing styles on the site. */
+
+.tims-amu-online-semester {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #14161c;
+}

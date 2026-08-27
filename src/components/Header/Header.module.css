@@ -23,6 +23,88 @@
   }
 }
 
+/* ---------- Hero variant (home page, before scroll) ----------
+   Sits flush against the top of the hero section and shares its
+   gradient background, so the navbar reads as part of the hero
+   instead of a separate white card floating on top of it. */
+
+.headerHero {
+  margin: 0;
+  top: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-shadow: none;
+}
+
+.headerHero .navWrap {
+  background: linear-gradient(135deg, #14161c 0%, #123061 55%, #14161c 100%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.headerHero .navLink {
+  color: #ffffff;
+}
+
+.headerHero .navLinkActive {
+  color: var(--red);
+}
+
+.headerHero .chevron {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.headerHero .mobileToggle span {
+  background: #ffffff;
+}
+
+.headerHero .mobilePhoneButton {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.headerHero.headerScrolled {
+  border-left: 3px solid #14161c;
+  border-right: 3px solid #14161c;
+  border-top: 3px solid #14161c;
+  box-shadow: 6px 6px 0 #14161c;
+  margin: 0.75rem 1rem 0;
+  top: 0.75rem;
+}
+
+@media (max-width: 560px) {
+  .headerHero.headerScrolled {
+    margin: 0.5rem 0.5rem 0;
+    top: 0.5rem;
+  }
+}
+
+.headerHero.headerScrolled .navWrap {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.headerHero.headerScrolled .navLink {
+  color: var(--navy-ink);
+}
+
+.headerHero.headerScrolled .navLinkActive {
+  color: var(--red);
+}
+
+.headerHero.headerScrolled .chevron {
+  color: var(--muted);
+}
+
+.headerHero.headerScrolled .mobileToggle span {
+  background: var(--navy-ink);
+}
+
+.headerHero.headerScrolled .mobilePhoneButton {
+  background: #f3f5f9;
+  color: var(--red);
+}
+
 /* ---------- Main nav ---------- */
 
 .navWrap {
@@ -105,6 +187,9 @@
 }
 
 .chevron {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
   color: var(--muted);
   transition: transform 0.15s ease;
 }
@@ -162,6 +247,9 @@
 }
 
 .subChevron {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
   color: var(--muted);
   transform: rotate(-90deg);
 }
@@ -198,60 +286,6 @@
   align-items: stretch;
   gap: 0.75rem;
   flex-shrink: 0;
-}
-
-.phoneBlock {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0 1.25rem;
-  text-decoration: none;
-  border-left: 3px solid #14161c;
-}
-
-.phoneIcon {
-  display: inline-flex;
-  color: var(--red);
-  flex-shrink: 0;
-}
-
-.phoneText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.25;
-}
-
-.phoneLabel {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.phoneNumber {
-  font-size: 0.9375rem;
-  font-weight: 800;
-  color: var(--navy-ink);
-}
-
-.phoneBlock:hover .phoneNumber {
-  color: var(--red);
-}
-
-.searchButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  border: none;
-  border-left: 3px solid #14161c;
-  background: transparent;
-  color: var(--navy-ink);
-  cursor: pointer;
-  transition: color 0.15s ease;
-}
-
-.searchButton:hover {
-  color: var(--red);
 }
 
 .mobilePhoneButton {
@@ -398,10 +432,6 @@
   .navList {
     gap: 1.1rem;
   }
-
-  .phoneBlock {
-    padding: 0 0.9rem;
-  }
 }
 
 @media (max-width: 1080px) {
@@ -412,19 +442,10 @@
   .navLink {
     font-size: 0.8125rem;
   }
-
-  .phoneLabel {
-    display: none;
-  }
 }
 
 @media (max-width: 960px) {
   .primaryNav {
-    display: none;
-  }
-
-  .phoneBlock,
-  .searchButton {
     display: none;
   }
 

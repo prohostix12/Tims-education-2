@@ -1,0 +1,98 @@
+/* Isolated, standalone additions layered on top of the shared
+   .tims-annamalai-books-section styles (heading / panel / table). All
+   selectors here are scoped under tims-svsu-online-* so this file
+   cannot collide with any existing styles on the site. */
+
+.tims-svsu-online-title {
+  margin: 0 0 1.75rem;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 800;
+  color: #14161c;
+}
+
+.tims-svsu-online-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: start;
+  gap: 1.5rem;
+}
+
+/* ---------- Semester sidebar ---------- */
+
+.tims-svsu-online-sidebar {
+  background: #ffffff;
+  border: 3px solid #14161c;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #14161c;
+  padding: 1rem;
+}
+
+.tims-svsu-online-sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tims-svsu-online-sidebar-btn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #14161c;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tims-svsu-online-sidebar-btn:hover {
+  background: rgba(255, 90, 78, 0.08);
+}
+
+.tims-svsu-online-sidebar-btn-active {
+  background: #ff5a4e;
+  border-color: #14161c;
+  color: #ffffff;
+}
+
+.tims-svsu-online-sidebar-btn-active:hover {
+  background: #ff5a4e;
+}
+
+/* ---------- Empty state ---------- */
+
+.tims-svsu-online-empty {
+  margin: 0;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: #5f6b7a;
+  font-size: 0.9375rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+  .tims-svsu-online-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tims-svsu-online-sidebar {
+    overflow-x: auto;
+  }
+
+  .tims-svsu-online-sidebar-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .tims-svsu-online-sidebar-btn {
+    width: auto;
+    white-space: nowrap;
+  }
+}
