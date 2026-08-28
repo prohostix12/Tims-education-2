@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import BosseSection from "@/components/BosseSection/BosseSection";
 import BosseHighlightsSection from "@/components/BosseHighlightsSection/BosseHighlightsSection";
 import BosseStudyPaceSection from "@/components/BosseStudyPaceSection/BosseStudyPaceSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "BOSSE | TIMS Education",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function BossePage() {
   return (
     <main>
+      <PageHero title="BOSSE" />
       <BosseSection />
       <BosseHighlightsSection />
       <BosseStudyPaceSection />

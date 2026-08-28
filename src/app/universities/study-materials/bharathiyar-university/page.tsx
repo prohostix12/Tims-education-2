@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BharathiyarBooksSection from "@/components/BharathiyarBooksSection/BharathiyarBooksSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Bharathiyar University Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function BharathiyarUniversityPage() {
   return (
     <main>
+      <PageHero title="Bharathiyar University" />
       <BharathiyarBooksSection />
     </main>
   );

@@ -1,7 +1,7 @@
 "use client";
 
-import type { FormEvent } from "react";
 import styles from "./ContactSection.module.css";
+import { useEnquiryForm } from "@/lib/useEnquiryForm";
 
 type Office = {
   title: string;
@@ -133,10 +133,7 @@ const socialIcons = {
 };
 
 export default function ContactSection() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // UI only for now — no backend wiring.
-  };
+  const { status, errorMessage, handleSubmit } = useEnquiryForm("contact-page");
 
   return (
     <section className={styles.contact}>
@@ -263,9 +260,14 @@ export default function ContactSection() {
                 </select>
               </div>
 
-              <button type="submit" className={styles.submitButton}>
-                Send Message
+              <button type="submit" className={styles.submitButton} disabled={status === "submitting"}>
+                {status === "submitting" ? "Sending..." : "Send Message"}
               </button>
+
+              {status === "success" && (
+                <p className={styles.formStatusSuccess}>Thanks! We&rsquo;ll get in touch with you shortly.</p>
+              )}
+              {status === "error" && <p className={styles.formStatusError}>{errorMessage}</p>}
             </form>
           </div>
         </div>

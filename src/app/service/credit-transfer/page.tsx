@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CreditTransferSection from "@/components/CreditTransferSection/CreditTransferSection";
 import CreditTransferProcessSection from "@/components/CreditTransferProcessSection/CreditTransferProcessSection";
 import CreditTransferRestartSection from "@/components/CreditTransferRestartSection/CreditTransferRestartSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Credit Transfer | TIMS Education",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function CreditTransferPage() {
   return (
     <main>
+      <PageHero title="Credit Transfer" />
       <CreditTransferSection />
       <CreditTransferProcessSection />
       <CreditTransferRestartSection />

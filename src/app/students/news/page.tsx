@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import NewsSection from "@/components/NewsSection/NewsSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "News | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function StudentsNewsPage() {
   return (
     <main>
+      <PageHero title="News" />
       <NewsSection />
     </main>
   );

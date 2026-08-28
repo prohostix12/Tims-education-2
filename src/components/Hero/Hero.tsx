@@ -2,16 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import type { FormEvent } from "react";
 import styles from "./Hero.module.css";
+import { useEnquiryForm } from "@/lib/useEnquiryForm";
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // UI only for now — no backend wiring.
-  };
+  const { status, errorMessage, handleSubmit } = useEnquiryForm("home-hero");
 
   useEffect(() => {
     const video = videoRef.current;
@@ -171,9 +167,14 @@ export default function Hero() {
               </select>
             </div>
 
-            <button type="submit" className={styles.submitButton}>
-              Enquire Now
+            <button type="submit" className={styles.submitButton} disabled={status === "submitting"}>
+              {status === "submitting" ? "Sending..." : "Enquire Now"}
             </button>
+
+            {status === "success" && (
+              <p className={styles.formStatusSuccess}>Thanks! We&rsquo;ll get in touch with you shortly.</p>
+            )}
+            {status === "error" && <p className={styles.formStatusError}>{errorMessage}</p>}
           </form>
         </div>
       </div>

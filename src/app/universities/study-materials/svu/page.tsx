@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SvuBooksSection from "@/components/SvuBooksSection/SvuBooksSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "SVU Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function SvuStudyMaterialsPage() {
   return (
     <main>
+      <PageHero title="SVU" />
       <SvuBooksSection />
     </main>
   );

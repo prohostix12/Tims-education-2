@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import DiplomaSection from "@/components/DiplomaSection/DiplomaSection";
 import DiplomaDistanceSection from "@/components/DiplomaDistanceSection/DiplomaDistanceSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Diploma | TIMS Education",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function DiplomaPage() {
   return (
     <main>
+      <PageHero title="Diploma" />
       <DiplomaSection />
       <DiplomaDistanceSection />
     </main>

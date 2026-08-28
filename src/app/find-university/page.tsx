@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FindUniversitySection from "@/components/FindUniversitySection/FindUniversitySection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Find University | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function FindUniversityPage() {
   return (
     <main>
+      <PageHero title="Find University" />
       <FindUniversitySection />
     </main>
   );

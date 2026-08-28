@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Directors | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function DirectorsPage() {
   return (
     <main>
+      <PageHero title="Directors" />
       <DirectorsSection />
     </main>
   );

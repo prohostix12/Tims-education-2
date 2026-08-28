@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Mono } from "next/font/google";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
+import SiteChrome from "@/components/SiteChrome/SiteChrome";
 import "./globals.css";
 
 const spaceMono = Space_Mono({
@@ -25,9 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={spaceMono.variable}>
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

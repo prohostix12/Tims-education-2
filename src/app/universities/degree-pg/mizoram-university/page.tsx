@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MizoramSection from "@/components/MizoramSection/MizoramSection";
 import MizoramOnlineDegreeSection from "@/components/MizoramOnlineDegreeSection/MizoramOnlineDegreeSection";
 import MizoramProgramsSection from "@/components/MizoramProgramsSection/MizoramProgramsSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Mizoram University | TIMS Education",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function MizoramUniversityPage() {
   return (
     <main>
+      <PageHero title="Mizoram University" />
       <MizoramSection />
       <MizoramOnlineDegreeSection />
       <MizoramProgramsSection />

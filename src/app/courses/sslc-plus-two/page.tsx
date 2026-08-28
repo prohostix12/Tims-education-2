@@ -6,6 +6,7 @@ import CourseLevelsSection from "@/components/AdmissionStreamsSection/CourseLeve
 import AdditionalFacilitySection from "@/components/AdditionalFacilitySection/AdditionalFacilitySection";
 import TimsSupportSection from "@/components/TimsSupportSection/TimsSupportSection";
 import SslcDistanceEducationSection from "@/components/SslcDistanceEducationSection/SslcDistanceEducationSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "SSLC / Plus Two | TIMS Education",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default function SslcPlusTwoPage() {
   return (
     <main>
+      <PageHero title="SSLC / Plus Two" />
       <SslcPlusTwoSection />
       <AdmissionStreamsSection />
       <CertificateValueSection />

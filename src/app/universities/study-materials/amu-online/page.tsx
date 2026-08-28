@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AmuOnlineSection from "@/components/AmuOnlineSection/AmuOnlineSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "AMU Online Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function AmuOnlineStudyMaterialsPage() {
   return (
     <main>
+      <PageHero title="AMU Online" />
       <AmuOnlineSection />
     </main>
   );

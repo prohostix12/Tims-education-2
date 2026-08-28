@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import StudyMaterialsNiosSection from "@/components/StudyMaterialsNiosSection/StudyMaterialsNiosSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "NIOS Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function NiosStudyMaterialsPage() {
   return (
     <main>
+      <PageHero title="NIOS" />
       <StudyMaterialsNiosSection />
     </main>
   );

@@ -3,6 +3,7 @@ import AmuSection from "@/components/AmuSection/AmuSection";
 import AmuStickyNotesSection from "@/components/AmuStickyNotesSection/AmuStickyNotesSection";
 import AmuCdoeSection from "@/components/AmuCdoeSection/AmuCdoeSection";
 import AmuOnlineProgramsSection from "@/components/AmuOnlineProgramsSection/AmuOnlineProgramsSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Aligarh Muslim University | TIMS Education",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function AligarhMuslimUniversityPage() {
   return (
     <main>
+      <PageHero title="Aligarh Muslim University" />
       <AmuSection />
       <AmuStickyNotesSection />
       <AmuCdoeSection />

@@ -1,0 +1,198 @@
+/* Isolated admin panel styles. Selectors are scoped under tims-admin-*
+   so this file cannot collide with the public site's styles. */
+
+.tims-admin-shell {
+  --aa-navy: #14161c;
+  --aa-red: #ff5a4e;
+  --aa-muted: #6b7686;
+  --aa-bg: #f4f5f8;
+  --aa-border: #e3e6ee;
+
+  min-height: 100dvh;
+  background: var(--aa-bg);
+  color: var(--aa-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+}
+
+.tims-admin-shell *,
+.tims-admin-shell *::before,
+.tims-admin-shell *::after {
+  box-sizing: border-box;
+}
+
+.tims-admin-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.tims-admin-page-header {
+  margin-bottom: 1.75rem;
+}
+
+.tims-admin-eyebrow {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--aa-red);
+}
+
+.tims-admin-heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+  font-weight: 800;
+}
+
+.tims-admin-subtitle {
+  margin: 0.5rem 0 0;
+  color: var(--aa-muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Stat cards ---------- */
+
+.tims-admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tims-admin-stat-card {
+  background: #ffffff;
+  border: 1px solid var(--aa-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+}
+
+.tims-admin-stat-label {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--aa-muted);
+  margin-bottom: 0.5rem;
+}
+
+.tims-admin-stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+/* ---------- Card / panel ---------- */
+
+.tims-admin-card {
+  background: #ffffff;
+  border: 1px solid var(--aa-border);
+  border-radius: 14px;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  margin-bottom: 1.5rem;
+}
+
+.tims-admin-card-title {
+  margin: 0 0 1rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+/* ---------- Table ---------- */
+
+.tims-admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--aa-border);
+  border-radius: 12px;
+}
+
+.tims-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.tims-admin-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--aa-muted);
+  padding: 0.75rem 1.1rem;
+  background: #f8f9fb;
+  border-bottom: 1px solid var(--aa-border);
+  white-space: nowrap;
+}
+
+.tims-admin-table td {
+  padding: 0.85rem 1.1rem;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.tims-admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tims-admin-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(46, 204, 113, 0.12);
+  color: #1a9c53;
+}
+
+.tims-admin-badge-muted {
+  background: rgba(107, 118, 134, 0.12);
+  color: var(--aa-muted);
+}
+
+/* ---------- Form (settings) ---------- */
+
+.tims-admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.tims-admin-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.tims-admin-input,
+.tims-admin-textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid var(--aa-border);
+  background: #f8f9fb;
+  color: var(--aa-navy);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  outline: none;
+}
+
+.tims-admin-input:focus,
+.tims-admin-textarea:focus {
+  border-color: var(--aa-red);
+}
+
+.tims-admin-save-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--aa-red);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.tims-admin-save-button:hover {
+  background: #e0473c;
+}

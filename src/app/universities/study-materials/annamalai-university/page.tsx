@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AnnamalaiBooksSection from "@/components/AnnamalaiBooksSection/AnnamalaiBooksSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Annamalai University Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function AnnamalaiUniversityPage() {
   return (
     <main>
+      <PageHero title="Annamalai University" />
       <AnnamalaiBooksSection />
     </main>
   );

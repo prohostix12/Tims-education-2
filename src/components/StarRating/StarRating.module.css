@@ -1,0 +1,30 @@
+.display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.inputButton {
+  display: inline-flex;
+  padding: 0.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: transform 0.1s ease;
+}
+
+.inputButton:hover {
+  transform: scale(1.12);
+}
+
+.inputButton:focus-visible {
+  outline: 2px solid #ff5a4e;
+  outline-offset: 2px;
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SvsuOnlineSection from "@/components/SvsuOnlineSection/SvsuOnlineSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "SVSU Online Study Materials | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function SvsuOnlineStudyMaterialsPage() {
   return (
     <main>
+      <PageHero title="SVSU Online" />
       <SvsuOnlineSection />
     </main>
   );

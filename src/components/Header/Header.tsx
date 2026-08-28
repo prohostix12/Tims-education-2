@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import styles from "./Header.module.css";
+
+const LOGO_CLICK_DELAY = 250;
 
 type NavLink = {
   label: string;
@@ -105,7 +108,7 @@ const navItems: NavLink[] = [
   },
   {
     label: "Students",
-    href: "/students",
+    href: "",
     children: [
       { label: "Syllabus", href: "/students/syllabus" },
       { label: "News", href: "/students/news" },
@@ -153,8 +156,8 @@ function DropdownMenu({
   return (
     <ul
       className={`${depth === 0 ? styles.dropdown : styles.subDropdown} ${
-        open ? (depth === 0 ? styles.dropdownOpen : styles.subDropdownOpen) : ""
-      }`}
+        depth >= 2 ? styles.subDropdownLeft : ""
+      } ${open ? (depth === 0 ? styles.dropdownOpen : styles.subDropdownOpen) : ""}`}
       role="menu"
     >
       {items.map((item) => (
@@ -217,10 +220,38 @@ function MobileSubList({
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const logoClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
+    };
+  }, []);
+
+  // A single click should navigate home like any normal logo link, but a
+  // double-click should jump to the admin panel instead — so the first
+  // click's navigation is held back briefly in case a second click follows.
+  const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
+    logoClickTimer.current = setTimeout(() => {
+      router.push("/");
+    }, LOGO_CLICK_DELAY);
+  };
+
+  const handleLogoDoubleClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (logoClickTimer.current) {
+      clearTimeout(logoClickTimer.current);
+      logoClickTimer.current = null;
+    }
+    router.push("/admin");
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -250,18 +281,20 @@ export default function Header() {
   const isSectionActive = (item: NavLink): boolean =>
     isActive(item.href) || (item.children?.some(isSectionActive) ?? false);
 
-  const isHome = pathname === "/";
-
   return (
     <header
       ref={headerRef}
-      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""} ${
-        isHome ? styles.headerHero : ""
-      }`}
+      className={`${styles.header} ${styles.headerHero} ${scrolled ? styles.headerScrolled : ""}`}
     >
       <div className={styles.navWrap}>
         <div className={styles.mainNavCard}>
-          <Link href="/" className={styles.logoLink} aria-label="TIMS Education home">
+          <Link
+            href="/"
+            className={styles.logoLink}
+            aria-label="TIMS Education home. Double-click to open the admin panel."
+            onClick={handleLogoClick}
+            onDoubleClick={handleLogoDoubleClick}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/tims_logo/logo.webp"

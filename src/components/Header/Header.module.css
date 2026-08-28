@@ -272,6 +272,12 @@
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
 }
 
+.subDropdownLeft {
+  left: auto;
+  right: 100%;
+  transform: translateX(-6px);
+}
+
 .subDropdownOpen,
 .dropdownItem:focus-within > .subDropdown {
   opacity: 1;

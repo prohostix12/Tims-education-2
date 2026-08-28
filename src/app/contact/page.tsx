@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactSection from "@/components/ContactSection/ContactSection";
+import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
   title: "Contact | TIMS Education",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main>
+      <PageHero title="Contact" />
       <ContactSection />
     </main>
   );
