@@ -1,3 +1,4 @@
+/*
 import type { Metadata } from "next";
 import SyllabusSection from "@/components/SyllabusSection/SyllabusSection";
 import PageHero from "@/components/PageHero/PageHero";
@@ -14,4 +15,9 @@ export default function SyllabusPage() {
       <SyllabusSection />
     </main>
   );
+}
+*/
+
+export default function DisabledSyllabusPage() {
+  return null;
 }

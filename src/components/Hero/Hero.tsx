@@ -74,7 +74,7 @@ export default function Hero() {
       <video
         ref={videoRef}
         className={styles.bgVideo}
-        src="/images/tims_logo/hero-bg.mp4"
+        src="/images/stories/Campus_video.mp4"
         autoPlay
         muted
         loop
@@ -86,13 +86,14 @@ export default function Hero() {
 
       <div className={styles.inner}>
         <div className={styles.content}>
-          <p className={styles.eyebrow}>Learning Without Boundaries</p>
+          <p className={styles.eyebrow}>TRUSTED EDUCATION GUIDANCE · SINCE 2009</p>
           <h1 className={styles.title}>
-            Shape Your Future With <span>The Right Course</span>, The Right University
+            Find <span>The Right Course</span>
+            <br />
+            For Your Future
           </h1>
           <p className={styles.subtitle}>
-            TIMS Education guides students through admissions, counselling, and university
-            placements — with expert support at every step of the journey.
+            Explore 10th, Degree &amp; PG programs with expert guidance for admissions and university selection.
           </p>
 
           <div className={styles.actions}>
@@ -102,6 +103,78 @@ export default function Hero() {
             <Link href="#" className={styles.secondaryButton}>
               Explore Courses
             </Link>
+          </div>
+
+          <div className={styles.noticeContainer}>
+            <div className={styles.paperNote}>
+              {/* Red Push Pin */}
+              <div className={styles.redPin} aria-hidden="true">
+                <svg width="26" height="30" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 0C8.686 0 6 2.686 6 6C6 8.5 7.5 10.6 9.6 11.5L9 18H15L14.4 11.5C16.5 10.6 18 8.5 18 6C18 2.686 15.314 0 12 0Z"
+                    fill="#dc2626"
+                  />
+                  <path
+                    d="M10.5 6C10.5 5.17 11.17 4.5 12 4.5C12.83 4.5 13.5 5.17 13.5 6"
+                    stroke="#fca5a5"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path d="M12 18V28" stroke="#7f1d1d" strokeWidth="2.5" strokeLinecap="round" />
+                  <circle cx="12" cy="6" r="3" fill="#ef4444" />
+                </svg>
+              </div>
+
+              {/* Header with Ringing Bell Icon */}
+              <div className={styles.noticeHeader}>
+                <div className={styles.noticeTitleGroup}>
+                  <div className={styles.bellWrapper}>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={styles.bellIcon}
+                    >
+                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                    </svg>
+                    <span className={styles.bellBadge} />
+                  </div>
+                  <h3 className={styles.noticeHeading}>Latest News &amp; Events</h3>
+                </div>
+                <span className={styles.newTag}>Live Updates</span>
+              </div>
+
+              {/* Sample Notifications & News List */}
+              <ul className={styles.noticeList}>
+                <li className={styles.noticeItem}>
+                  <span className={styles.bulletDot} />
+                  <div className={styles.noticeContent}>
+                    <span className={styles.noticeDate}>ADMISSIONS</span>
+                    <strong>2026 Admissions Open:</strong> Enrolling now for SSLC, Plus Two, Degree &amp; PG Courses.
+                  </div>
+                </li>
+                <li className={styles.noticeItem}>
+                  <span className={styles.bulletDot} />
+                  <div className={styles.noticeContent}>
+                    <span className={styles.noticeDate}>SPOT DRIVE</span>
+                    <strong>University Counseling Day:</strong> Free 1-on-1 university selection &amp; spot registration.
+                  </div>
+                </li>
+                <li className={styles.noticeItem}>
+                  <span className={styles.bulletDot} />
+                  <div className={styles.noticeContent}>
+                    <span className={styles.noticeDate}>SCHOLARSHIP</span>
+                    <strong>Fee Waiver Scheme:</strong> Early applicants receive up to 30% tuition fee discounts.
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 

@@ -1,20 +1,15 @@
-/* Isolated, standalone section. All selectors are scoped under
-   .tims-directors-section so this file cannot collide with any
-   existing styles on the site. */
-
 .tims-directors-section {
   --dr-navy: #14161c;
   --dr-red: #ff5a4e;
-  --dr-text-muted: #5f6b7a;
+  --dr-gold: #ffcf3f;
+  --dr-text-muted: #4a5568;
   --dr-bg: #f6f2e7;
-  --dr-card-bg: #ffffff;
-  --dr-border: #14161c;
 
   position: relative;
   background: var(--dr-bg);
   color: var(--dr-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  padding: clamp(3.5rem, 9vw, 7rem) 1.5rem;
+  padding: clamp(3.5rem, 7vw, 6rem) 1.5rem;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -25,38 +20,25 @@
   box-sizing: border-box;
 }
 
-.tims-directors-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  pointer-events: none;
-  z-index: 0;
-  background: rgba(20, 22, 28, 0.06);
-  width: 320px;
-  height: 320px;
-  bottom: -140px;
-  left: -100px;
-}
-
 .tims-directors-inner {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
-/* ---------- Heading ---------- */
+/* ---------- Header ---------- */
 
 .tims-directors-heading-wrap {
   text-align: center;
-  max-width: 640px;
-  margin: 0 auto clamp(2.5rem, 6vw, 3.75rem);
+  max-width: 680px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
 }
 
 .tims-directors-label {
   display: inline-block;
   font-size: 0.8125rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--dr-red);
@@ -64,126 +46,226 @@
 }
 
 .tims-directors-heading {
-  margin: 0 0 0.75rem;
-  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--dr-navy);
+}
+
+.tims-directors-heading span {
+  display: inline-block;
+  background: var(--dr-gold);
+  color: var(--dr-navy);
+  padding: 0.05em 0.35em;
+  border: 3px solid var(--dr-navy);
+  border-radius: 8px;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 var(--dr-navy);
 }
 
 .tims-directors-subtitle {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
+  margin: 0 auto;
+  font-size: clamp(0.95rem, 1.8vw, 1.0625rem);
+  line-height: 1.65;
   color: var(--dr-text-muted);
 }
 
-/* ---------- Grid ---------- */
+/* ---------- Infinite Right to Left Marquee ---------- */
 
-.tims-directors-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.25rem);
+.tims-directors-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0 3rem;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
 }
+
+.tims-directors-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.25rem;
+  width: max-content;
+  animation: scrollRightToLeft 24s linear infinite;
+}
+
+.tims-directors-marquee:hover .tims-directors-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollRightToLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Skewed Director Card Design ---------- */
 
 .tims-director-card {
   position: relative;
-  background: var(--dr-card-bg);
-  border: 3px solid var(--dr-border);
-  border-radius: 20px;
-  padding: 2rem 1.75rem 1.75rem;
-  text-align: center;
-  box-shadow: 6px 6px 0 #14161c;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: clamp(340px, 30vw, 372px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .tims-director-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 8px 8px 0 #14161c;
+  transform: translateY(-8px);
 }
 
-.tims-director-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 46px;
-  height: 4px;
-  border-radius: 0 0 4px 4px;
-  background: var(--dr-red);
-}
+/* Skewed Polygon Frame (Matching reference image backdrop shape) */
 
-/* ---------- Photo placeholder ---------- */
-
-.tims-director-photo {
+.tims-director-skew-frame {
   position: relative;
-  width: clamp(180px, 22vw, 220px);
-  height: clamp(180px, 22vw, 220px);
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f6f2e7 0%, #dfe6f1 100%);
-  border: 2px dashed rgba(20, 22, 28, 0.22);
+  width: 100%;
+  height: clamp(380px, 34vw, 425px);
+  border-radius: 32px 14px 32px 14px;
+  border: 4px solid var(--dr-navy);
+  box-shadow: 10px 10px 0 var(--dr-navy);
+  transform: skewX(-6deg);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.tims-director-card:hover .tims-director-skew-frame {
+  box-shadow: 14px 14px 0 var(--dr-navy);
+}
+
+/* Unskew content inside the frame so text & icon stay upright */
+
+.tims-director-unskew-content {
+  width: 100%;
+  height: 100%;
+  transform: skewX(6deg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(20, 22, 28, 0.35);
-  overflow: hidden;
+  position: relative;
 }
 
-.tims-director-photo svg {
-  width: 30%;
-  height: 30%;
-}
-
-.tims-director-photo-img {
-  position: absolute;
-  inset: 0;
+.tims-director-portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.tims-director-photo-hint {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.625rem;
-  font-weight: 700;
+/* Reserved space for director photo */
+
+.tims-director-placeholder-space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  border: 2.5px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 22px;
+  padding: 1.75rem 1rem;
+  width: 86%;
+  height: 86%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tims-director-placeholder-space svg {
+  color: rgba(255, 255, 255, 0.85);
+  width: 54px;
+  height: 54px;
+}
+
+.tims-director-placeholder-text {
+  font-size: 0.8125rem;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(20, 22, 28, 0.4);
-  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* ---------- Text ---------- */
+/* Bottom Overlay Name & Role Badge */
+
+.tims-director-info-badge {
+  position: relative;
+  width: 94%;
+  margin-top: -38px;
+  z-index: 10;
+  background: var(--dr-navy);
+  color: #ffffff;
+  padding: 0.95rem 1.25rem 1rem;
+  border-radius: 20px;
+  border: 3.5px solid var(--dr-navy);
+  box-shadow: 5px 5px 0 var(--dr-red);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tims-director-card:hover .tims-director-info-badge {
+  transform: scale(1.03);
+  box-shadow: 7px 7px 0 var(--dr-red);
+}
 
 .tims-director-name {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.25rem;
   font-size: 1.1875rem;
   font-weight: 800;
-  color: var(--dr-navy);
+  color: #ffffff;
+  line-height: 1.25;
 }
 
 .tims-director-role {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: 12px;
-  background: rgba(255, 90, 78, 0.08);
-  color: var(--dr-red);
-  font-size: 0.8125rem;
+  margin: 0;
+  font-size: 0.84375rem;
   font-weight: 700;
+  color: var(--dr-gold);
+  font-style: italic;
 }
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 900px) {
-  .tims-directors-grid {
-    grid-template-columns: 1fr;
-    max-width: 380px;
-    margin: 0 auto;
+@media (max-width: 1120px) {
+  .tims-director-card {
+    width: clamp(300px, 42vw, 360px);
+  }
+
+  .tims-director-skew-frame {
+    height: clamp(340px, 40vw, 400px);
+  }
+}
+
+@media (max-width: 680px) {
+  .tims-director-card {
+    width: clamp(260px, 78vw, 310px);
+  }
+
+  .tims-director-skew-frame {
+    height: 310px;
+  }
+
+  .tims-director-info-badge {
+    margin-top: -30px;
+    padding: 0.8rem 1rem;
+  }
+
+  .tims-director-name {
+    font-size: 1.05rem;
   }
 }

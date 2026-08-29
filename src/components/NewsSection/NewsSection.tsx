@@ -1,3 +1,4 @@
+/*
 import Link from "next/link";
 import "./tims-news-section.css";
 
@@ -115,4 +116,9 @@ export default function NewsSection() {
       </div>
     </section>
   );
+}
+*/
+
+export default function NewsSection() {
+  return null;
 }

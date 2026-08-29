@@ -1,24 +1,60 @@
+"use client";
+
 import "./tims-directors-section.css";
 
 type Director = {
+  id: string;
   name: string;
   role: string;
+  image?: string;
+  accentBg?: string;
 };
 
-const directors: Director[] = [
-  { name: "Adv ShoukathAli Pootheri", role: "Founder & Director, TIMS Education" },
-  { name: "Nabeel CM", role: "Managing Director, TIMS Education" },
-  { name: "Mohamed Shameem", role: "CEO & Director, TIMS Education" },
+const directorsList: Director[] = [
+  {
+    id: "dir-1",
+    name: "Adv ShoukathAli Pootheri",
+    role: "Founder & Director",
+    image: "/images/Shoukathali.png",
+    accentBg: "#14161c",
+  },
+  {
+    id: "dir-2",
+    name: "Nabeel CM",
+    role: "Managing Director",
+    image: "/images/Nabeel.png",
+    accentBg: "#123061",
+  },
+  {
+    id: "dir-3",
+    name: "Mohamed Shameem",
+    role: "CEO & Director",
+    image: "/images/Shameem.png",
+    accentBg: "#1a202c",
+  },
+  {
+    id: "dir-4",
+    name: "Mr Jamsheer Backer",
+    role: "Founder & Managing Director",
+    image: "/images/",
+    accentBg: "#0f382c",
+  },
+  {
+    id: "dir-5",
+    name: "Dr. K. P. Abdullah",
+    role: "Academic Director",
+    accentBg: "#1e293b",
+  },
 ];
 
 function PersonIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" aria-hidden="true">
-      <circle cx="12" cy="8" r="3.6" stroke="currentColor" strokeWidth="1.6" />
+    <svg viewBox="0 0 24 24" width="48" height="48" fill="none" aria-hidden="true">
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8" />
       <path
-        d="M4.5 20c1.2-3.8 4.3-5.8 7.5-5.8s6.3 2 7.5 5.8"
+        d="M4 20c1.5-4.2 4.8-6.2 8-6.2s6.5 2 8 6.2"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.8"
         strokeLinecap="round"
       />
     </svg>
@@ -26,31 +62,62 @@ function PersonIcon() {
 }
 
 export default function DirectorsSection() {
+  // Duplicate directors list for seamless infinite right-to-left marquee loop
+  const loopDirectors = [...directorsList, ...directorsList];
+
   return (
     <section className="tims-directors-section">
-      <span className="tims-directors-blob" aria-hidden="true" />
-
       <div className="tims-directors-inner">
+        {/* Section Header */}
         <div className="tims-directors-heading-wrap">
-          <span className="tims-directors-label">Leadership</span>
-          <h2 className="tims-directors-heading">Meet the Directors of TIMS Education</h2>
+          <span className="tims-directors-label">LEADERSHIP &amp; VISION</span>
+          <h2 className="tims-directors-heading">
+            Meet Our <span>Directors</span>
+          </h2>
           <p className="tims-directors-subtitle">
-            Guided by experienced leadership committed to helping every student find the
-            right path forward.
+            Guided by visionary leadership committed to quality education, student guidance, and academic excellence.
           </p>
         </div>
 
-        <div className="tims-directors-grid">
-          {directors.map((director) => (
-            <div className="tims-director-card" key={director.name}>
-              <div className="tims-director-photo">
-                <PersonIcon />
-                <span className="tims-director-photo-hint">Photo coming soon</span>
+        {/* Infinite Right-to-Left Continuous Loop Marquee */}
+        <div className="tims-directors-marquee">
+          <div className="tims-directors-track">
+            {loopDirectors.map((director, index) => (
+              <div
+                className="tims-director-card"
+                key={`${director.id}-${index}`}
+              >
+                {/* Skewed Geometric Photo Frame matching reference design */}
+                <div
+                  className="tims-director-skew-frame"
+                  style={{ backgroundColor: director.accentBg || "#14161c" }}
+                >
+                  <div className="tims-director-unskew-content">
+                    {director.image ? (
+                      <img
+                        src={director.image}
+                        alt={director.name}
+                        className="tims-director-portrait-img"
+                      />
+                    ) : (
+                      <div className="tims-director-placeholder-space">
+                        <PersonIcon />
+                        <span className="tims-director-placeholder-text">
+                          Director Photo Space
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Bottom Overlay Badge for Name & Role */}
+                <div className="tims-director-info-badge">
+                  <h3 className="tims-director-name">{director.name}</h3>
+                  <p className="tims-director-role">{director.role}</p>
+                </div>
               </div>
-              <h3 className="tims-director-name">{director.name}</h3>
-              <span className="tims-director-role">{director.role}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,546 @@
+.section {
+  position: relative;
+  background: #f6f2e7;
+  color: #14161c;
+  padding: clamp(3.5rem, 7vw, 6rem) 1.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Layout Grid: Left Content & Right Deck Stage ---------- */
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* ---------- Left Column ---------- */
+
+.leftColumn {
+  text-align: left;
+}
+
+.eyebrowWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.eyebrowLine {
+  display: inline-block;
+  width: 32px;
+  height: 3px;
+  background: #ff5a4e;
+  border-radius: 999px;
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff5a4e;
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #14161c;
+}
+
+.title span {
+  display: inline-block;
+  background: #ffcf3f;
+  color: #14161c;
+  padding: 0.05em 0.35em;
+  border: 3px solid #14161c;
+  border-radius: 8px;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 #14161c;
+}
+
+.subtitle {
+  margin: 0 0 2rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.0625rem);
+  line-height: 1.65;
+  color: #4a5568;
+  max-width: 480px;
+}
+
+/* Slider Controls: Counter + Progress Bar + Navigation Arrows */
+
+.sliderControls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.counterGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-weight: 800;
+}
+
+.activeNumber {
+  font-size: 1.5rem;
+  color: #ff5a4e;
+}
+
+.counterDivider {
+  font-size: 1.1rem;
+  color: #a0aec0;
+}
+
+.totalNumber {
+  font-size: 1.1rem;
+  color: #718096;
+}
+
+.progressBarTrack {
+  flex: 1;
+  min-width: 100px;
+  max-width: 180px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(20, 22, 28, 0.15);
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #ff5a4e;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.arrowGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.arrowBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #14161c;
+  border: 2.5px solid #14161c;
+  box-shadow: 3px 3px 0 #14161c;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.arrowBtn:not(:disabled):hover {
+  background: #ff5a4e;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #14161c;
+}
+
+.arrowBtn:not(:disabled):active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 #14161c;
+}
+
+/* Dots Row */
+
+.dotsRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
+  background: #cbd5e0;
+  transition: background 0.25s ease, width 0.25s ease;
+}
+
+.dotActive {
+  width: 28px;
+  background: #ff5a4e;
+}
+
+/* Action CTA Group */
+
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  background: #ff5a4e;
+  color: #14161c;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 12px;
+  border: 3px solid #14161c;
+  box-shadow: 4px 4px 0 #14161c;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.primaryBtn:hover {
+  background: #ff7167;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #14161c;
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  color: #14161c;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 12px;
+  border: 3px solid #14161c;
+  box-shadow: 4px 4px 0 #14161c;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.secondaryBtn:hover {
+  background: #fff6e0;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #14161c;
+}
+
+/* ---------- Right Column: Infinite Stacked Card Stage ---------- */
+
+.rightColumn {
+  position: relative;
+  width: 100%;
+  padding-right: 80px; /* Space for stacked card offsets */
+}
+
+.deckStage {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 480px;
+  margin: 0 auto;
+}
+
+/* ---------- Image Card Base ---------- */
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 480px;
+  background: #14161c;
+  border-radius: 24px;
+  border: 3px solid #14161c;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: transform 0.5s cubic-bezier(0.34, 1.25, 0.64, 1),
+              opacity 0.45s ease,
+              box-shadow 0.35s ease;
+  transform-origin: center right;
+  user-select: none;
+}
+
+.cardImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.cardActive:hover .cardImage {
+  transform: scale(1.05);
+}
+
+/* Top Overlay Badges */
+
+.cardTopBar {
+  position: absolute;
+  top: 1.15rem;
+  left: 1.15rem;
+  right: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  z-index: 6;
+}
+
+.categoryTag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1.5px solid #14161c;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #14161c;
+}
+
+/* Bottom Caption Overlay Container */
+
+.captionOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  background: linear-gradient(
+    to top,
+    rgba(12, 14, 20, 0.98) 0%,
+    rgba(12, 14, 20, 0.9) 65%,
+    rgba(12, 14, 20, 0.4) 90%,
+    transparent 100%
+  );
+  padding: 2.25rem 1.5rem 1.35rem;
+  color: #ffffff;
+  text-align: left;
+  backdrop-filter: blur(3px);
+}
+
+.captionMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.dateBadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffcf3f;
+  background: rgba(255, 207, 63, 0.15);
+  border: 1px solid rgba(255, 207, 63, 0.4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.verifiedTag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #4ade80;
+}
+
+.captionTitle {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.captionText {
+  margin: 0 0 0.65rem;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.captionFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.studentName {
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.studentRole {
+  color: #ff5a4e;
+  font-weight: 700;
+}
+
+/* ---------- Card Display States ---------- */
+
+/* Card 0: Active in Primary Focus */
+.cardActive {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+  box-shadow: 10px 10px 0 #14161c;
+}
+
+/* Card 1: 1st Stacked Card Peeking Behind */
+.cardStack1 {
+  transform: translate3d(44px, 14px, 0) scale(0.93) rotate(2.5deg);
+  opacity: 0.88;
+  z-index: 9;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 rgba(20, 22, 28, 0.85);
+}
+
+.cardStack1:hover {
+  transform: translate3d(52px, 10px, 0) scale(0.95) rotate(1.5deg);
+  opacity: 0.98;
+}
+
+/* Card 2: 2nd Stacked Card Peeking Further Behind */
+.cardStack2 {
+  transform: translate3d(84px, 28px, 0) scale(0.86) rotate(5deg);
+  opacity: 0.65;
+  z-index: 8;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 rgba(20, 22, 28, 0.6);
+}
+
+.cardStack2:hover {
+  transform: translate3d(92px, 24px, 0) scale(0.88) rotate(4deg);
+  opacity: 0.8;
+}
+
+/* Card Exiting: Top card sliding out off to the left before recycling to back of stack */
+.cardExiting {
+  transform: translate3d(-125%, -15px, 0) scale(0.88) rotate(-8deg);
+  opacity: 0;
+  z-index: 25;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+}
+
+/* Card Entering: Card sliding in from left when Prev is pressed */
+.cardEntering {
+  transform: translate3d(-125%, -15px, 0) scale(0.88) rotate(-8deg);
+  opacity: 0;
+  z-index: 25;
+  pointer-events: none;
+  transition: none;
+}
+
+/* Card Back Of Stack: Recycled behind the visible stack */
+.cardBackOfStack {
+  transform: translate3d(115px, 36px, 0) scale(0.78) rotate(6deg);
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+  .layoutGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .leftColumn {
+    text-align: center;
+  }
+
+  .eyebrowWrapper {
+    justify-content: center;
+  }
+
+  .subtitle {
+    margin: 0 auto 2rem;
+  }
+
+  .sliderControls {
+    justify-content: center;
+  }
+
+  .dotsRow {
+    justify-content: center;
+  }
+
+  .ctaGroup {
+    justify-content: center;
+  }
+
+  .rightColumn {
+    padding-right: 40px;
+  }
+
+  .deckStage {
+    max-width: 440px;
+    min-height: 480px;
+  }
+}
+
+@media (max-width: 600px) {
+  .rightColumn {
+    padding-right: 0;
+  }
+
+  .deckStage {
+    max-width: 100%;
+    min-height: 500px;
+  }
+
+  .cardStack1 {
+    transform: translate3d(20px, 12px, 0) scale(0.94) rotate(1.5deg);
+  }
+
+  .cardStack2 {
+    transform: translate3d(40px, 24px, 0) scale(0.88) rotate(3deg);
+  }
+
+  .cardExiting {
+    transform: translate3d(-110%, -10px, 0) scale(0.9) rotate(-5deg);
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

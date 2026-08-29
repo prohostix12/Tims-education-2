@@ -1,3 +1,4 @@
+/*
 import type { Metadata } from "next";
 import NewsSection from "@/components/NewsSection/NewsSection";
 import PageHero from "@/components/PageHero/PageHero";
@@ -14,4 +15,9 @@ export default function StudentsNewsPage() {
       <NewsSection />
     </main>
   );
+}
+*/
+
+export default function DisabledNewsPage() {
+  return null;
 }

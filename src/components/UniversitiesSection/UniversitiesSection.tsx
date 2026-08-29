@@ -6,9 +6,9 @@ type Accent = "red" | "navy";
 type University = {
   name: string;
   slug: string;
+  href: string;
   description: string;
   accent: Accent;
-  /** Placeholder path — replace with the real image in /public later. */
   image: string;
 };
 
@@ -16,25 +16,56 @@ const universities: University[] = [
   {
     name: "Aligarh Muslim University",
     slug: "amu",
+    href: "/universities/degree-pg/aligarh-muslim-university",
     description:
-      "Aligarh Muslim University (AMU): Shaping Futures, Empowering Minds Aligarh Muslim University...",
+      "Aligarh Muslim University (AMU): Shaping Futures, Empowering Minds with recognized distance & online degree programs.",
     accent: "red",
     image: "/images/aligrh_image.png",
   },
   {
-    name: "Andhra University",
-    slug: "andhra",
+    name: "Swami Vivekanand Subharti University",
+    slug: "svsu",
+    href: "/universities/degree-pg/swami-vivekanand-subharti-university",
     description:
-      "Andhra University Affiliations : AICTE, UGC Andhra University: Legacy of Excellence...",
+      "Swami Vivekanand Subharti University (SVSU): UGC & DEB approved online and distance learning programs.",
     accent: "navy",
-    image: "/images/andhra_image.png",
+    image: "/images/swami-logo.webp",
   },
   {
     name: "Guru Kashi University",
     slug: "guru-kashi",
-    description: "View Website",
+    href: "/universities/degree-pg/guru-kashi-university",
+    description:
+      "Guru Kashi University: Prominent institution offering accredited distance degree, credit transfer, and PG courses.",
     accent: "red",
     image: "/images/universities/guru-kashi-university.jpg",
+  },
+  {
+    name: "Mizoram University",
+    slug: "mizoram",
+    href: "/universities/degree-pg/mizoram-university",
+    description:
+      "Mizoram University: A Central University offering accredited online degree, diploma, and master programs.",
+    accent: "navy",
+    image: "/images/andhra_image.png",
+  },
+  {
+    name: "Suresh Gyan Vihar University",
+    slug: "sgvu",
+    href: "/universities/degree-pg/suresh-gyan-vihar-university",
+    description:
+      "Suresh Gyan Vihar University (SGVU): NAAC 'A+' accredited university providing flexible distance education.",
+    accent: "red",
+    image: "/images/bg-1.png",
+  },
+  {
+    name: "Andhra University",
+    slug: "andhra",
+    href: "/universities/degree-pg/andhra-university",
+    description:
+      "Andhra University: Legacy of excellence with AICTE & UGC approved distance and online degree courses.",
+    accent: "navy",
+    image: "/images/andra-logo.webp",
   },
 ];
 
@@ -92,7 +123,7 @@ export default function UniversitiesSection() {
       <div className="tims-universities-inner">
         <div className="tims-universities-heading-block">
           <span className="tims-universities-label">UNIVERSITIES &amp; BOARDS</span>
-          <h2 className="tims-universities-title">Let&rsquo;s explore Degree/PG</h2>
+          <h2 className="tims-universities-title">Explore Partner Universities</h2>
         </div>
 
         <div className="tims-universities-grid">
@@ -101,10 +132,12 @@ export default function UniversitiesSection() {
               key={uni.slug}
               className={`tims-uni-card tims-uni-card--${uni.accent}`}
             >
-              <div className="tims-uni-card-image">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={uni.image} alt={uni.name} />
-              </div>
+              <Link href={uni.href} className="tims-uni-card-image-link" aria-label={`View details for ${uni.name}`}>
+                <div className="tims-uni-card-image">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={uni.image} alt={uni.name} />
+                </div>
+              </Link>
 
               <CardDivider />
 
@@ -113,12 +146,16 @@ export default function UniversitiesSection() {
                   <InstitutionIcon />
                 </span>
 
-                <h3 className="tims-uni-card-title">{uni.name}</h3>
+                <h3 className="tims-uni-card-title">
+                  <Link href={uni.href} style={{ color: "inherit", textDecoration: "none" }}>
+                    {uni.name}
+                  </Link>
+                </h3>
 
                 <p className="tims-uni-card-description">{uni.description}</p>
 
-                <Link href="#" className="tims-uni-card-button">
-                  <span>View Service</span>
+                <Link href={uni.href} className="tims-uni-card-button">
+                  <span>View Details</span>
                   <ArrowIcon />
                 </Link>
               </div>

@@ -1,3 +1,4 @@
+/*
 import "../AnnamalaiBooksSection/tims-annamalai-books.css";
 
 const universities = [
@@ -48,4 +49,9 @@ export default function SyllabusSection() {
       </div>
     </section>
   );
+}
+*/
+
+export default function SyllabusSection() {
+  return null;
 }

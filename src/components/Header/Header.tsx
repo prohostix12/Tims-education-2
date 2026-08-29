@@ -106,6 +106,8 @@ const navItems: NavLink[] = [
       },
     ],
   },
+  { label: "Contact", href: "/contact" },
+  /*
   {
     label: "Students",
     href: "",
@@ -114,7 +116,7 @@ const navItems: NavLink[] = [
       { label: "News", href: "/students/news" },
     ],
   },
-  { label: "Contact", href: "/contact" },
+  */
 ];
 
 /* ---------- Inline icons (no external icon package) ---------- */
@@ -127,6 +129,20 @@ function PhoneIcon() {
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M4 20c1.5-4.2 4.8-6.2 8-6.2s6.5 2 8 6.2"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );
@@ -335,6 +351,11 @@ export default function Header() {
           </nav>
 
           <div className={styles.actions}>
+            <Link href="/admin" className={styles.studentLoginBtn}>
+              <UserIcon />
+              <span>Student Login</span>
+            </Link>
+
             <a href="tel:+917736111588" className={styles.mobilePhoneButton} aria-label="Call TIMS Education">
               <PhoneIcon />
             </a>
@@ -379,6 +400,10 @@ export default function Header() {
         </ul>
 
         <div className={styles.mobileDrawerFooter}>
+          <Link href="/admin" className={styles.mobileStudentLoginBtn} onClick={() => setMobileOpen(false)}>
+            <UserIcon />
+            <span>Student Login</span>
+          </Link>
           <a href="tel:+917736111588" className={styles.mobileDrawerPhone}>
             <PhoneIcon />
             <span>+91 7736 1115 88</span>

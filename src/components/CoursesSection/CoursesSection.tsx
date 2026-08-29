@@ -8,7 +8,7 @@ type CourseLink = {
 };
 
 const courseLinks: CourseLink[] = [
-  { label: "Credit Transfer", href: "#", icon: "transfer", accent: "navy" },
+  { label: "Credit Transfer", href: "https://www.edumentora.com/", icon: "transfer", accent: "navy" },
   { label: "Post Graduation", href: "#", icon: "graduation", accent: "red" },
   { label: "Diploma", href: "#", icon: "certificate", accent: "red" },
   { label: "Online Degree", href: "#", icon: "monitor", accent: "navy" },
