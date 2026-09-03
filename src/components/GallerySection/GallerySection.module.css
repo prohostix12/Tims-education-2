@@ -1,0 +1,310 @@
+.galleryPageWrapper {
+  background-color: #F6F2E7;
+  width: 100%;
+}
+
+.gallerySection {
+  padding: clamp(2.5rem, 5vw, 4.5rem) 1.25rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: inherit;
+  background-color: #F6F2E7;
+}
+
+.intro {
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #475569;
+}
+
+/* Filter Bar */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+
+.filterBtn {
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.filterBtnActive {
+  background: #ed1c24;
+  border-color: #ed1c24;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(237, 28, 36, 0.25);
+}
+
+.filterBtnActive:hover {
+  background: #d0171e;
+  border-color: #d0171e;
+}
+
+/* Section Blocks */
+.eventBlock {
+  margin-bottom: 3.5rem;
+  background-color: #F6F2E7;
+}
+
+.eventBlock:last-child {
+  margin-bottom: 0;
+}
+
+.eventHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.eventTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.eventAccentBar {
+  width: 4px;
+  height: 1.5rem;
+  background: #ed1c24;
+  border-radius: 999px;
+}
+
+.eventTitle {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Masonry Grid Layout */
+.masonryGrid {
+  column-count: 3;
+  column-gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .masonryGrid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 550px) {
+  .masonryGrid {
+    column-count: 1;
+  }
+}
+
+.masonryCard {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f1f5f9;
+  cursor: default;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.masonryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+}
+
+.cardImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.masonryCard:hover .cardImg {
+  transform: scale(1.05);
+}
+
+/* Grey border overlay on hover with small margin following image shape */
+.cardHoverFrame {
+  position: absolute;
+  inset: 10px;
+  border: 2px solid #cbd5e1;
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  z-index: 2;
+}
+
+.masonryCard:hover .cardHoverFrame {
+  opacity: 1;
+  transform: scale(1);
+  border-color: #94a3b8;
+}
+
+/* Loading & Empty States */
+.emptyState,
+.loadingState {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+}
+
+/* Lightbox Modal */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(10, 15, 29, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightboxHeader {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.lightboxTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.lightboxCounter {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.closeBtn:hover {
+  background: #ed1c24;
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 1000px;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.navBtn:hover {
+  background: #ed1c24;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prevBtn {
+  left: -24px;
+}
+
+.nextBtn {
+  right: -24px;
+}
+
+@media (max-width: 768px) {
+  .prevBtn {
+    left: 8px;
+  }
+
+  .nextBtn {
+    right: 8px;
+  }
+}

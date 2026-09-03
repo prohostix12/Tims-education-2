@@ -6,7 +6,10 @@ import styles from "./AdminHeader.module.css";
 
 const adminNavItems = [
   { label: "Dashboard", href: "/admin" },
+  { label: "Universities", href: "/admin/universities" },
   { label: "Enquiries", href: "/admin/enquiries" },
+  { label: "Contact Info", href: "/admin/contact" },
+  { label: "Gallery", href: "/admin/gallery" },
   { label: "Reviews", href: "/admin/reviews" },
   { label: "Pages", href: "/admin/pages" },
   { label: "Users", href: "/admin/users" },

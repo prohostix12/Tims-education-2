@@ -1,0 +1,242 @@
+.section {
+  min-height: 100vh;
+  padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
+  background: #FEFCED;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.inner {
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    min-height: auto;
+    padding: 3.5rem 1.25rem;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Left Content */
+.leftContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ed1c24;
+  margin-bottom: 0.85rem;
+}
+
+.heading {
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  font-size: clamp(1.6rem, 3vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.28;
+  color: #14161c;
+  margin: 0 0 1.25rem;
+  letter-spacing: normal;
+}
+
+.subtitle {
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: #5f6b7a;
+  margin: 0 0 1.75rem;
+  max-width: 420px;
+}
+
+.exploreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.75rem;
+  background: #14161c;
+  color: #ffffff;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(20, 22, 28, 0.12);
+}
+
+.exploreBtn:hover {
+  background: #ed1c24;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(237, 28, 36, 0.25);
+}
+
+.arrowIcon {
+  transition: transform 0.25s ease;
+}
+
+.exploreBtn:hover .arrowIcon {
+  transform: translateX(4px);
+}
+
+/* Right Collage Container - 3 Vertical Infinite Moving Columns */
+.rightCollage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  width: 100%;
+  height: clamp(620px, 88vh, 880px);
+  overflow: hidden;
+  position: relative;
+  border-radius: 0;
+  background: #000000;
+  padding: 0.5rem;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+@media (max-width: 640px) {
+  .rightCollage {
+    grid-template-columns: repeat(2, 1fr);
+    height: 480px;
+  }
+
+  .col3Hide {
+    display: none;
+  }
+}
+
+.collageColumn {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  background: #000000;
+}
+
+.collageColumnTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: #000000;
+  will-change: transform;
+}
+
+/* Vertical Scrolling Animations */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* First Column: Bottom to Top */
+.moveUp {
+  animation: scrollUp 24s linear infinite;
+}
+
+/* Second Column: Top to Bottom */
+.moveDown {
+  animation: scrollDown 22s linear infinite;
+}
+
+/* Third Column: Bottom to Top */
+.moveUpAlt {
+  animation: scrollUp 26s linear infinite;
+}
+
+/* Pause animation on hover so user can hover over images */
+.rightCollage:hover .moveUp,
+.rightCollage:hover .moveDown,
+.rightCollage:hover .moveUpAlt {
+  animation-play-state: paused;
+}
+
+.collageCard {
+  position: relative;
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  background: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.collageImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.collageCard:hover .collageImg {
+  transform: scale(1.06);
+}
+
+/* Inset Grey Border Hover Frame */
+.cardHoverFrame {
+  position: absolute;
+  inset: 8px;
+  border: 2px solid #cbd5e1;
+  border-radius: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  z-index: 2;
+}
+
+.collageCard:hover .cardHoverFrame {
+  opacity: 1;
+  transform: scale(1);
+  border-color: #94a3b8;
+}
+
+/* Aspect ratio variations for dynamic aesthetic */
+.ratioTall {
+  aspect-ratio: 3 / 4.2;
+}
+
+.ratioShort {
+  aspect-ratio: 4 / 3;
+}
+
+.ratioSquare {
+  aspect-ratio: 1 / 1;
+}
+
+.ratioMedium {
+  aspect-ratio: 3 / 3.8;
+}

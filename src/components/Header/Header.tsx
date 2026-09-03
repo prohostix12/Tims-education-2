@@ -21,6 +21,7 @@ const navItems: NavLink[] = [
     href: "",
     children: [
       { label: "Directors", href: "/directors" },
+      { label: "Gallery", href: "/gallery" },
       { label: "Blog", href: "/blog" },
       { label: "News", href: "/news" },
     ],
@@ -49,7 +50,7 @@ const navItems: NavLink[] = [
   },
   {
     label: "Universities",
-    href: "",
+    href: "/universities",
     children: [
       {
         label: "10th/Plus Two",
@@ -82,28 +83,30 @@ const navItems: NavLink[] = [
           },
         ],
       },
-      {
-        label: "Study Materials",
-        href: "",
-        children: [
-          { label: "NIOS", href: "/universities/study-materials/nios" },
-          { label: "ANNAMALAI UNIVERSITY", href: "/universities/study-materials/annamalai-university" },
-          { label: "BHARATHIYAR UNIVERSITY", href: "/universities/study-materials/bharathiyar-university" },
-          { label: "SVSU", href: "/universities/study-materials/svsu" },
-          { label: "SVSU Online", href: "/universities/study-materials/svsu-online" },
-          { label: "SVU", href: "/universities/study-materials/svu" },
-          { label: "AMU Online", href: "/universities/study-materials/amu-online" },
-          { label: "Tutor Mark Assignment", href: "/universities/study-materials/tutor-mark-assignment" },
-        ],
-      },
-      {
-        label: "Examination",
-        href: "",
-        children: [
-          { label: "Time Table For SSLC And Plus Two", href: "#" },
-          { label: "Results", href: "#" },
-        ],
-      },
+          /*
+          {
+            label: "Study Materials",
+            href: "",
+            children: [
+              { label: "NIOS", href: "/universities/study-materials/nios" },
+              { label: "ANNAMALAI UNIVERSITY", href: "/universities/study-materials/annamalai-university" },
+              { label: "BHARATHIYAR UNIVERSITY", href: "/universities/study-materials/bharathiyar-university" },
+              { label: "SVSU", href: "/universities/study-materials/svsu" },
+              { label: "SVSU Online", href: "/universities/study-materials/svsu-online" },
+              { label: "SVU", href: "/universities/study-materials/svu" },
+              { label: "AMU Online", href: "/universities/study-materials/amu-online" },
+              { label: "Tutor Mark Assignment", href: "/universities/study-materials/tutor-mark-assignment" },
+            ],
+          },
+          {
+            label: "Examination",
+            href: "",
+            children: [
+              { label: "Time Table For SSLC And Plus Two", href: "#" },
+              { label: "Results", href: "#" },
+            ],
+          },
+          */
     ],
   },
   { label: "Contact", href: "/contact" },
@@ -351,10 +354,15 @@ export default function Header() {
           </nav>
 
           <div className={styles.actions}>
-            <Link href="/admin" className={styles.studentLoginBtn}>
+            <a
+              href="https://pypeerm.com/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.studentLoginBtn}
+            >
               <UserIcon />
               <span>Student Login</span>
-            </Link>
+            </a>
 
             <a href="tel:+917736111588" className={styles.mobilePhoneButton} aria-label="Call TIMS Education">
               <PhoneIcon />
@@ -400,10 +408,16 @@ export default function Header() {
         </ul>
 
         <div className={styles.mobileDrawerFooter}>
-          <Link href="/admin" className={styles.mobileStudentLoginBtn} onClick={() => setMobileOpen(false)}>
+          <a
+            href="https://pypeerm.com/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.mobileStudentLoginBtn}
+            onClick={() => setMobileOpen(false)}
+          >
             <UserIcon />
             <span>Student Login</span>
-          </Link>
+          </a>
           <a href="tel:+917736111588" className={styles.mobileDrawerPhone}>
             <PhoneIcon />
             <span>+91 7736 1115 88</span>

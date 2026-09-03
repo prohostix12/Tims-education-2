@@ -8,7 +8,7 @@
   --td-text-muted: #5f6b7a;
 
   position: relative;
-  background: #f6f2e7;
+  background: #F4F0D3;
   color: var(--td-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3.5rem, 9vw, 7rem) 1.5rem;

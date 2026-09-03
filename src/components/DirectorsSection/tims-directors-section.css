@@ -3,7 +3,7 @@
   --dr-red: #ff5a4e;
   --dr-gold: #ffcf3f;
   --dr-text-muted: #4a5568;
-  --dr-bg: #f6f2e7;
+  --dr-bg: #FEFCED;
 
   position: relative;
   background: var(--dr-bg);

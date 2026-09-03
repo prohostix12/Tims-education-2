@@ -6,7 +6,7 @@
   --tp-navy: #14161c;
   --tp-red: #ff5a4e;
 
-  background: #f6f2e7;
+  background: #FEFCED;
   color: var(--tp-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(2.75rem, 7vw, 4.5rem) 0;

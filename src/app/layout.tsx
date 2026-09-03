@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={spaceMono.variable}>
-      <body>
+      <body suppressHydrationWarning>
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

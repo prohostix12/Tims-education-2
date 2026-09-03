@@ -12,18 +12,18 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    title: "Embassy Attestation",
-    description: "Attest your educational and non-educational documents.",
+    title: "Online Degree",
+    description: "Pursue your higher education from UGC Approved Universities with ease.",
     icon: "attestation",
   },
   {
-    title: "Online Studies",
-    description: "Assistance for Admission in Best Institutes of India and Abroad.",
+    title: "Diploma & Skill Programs",
+    description: "Enhance your professional skills with a variety of diploma and skill courses.",
     icon: "monitor",
   },
   {
-    title: "Distance Education",
-    description: "We provide educational services to students all across World.",
+    title: "10th/Plus Two",
+    description: "Complete your 10th or Plus Two certification from NIOS or other recognized boards.",
     icon: "globe",
   },
 ];

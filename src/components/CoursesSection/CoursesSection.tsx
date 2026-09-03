@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./tims-new-courses-section.css";
 
 type CourseLink = {
@@ -8,12 +9,12 @@ type CourseLink = {
 };
 
 const courseLinks: CourseLink[] = [
-  { label: "Credit Transfer", href: "https://www.edumentora.com/", icon: "transfer", accent: "navy" },
-  { label: "Post Graduation", href: "#", icon: "graduation", accent: "red" },
-  { label: "Diploma", href: "#", icon: "certificate", accent: "red" },
-  { label: "Online Degree", href: "#", icon: "monitor", accent: "navy" },
-  { label: "Btech / Mtech", href: "#", icon: "layers", accent: "navy" },
-  { label: "SSLC / PLUS TWO", href: "#", icon: "book", accent: "red" },
+  { label: "Credit Transfer", href: "https://www.edumentora.com/b-tech-credit-transfer", icon: "transfer", accent: "navy" },
+  { label: "Post Graduation", href: "/courses/post-graduation", icon: "graduation", accent: "red" },
+  { label: "Diploma", href: "/courses/diploma", icon: "certificate", accent: "red" },
+  { label: "Online Degree", href: "/courses/online-degree", icon: "monitor", accent: "navy" },
+  { label: "Btech / Mtech", href: "/courses/btech-mtech", icon: "layers", accent: "navy" },
+  { label: "SSLC / PLUS TWO", href: "/courses/sslc-plus-two", icon: "book", accent: "red" },
 ];
 
 function TransferIcon() {
@@ -181,8 +182,28 @@ export default function CoursesSection() {
           <div className="tims-new-courses-grid">
             {courseLinks.map((course) => {
               const Icon = iconComponents[course.icon];
+              const isExternal = course.href.startsWith("http");
+
+              if (isExternal) {
+                return (
+                  <a
+                    key={course.label}
+                    href={course.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`tims-new-course-card tims-new-course-card--${course.accent}`}
+                  >
+                    <span className="tims-new-course-icon">
+                      <Icon />
+                    </span>
+                    <span className="tims-new-course-name">{course.label}</span>
+                    <ArrowIcon />
+                  </a>
+                );
+              }
+
               return (
-                <a
+                <Link
                   key={course.label}
                   href={course.href}
                   className={`tims-new-course-card tims-new-course-card--${course.accent}`}
@@ -192,7 +213,7 @@ export default function CoursesSection() {
                   </span>
                   <span className="tims-new-course-name">{course.label}</span>
                   <ArrowIcon />
-                </a>
+                </Link>
               );
             })}
           </div>

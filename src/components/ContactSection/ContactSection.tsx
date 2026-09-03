@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
 import { useEnquiryForm } from "@/lib/useEnquiryForm";
 
@@ -7,34 +8,39 @@ type Office = {
   title: string;
   address: string;
   phone: string;
-  phoneHref: string;
   email: string;
 };
 
-const offices: Office[] = [
+type Socials = {
+  youtube: string;
+  facebook: string;
+  instagram: string;
+  x: string;
+  telegram: string;
+};
+
+const defaultOffices: Office[] = [
   {
     title: "Head Office",
     address: "2nd Floor, Pamls Tower, near Central Bank, Thazhepalam, Tirur, Kerala 676101",
     phone: "+91 9961967777",
-    phoneHref: "tel:+919961967777",
     email: "info@timseducation.com",
   },
   {
     title: "Edapal Office",
     address: "2nd floor Al madeela complex Calicut road Edappal 679576 MALAPPURAM DT Kerala",
     phone: "+91 9526387777",
-    phoneHref: "tel:+919526387777",
     email: "info@timseducation.com",
   },
 ];
 
-const socialLinks = [
-  { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
-  { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
-  { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
-  { label: "X", href: "https://x.com", icon: "x" },
-  { label: "Telegram", href: "https://telegram.org", icon: "telegram" },
-] as const;
+const defaultSocials: Socials = {
+  youtube: "https://youtube.com",
+  facebook: "https://facebook.com",
+  instagram: "https://instagram.com",
+  x: "https://x.com",
+  telegram: "https://telegram.org",
+};
 
 function PinIcon() {
   return (
@@ -134,6 +140,41 @@ const socialIcons = {
 
 export default function ContactSection() {
   const { status, errorMessage, handleSubmit } = useEnquiryForm("contact-page");
+  const [offices, setOffices] = useState<Office[]>(defaultOffices);
+  const [socials, setSocials] = useState<Socials>(defaultSocials);
+
+  useEffect(() => {
+    async function loadContactInfo() {
+      try {
+        const res = await fetch("/api/contact-info");
+        if (res.ok) {
+          const contentType = res.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const data = await res.json();
+            if (data && data.contactInfo) {
+              if (Array.isArray(data.contactInfo.offices) && data.contactInfo.offices.length > 0) {
+                setOffices(data.contactInfo.offices);
+              }
+              if (data.contactInfo.socials) {
+                setSocials(data.contactInfo.socials);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Could not fetch contact info, using defaults:", err);
+      }
+    }
+    loadContactInfo();
+  }, []);
+
+  const socialLinks = [
+    { label: "YouTube", href: socials.youtube || "https://youtube.com", icon: "youtube" as const },
+    { label: "Facebook", href: socials.facebook || "https://facebook.com", icon: "facebook" as const },
+    { label: "Instagram", href: socials.instagram || "https://instagram.com", icon: "instagram" as const },
+    { label: "X", href: socials.x || "https://x.com", icon: "x" as const },
+    { label: "Telegram", href: socials.telegram || "https://telegram.org", icon: "telegram" as const },
+  ];
 
   return (
     <section className={styles.contact}>
@@ -146,56 +187,60 @@ export default function ContactSection() {
       <div className={styles.inner}>
         <div className={styles.layout}>
           <div className={styles.offices}>
-            {offices.map((office) => (
-              <div className={styles.officeCard} key={office.title}>
-                <div className={styles.officeHeader}>
-                  <span className={styles.officeIcon}>
-                    <PinIcon />
-                  </span>
-                  <h2 className={styles.officeTitle}>{office.title}</h2>
-                </div>
+            {offices.map((office, idx) => {
+              const phoneHref = `tel:${office.phone.replace(/[^+\d]/g, "")}`;
 
-                <ul className={styles.officeDetails}>
-                  <li>
-                    <span className={styles.detailIcon}>
-                      <BuildingIcon />
+              return (
+                <div className={styles.officeCard} key={office.title || idx}>
+                  <div className={styles.officeHeader}>
+                    <span className={styles.officeIcon}>
+                      <PinIcon />
                     </span>
-                    <span>{office.address}</span>
-                  </li>
-                  <li>
-                    <span className={styles.detailIcon}>
-                      <PhoneIcon />
-                    </span>
-                    <a href={office.phoneHref}>Phone: {office.phone}</a>
-                  </li>
-                  <li>
-                    <span className={styles.detailIcon}>
-                      <MailIcon />
-                    </span>
-                    <a href={`mailto:${office.email}`}>{office.email}</a>
-                  </li>
-                </ul>
+                    <h2 className={styles.officeTitle}>{office.title}</h2>
+                  </div>
 
-                <div className={styles.socialRow}>
-                  <span className={styles.socialLabel}>Social:</span>
-                  {socialLinks.map((social) => {
-                    const Icon = socialIcons[social.icon];
-                    return (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={social.label}
-                        className={styles.socialIcon}
-                      >
-                        <Icon />
-                      </a>
-                    );
-                  })}
+                  <ul className={styles.officeDetails}>
+                    <li>
+                      <span className={styles.detailIcon}>
+                        <BuildingIcon />
+                      </span>
+                      <span>{office.address}</span>
+                    </li>
+                    <li>
+                      <span className={styles.detailIcon}>
+                        <PhoneIcon />
+                      </span>
+                      <a href={phoneHref}>Phone: {office.phone}</a>
+                    </li>
+                    <li>
+                      <span className={styles.detailIcon}>
+                        <MailIcon />
+                      </span>
+                      <a href={`mailto:${office.email}`}>{office.email}</a>
+                    </li>
+                  </ul>
+
+                  <div className={styles.socialRow}>
+                    <span className={styles.socialLabel}>Social:</span>
+                    {socialLinks.map((social) => {
+                      const Icon = socialIcons[social.icon];
+                      return (
+                        <a
+                          key={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.label}
+                          className={styles.socialIcon}
+                        >
+                          <Icon />
+                        </a>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className={styles.formCard}>

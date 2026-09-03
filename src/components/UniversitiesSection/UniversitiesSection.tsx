@@ -1,168 +1,177 @@
-import Link from "next/link";
-import "./tims-universities-section.css";
+"use client";
 
-type Accent = "red" | "navy";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import "./tims-universities-section.css";
 
 type University = {
   name: string;
   slug: string;
   href: string;
-  description: string;
-  accent: Accent;
   image: string;
 };
 
-const universities: University[] = [
+const defaultUniversities: University[] = [
+  // Top Row (4 items)
   {
     name: "Aligarh Muslim University",
-    slug: "amu",
-    href: "/universities/degree-pg/aligarh-muslim-university",
-    description:
-      "Aligarh Muslim University (AMU): Shaping Futures, Empowering Minds with recognized distance & online degree programs.",
-    accent: "red",
+    slug: "aligarh-muslim-university",
+    href: "/universities?search=Aligarh%20Muslim%20University",
     image: "/images/aligrh_image.png",
   },
   {
     name: "Swami Vivekanand Subharti University",
-    slug: "svsu",
-    href: "/universities/degree-pg/swami-vivekanand-subharti-university",
-    description:
-      "Swami Vivekanand Subharti University (SVSU): UGC & DEB approved online and distance learning programs.",
-    accent: "navy",
+    slug: "swami-vivekanand-subharti-university",
+    href: "/universities?search=Swami%20Vivekanand%20Subharti%20University",
     image: "/images/swami-logo.webp",
   },
   {
     name: "Guru Kashi University",
-    slug: "guru-kashi",
-    href: "/universities/degree-pg/guru-kashi-university",
-    description:
-      "Guru Kashi University: Prominent institution offering accredited distance degree, credit transfer, and PG courses.",
-    accent: "red",
-    image: "/images/universities/guru-kashi-university.jpg",
+    slug: "guru-kashi-university",
+    href: "/universities?search=Guru%20Kashi%20University",
+    image: "/images/aligrh_image.png",
   },
   {
     name: "Mizoram University",
-    slug: "mizoram",
-    href: "/universities/degree-pg/mizoram-university",
-    description:
-      "Mizoram University: A Central University offering accredited online degree, diploma, and master programs.",
-    accent: "navy",
+    slug: "mizoram-university",
+    href: "/universities?search=Mizoram%20University",
     image: "/images/andhra_image.png",
   },
+
+  // Bottom Row (5 items)
   {
     name: "Suresh Gyan Vihar University",
-    slug: "sgvu",
-    href: "/universities/degree-pg/suresh-gyan-vihar-university",
-    description:
-      "Suresh Gyan Vihar University (SGVU): NAAC 'A+' accredited university providing flexible distance education.",
-    accent: "red",
+    slug: "suresh-gyan-vihar-university",
+    href: "/universities?search=Suresh%20Gyan%20Vihar%20University",
     image: "/images/bg-1.png",
   },
   {
     name: "Andhra University",
-    slug: "andhra",
-    href: "/universities/degree-pg/andhra-university",
-    description:
-      "Andhra University: Legacy of excellence with AICTE & UGC approved distance and online degree courses.",
-    accent: "navy",
+    slug: "andhra-university",
+    href: "/universities?search=Andhra%20University",
     image: "/images/andra-logo.webp",
+  },
+  {
+    name: "Jamia Urdu Aligarh",
+    slug: "jamia-urdu-aligarh",
+    href: "/universities/10th-plus-two/jamia-urdu-aligarh",
+    image: "/images/jua-logo.webp",
+  },
+  {
+    name: "Board of Open Schooling & Skill Education",
+    slug: "bosse",
+    href: "/universities/10th-plus-two/bosse",
+    image: "/images/bosse-logo.webp",
+  },
+  {
+    name: "National Institute of Open Schooling",
+    slug: "nios",
+    href: "/universities/10th-plus-two/national-institute-of-open-schooling",
+    image: "/images/bosse-logo.webp",
   },
 ];
 
-function InstitutionIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
-      <path
-        d="M12 3 3 8.5 12 14l9-5.5L12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6 11v5.2c0 1.5 2.7 3.3 6 3.3s6-1.8 6-3.3V11"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path d="M20 9v6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-      <path
-        d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/** Curved divider that blends the image into the card body below it. */
-function CardDivider() {
-  return (
-    <svg
-      className="tims-uni-card-divider"
-      viewBox="0 0 300 32"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <path d="M0,32 C90,0 210,0 300,32 Z" fill="currentColor" />
-    </svg>
-  );
-}
-
 export default function UniversitiesSection() {
+  const [items, setItems] = useState<University[]>(defaultUniversities);
+
+  useEffect(() => {
+    async function loadUniversities() {
+      try {
+        const res = await fetch("/api/universities");
+        if (!res.ok) return;
+        const data = await res.json();
+
+        if (Array.isArray(data.universities) && data.universities.length > 0) {
+          const mapped = data.universities.map((u: {
+            name: string;
+            slug?: string;
+            logo?: string;
+            image?: string;
+          }, idx: number) => ({
+            name: u.name,
+            slug: u.slug || `uni-${idx}`,
+            href: `/universities?search=${encodeURIComponent(u.name)}`,
+            image: u.logo || u.image || defaultUniversities[idx % defaultUniversities.length].image,
+          }));
+
+          let fullList = [...mapped];
+          while (fullList.length < 9) {
+            fullList = [...fullList, ...defaultUniversities.slice(0, 9 - fullList.length)];
+          }
+          setItems(fullList.slice(0, 9));
+        }
+      } catch (err) {
+        console.error("Using default static universities:", err);
+      }
+    }
+
+    loadUniversities();
+  }, []);
+
+  const row1 = items.slice(0, 4);
+  const row2 = items.slice(4, 9);
+
+  const renderCard = (uni: University, index: number) => {
+    const gradientId = `tuGoldGrad-${index}`;
+    return (
+      <Link
+        href={uni.href}
+        className="tims-hex-card"
+        key={`${uni.slug}-${index}`}
+        aria-label={`View details for ${uni.name}`}
+      >
+        <svg className="tims-hex-svg" viewBox="0 0 185 214" aria-hidden="true">
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#f7e5aa" />
+              <stop offset="50%" stopColor="#d4af37" />
+              <stop offset="100%" stopColor="#aa8214" />
+            </linearGradient>
+          </defs>
+          <polygon
+            points="92.5,4 180,55 180,159 92.5,210 5,159 5,55"
+            fill="#ffffff"
+            stroke={`url(#${gradientId})`}
+            strokeWidth="2.8"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        <div className="tims-hex-content">
+          <div className="tims-hex-logo-wrap">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={uni.image} alt={uni.name} className="tims-hex-logo" />
+          </div>
+          <span className="tims-hex-name">{uni.name}</span>
+        </div>
+      </Link>
+    );
+  };
+
   return (
     <section className="tims-universities-section">
+      <div className="tims-universities-bg-grid" aria-hidden="true" />
+
       <div className="tims-universities-inner">
         <div className="tims-universities-heading-block">
           <span className="tims-universities-label">UNIVERSITIES &amp; BOARDS</span>
           <h2 className="tims-universities-title">Explore Partner Universities</h2>
         </div>
 
-        <div className="tims-universities-grid">
-          {universities.map((uni) => (
-            <article
-              key={uni.slug}
-              className={`tims-uni-card tims-uni-card--${uni.accent}`}
-            >
-              <Link href={uni.href} className="tims-uni-card-image-link" aria-label={`View details for ${uni.name}`}>
-                <div className="tims-uni-card-image">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={uni.image} alt={uni.name} />
-                </div>
-              </Link>
-
-              <CardDivider />
-
-              <div className="tims-uni-card-body">
-                <span className="tims-uni-card-icon">
-                  <InstitutionIcon />
-                </span>
-
-                <h3 className="tims-uni-card-title">
-                  <Link href={uni.href} style={{ color: "inherit", textDecoration: "none" }}>
-                    {uni.name}
-                  </Link>
-                </h3>
-
-                <p className="tims-uni-card-description">{uni.description}</p>
-
-                <Link href={uni.href} className="tims-uni-card-button">
-                  <span>View Details</span>
-                  <ArrowIcon />
-                </Link>
-              </div>
-            </article>
-          ))}
+        {/* 2 Staggered Honeycomb Rows (Top: 4 Hexagons, Bottom: 5 Hexagons) */}
+        <div className="tims-hex-wrapper">
+          <div className="tims-hex-row tims-hex-row-1">
+            {row1.map((uni, idx) => renderCard(uni, idx))}
+          </div>
+          <div className="tims-hex-row tims-hex-row-2">
+            {row2.map((uni, idx) => renderCard(uni, 4 + idx))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+
+
+

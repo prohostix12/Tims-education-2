@@ -8,7 +8,7 @@
   --nw-text-muted: #5f6b7a;
   --nw-border: #14161c;
 
-  background: #ffffff;
+  background: #FEFCED;
   color: var(--nw-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;

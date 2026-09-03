@@ -1,19 +1,17 @@
-/* Isolated, standalone section. All selectors are scoped under
-   .tims-universities-section so this file cannot collide with any
-   existing styles on the site. */
+/* Scoped styles for .tims-universities-section */
 
 .tims-universities-section {
   --tu-navy: #14161c;
   --tu-red: #ff5a4e;
+  --tu-gold: #d4af37;
   --tu-text-muted: #5f6b7a;
-  --tu-bg: #ffffff;
-  --tu-border: #14161c;
+  --tu-bg: #F4F0D3;
 
   position: relative;
-  background: var(--tu-bg);
+  background-color: var(--tu-bg);
   color: var(--tu-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  padding: clamp(3.5rem, 7vw, 6rem) 1rem;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -24,44 +22,29 @@
   box-sizing: border-box;
 }
 
-.tims-universities-section::before,
-.tims-universities-section::after {
-  content: "";
+/* Ambient dot matrix background pattern */
+.tims-universities-bg-grid {
   position: absolute;
-  border-radius: 50%;
+  inset: 0;
+  background-image: radial-gradient(rgba(180, 150, 80, 0.14) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
   pointer-events: none;
   z-index: 0;
-}
-
-.tims-universities-section::before {
-  width: 340px;
-  height: 340px;
-  background: rgba(255, 90, 78, 0.05);
-  top: -120px;
-  right: -100px;
-}
-
-.tims-universities-section::after {
-  width: 260px;
-  height: 260px;
-  background: rgba(20, 22, 28, 0.05);
-  bottom: -90px;
-  left: -80px;
 }
 
 .tims-universities-inner {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
-/* ---------- Heading ---------- */
+/* ---------- Heading Block ---------- */
 
 .tims-universities-heading-block {
   text-align: center;
-  max-width: 620px;
-  margin: 0 auto clamp(2.5rem, 6vw, 3.5rem);
+  max-width: 640px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
 }
 
 .tims-universities-label {
@@ -71,7 +54,12 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--tu-red);
-  margin-bottom: 0.75rem;
+  background: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.35rem 1.1rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 0.85rem;
 }
 
 .tims-universities-title {
@@ -80,152 +68,194 @@
   font-weight: 800;
   line-height: 1.2;
   color: var(--tu-navy);
+  letter-spacing: -0.02em;
 }
 
-/* ---------- Grid ---------- */
+/* ---------- Honeycomb Interlocking Hexagon Mesh (4 Top, 5 Bottom) ---------- */
 
-.tims-universities-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.5rem, 3vw, 2rem);
-  align-items: stretch;
-}
-
-/* ---------- Card ---------- */
-
-.tims-uni-card {
-  --tu-card-accent: var(--tu-red);
-
+.tims-hex-wrapper {
   display: flex;
   flex-direction: column;
-  background: var(--tu-bg);
-  border: 3px solid var(--tu-border);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 6px 6px 0 #14161c;
-  height: 100%;
-}
-
-.tims-uni-card--navy {
-  --tu-card-accent: var(--tu-navy);
-}
-
-.tims-uni-card-image {
-  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0 2.5rem;
   width: 100%;
-  height: clamp(180px, 22vw, 220px);
-  flex-shrink: 0;
-  background: linear-gradient(135deg, #eef1f6 0%, #e3e8f1 100%);
-  overflow: hidden;
 }
 
-.tims-uni-card-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.tims-uni-card-divider {
-  display: block;
-  width: 100%;
-  height: 20px;
-  margin-top: -19px;
-  color: var(--tu-bg);
-  position: relative;
-  z-index: 1;
-}
-
-.tims-uni-card-body {
+.tims-hex-row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  padding: 0.25rem 1.75rem 1.75rem;
-}
-
-.tims-uni-card-icon {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background: var(--tu-card-accent);
-  color: #ffffff;
-  margin-bottom: 1rem;
-  flex-shrink: 0;
-}
-
-.tims-uni-card-title {
-  margin: 0 0 0.65rem;
-  font-size: 1.1875rem;
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--tu-navy);
-}
-
-.tims-uni-card-description {
-  margin: 0 0 1.5rem;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--tu-text-muted);
-  flex: 1;
-}
-
-.tims-uni-card-button {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 16px; /* Horizontal gap between adjacent hexagons in row */
+  position: relative;
   width: 100%;
-  padding: 0.85rem 1.25rem;
-  border-radius: 12px;
-  border: 1.5px solid var(--tu-card-accent);
-  color: var(--tu-card-accent);
-  background: transparent;
+}
+
+.tims-hex-row-1 {
+  z-index: 3;
+}
+
+/* Interlocks Row 2 into bottom V-notches of Row 1 */
+.tims-hex-row-2 {
+  margin-top: -53px;
+  z-index: 2;
+}
+
+/* ---------- Larger Pointy-Top Hexagon Card Component ---------- */
+
+.tims-hex-card {
+  position: relative;
+  width: 185px;
+  height: 214px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
+  filter: drop-shadow(0 9px 18px rgba(20, 22, 28, 0.08));
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.tims-uni-card-button:hover {
-  background: var(--tu-card-accent);
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 5px 5px 0 #14161c;
+.tims-hex-card:hover {
+  transform: translateY(-6px) scale(1.06);
+  filter: drop-shadow(0 18px 30px rgba(212, 175, 55, 0.36))
+          drop-shadow(0 9px 18px rgba(20, 22, 28, 0.12));
+  z-index: 10;
 }
 
-.tims-uni-card-button svg {
-  transition: transform 0.3s ease;
+.tims-hex-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.tims-uni-card-button:hover svg {
-  transform: translateX(3px);
+.tims-hex-content {
+  position: relative;
+  z-index: 2;
+  width: 82%;
+  height: 78%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.35rem 0.5rem;
 }
 
-/* ---------- Responsive ---------- */
+.tims-hex-logo-wrap {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+}
 
-@media (max-width: 960px) {
-  .tims-universities-grid {
-    grid-template-columns: repeat(2, 1fr);
+.tims-hex-logo {
+  max-width: 85%;
+  max-height: 52px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.tims-hex-card:hover .tims-hex-logo {
+  transform: scale(1.08);
+}
+
+.tims-hex-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--tu-navy);
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 145px;
+}
+
+/* ---------- Responsive Scaling ---------- */
+
+@media (max-width: 1024px) {
+  .tims-hex-row {
+    gap: 12px;
+  }
+
+  .tims-hex-row-2 {
+    margin-top: -44px;
+  }
+
+  .tims-hex-card {
+    width: 155px;
+    height: 179px;
+  }
+
+  .tims-hex-logo-wrap {
+    height: 48px;
+  }
+
+  .tims-hex-logo {
+    max-height: 40px;
+  }
+
+  .tims-hex-name {
+    font-size: 0.78rem;
+    max-width: 120px;
   }
 }
 
-@media (max-width: 640px) {
-  .tims-universities-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .tims-hex-row {
+    gap: 10px;
   }
 
-  .tims-uni-card-body {
-    padding: 0.25rem 1.35rem 1.5rem;
+  .tims-hex-row-2 {
+    margin-top: -38px;
+  }
+
+  .tims-hex-card {
+    width: 135px;
+    height: 156px;
+  }
+
+  .tims-hex-logo-wrap {
+    height: 42px;
+  }
+
+  .tims-hex-logo {
+    max-height: 34px;
+  }
+
+  .tims-hex-name {
+    font-size: 0.72rem;
+    max-width: 105px;
   }
 }
 
-@media (max-width: 380px) {
-  .tims-universities-section {
-    padding-left: 1rem;
-    padding-right: 1rem;
+@media (max-width: 580px) {
+  .tims-hex-wrapper {
+    gap: 0.75rem;
+  }
+
+  .tims-hex-row {
+    flex-wrap: wrap;
+    margin-top: 0 !important;
+    gap: 0.75rem;
+  }
+
+  .tims-hex-card {
+    width: 130px;
+    height: 150px;
+  }
+
+  .tims-hex-name {
+    font-size: 0.7rem;
+    max-width: 98px;
   }
 }

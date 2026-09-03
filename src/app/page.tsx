@@ -10,6 +10,7 @@ import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import DreamSection from "@/components/DreamSection/DreamSection";
 import BlogSection from "@/components/BlogSection/BlogSection";
 import DistanceEducationSection from "@/components/DistanceEducationSection/DistanceEducationSection";
+import HomeGallerySection from "@/components/HomeGallerySection/HomeGallerySection";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       <DreamSection />
       <BlogSection />
       <DistanceEducationSection />
+      <HomeGallerySection />
     </main>
   );
 }
