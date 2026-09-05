@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
-import PageHero from "@/components/PageHero/PageHero";
+import DirectorsHero from "@/components/DirectorsHero/DirectorsHero";
 
 export const metadata: Metadata = {
-  title: "Directors | TIMS Education",
-  description: "Meet the directors and leadership team of TIMS Education.",
+  title: "Directors & Leadership | TIMS Education",
+  description: "Meet the directors, founders, and leadership team of TIMS Education.",
 };
 
 export default function DirectorsPage() {
   return (
     <main>
-      <PageHero title="Directors" />
+      <DirectorsHero />
       <DirectorsSection />
     </main>
   );

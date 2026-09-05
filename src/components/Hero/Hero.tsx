@@ -1,13 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Hero.module.css";
 import { useEnquiryForm } from "@/lib/useEnquiryForm";
+
+type MarqueeNewsItem = {
+  id: string;
+  tag: string;
+  title: string;
+  description: string;
+  link?: string;
+};
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { status, errorMessage, handleSubmit } = useEnquiryForm("home-hero");
+  const [newsItems, setNewsItems] = useState<MarqueeNewsItem[]>([]);
+
+  useEffect(() => {
+    async function loadMarqueeItems() {
+      try {
+        const res = await fetch("/api/news-events?marquee=true");
+        const data = await res.json();
+        if (data.items && Array.isArray(data.items)) {
+          setNewsItems(
+            data.items.map((item: any) => ({
+              id: item.id,
+              tag: item.tag || "UPDATE",
+              title: item.title || "",
+              description: item.description || "",
+              link: item.link || "/students/news",
+            }))
+          );
+        }
+      } catch (err) {
+        console.error("Failed to load marquee news items:", err);
+      }
+    }
+    loadMarqueeItems();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -71,110 +103,41 @@ export default function Hero() {
 
   return (
     <section className={styles.hero}>
-      <video
+      {/* <video
         ref={videoRef}
         className={styles.bgVideo}
-        src="/images/stories/Campus_video.mp4"
+        src="/images/stories/Campus_video1.mp4"
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
         aria-hidden="true"
-      />
+      /> */}
       <div className={styles.backdrop} aria-hidden="true" />
 
       <div className={styles.inner}>
         <div className={styles.content}>
-          <p className={styles.eyebrow}>TRUSTED EDUCATION GUIDANCE · SINCE 2009</p>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowLine} aria-hidden="true" />
+            <span>YOUR NEXT ACADEMIC STEP STARTS HERE</span>
+          </div>
           <h1 className={styles.title}>
-            Find <span>The Right Course</span>
+            Learn Without Limits.
             <br />
-            For Your Future
+            <span className={styles.titleTeal}>Build the Future You Want.</span>
           </h1>
           <p className={styles.subtitle}>
-            Explore 10th, Degree &amp; PG programs with expert guidance for admissions and university selection.
+            Explore 10th &amp; Plus Two, degree, postgraduate, diploma and skill programs with expert guidance to help you choose the right course and university.
           </p>
 
           <div className={styles.actions}>
             <a href="https://findyouruniversity.com/" className={styles.primaryButton}>
-              Find Your Best University
+              Explore Programs &rarr;
             </a>
-            <Link href="#" className={styles.secondaryButton}>
-              Explore Courses
-            </Link>
-          </div>
-
-          <div className={styles.noticeContainer}>
-            <div className={styles.paperNote}>
-              {/* Red Push Pin */}
-              <div className={styles.redPin} aria-hidden="true">
-                <svg width="26" height="30" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M12 0C8.686 0 6 2.686 6 6C6 8.5 7.5 10.6 9.6 11.5L9 18H15L14.4 11.5C16.5 10.6 18 8.5 18 6C18 2.686 15.314 0 12 0Z"
-                    fill="#dc2626"
-                  />
-                  <path
-                    d="M10.5 6C10.5 5.17 11.17 4.5 12 4.5C12.83 4.5 13.5 5.17 13.5 6"
-                    stroke="#fca5a5"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path d="M12 18V28" stroke="#7f1d1d" strokeWidth="2.5" strokeLinecap="round" />
-                  <circle cx="12" cy="6" r="3" fill="#ef4444" />
-                </svg>
-              </div>
-
-              {/* Header with Ringing Bell Icon */}
-              <div className={styles.noticeHeader}>
-                <div className={styles.noticeTitleGroup}>
-                  <div className={styles.bellWrapper}>
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className={styles.bellIcon}
-                    >
-                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                    </svg>
-                    <span className={styles.bellBadge} />
-                  </div>
-                  <h3 className={styles.noticeHeading}>Latest News &amp; Events</h3>
-                </div>
-                <span className={styles.newTag}>Live Updates</span>
-              </div>
-
-              {/* Sample Notifications & News List */}
-              <ul className={styles.noticeList}>
-                <li className={styles.noticeItem}>
-                  <span className={styles.bulletDot} />
-                  <div className={styles.noticeContent}>
-                    <span className={styles.noticeDate}>ADMISSIONS</span>
-                    <strong>2026 Admissions Open:</strong> Enrolling now for SSLC, Plus Two, Degree &amp; PG Courses.
-                  </div>
-                </li>
-                <li className={styles.noticeItem}>
-                  <span className={styles.bulletDot} />
-                  <div className={styles.noticeContent}>
-                    <span className={styles.noticeDate}>SPOT DRIVE</span>
-                    <strong>University Counseling Day:</strong> Free 1-on-1 university selection &amp; spot registration.
-                  </div>
-                </li>
-                <li className={styles.noticeItem}>
-                  <span className={styles.bulletDot} />
-                  <div className={styles.noticeContent}>
-                    <span className={styles.noticeDate}>SCHOLARSHIP</span>
-                    <strong>Fee Waiver Scheme:</strong> Early applicants receive up to 30% tuition fee discounts.
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <a href="#hero-name" className={styles.secondaryButton}>
+              Talk to an Advisor
+            </a>
           </div>
         </div>
 
@@ -250,6 +213,61 @@ export default function Hero() {
             {status === "error" && <p className={styles.formStatusError}>{errorMessage}</p>}
           </form>
         </div>
+      </div>
+
+      {/* Marquee News & Events Bar */}
+      <div className={styles.marqueeSection}>
+        <div className={styles.marqueeHeader}>
+          <div className={styles.bellWrapper}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={styles.bellIcon}
+            >
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+            </svg>
+            <span className={styles.bellBadge} />
+          </div>
+          <span className={styles.marqueeTitle}>Latest Updates</span>
+          <span className={styles.liveTag}>LIVE</span>
+        </div>
+
+        <div className={styles.marqueeContainer}>
+          <div className={styles.marqueeTrack}>
+            {/* Set 1 */}
+            {newsItems.map((item) => (
+              <Link href={item.link || "/students/news"} key={`news-1-${item.id}`} className={styles.marqueeItem}>
+                <span className={styles.marqueeDateTag}>{item.tag}</span>
+                <strong className={styles.marqueeItemTitle}>{item.title}:</strong>
+                <span className={styles.marqueeItemDesc}>{item.description}</span>
+                <span className={styles.marqueeDivider}>•</span>
+              </Link>
+            ))}
+            {/* Set 2 (duplication for continuous loop) */}
+            {newsItems.map((item) => (
+              <Link href={item.link || "/students/news"} key={`news-2-${item.id}`} className={styles.marqueeItem}>
+                <span className={styles.marqueeDateTag}>{item.tag}</span>
+                <strong className={styles.marqueeItemTitle}>{item.title}:</strong>
+                <span className={styles.marqueeItemDesc}>{item.description}</span>
+                <span className={styles.marqueeDivider}>•</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <Link href="/students/news" className={styles.viewAllLink}>
+          View All
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </Link>
       </div>
     </section>
   );

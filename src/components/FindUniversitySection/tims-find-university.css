@@ -61,14 +61,33 @@
 }
 
 .tims-fu-source {
-  margin: 1rem 0 0;
-  font-size: 0.8125rem;
+  margin: 1.1rem 0 0;
+  font-size: 0.875rem;
   color: var(--fu-text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
-.tims-fu-source a {
+.tims-fu-link-highlight {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 800;
   color: var(--fu-navy);
-  font-weight: 700;
+  background: #ffcf3f;
+  border: 2px solid var(--fu-navy);
+  border-radius: 8px;
+  padding: 0.25rem 0.65rem;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--fu-navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.tims-fu-link-highlight:hover {
+  background: #ffe066;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--fu-navy);
 }
 
 /* ---------- Stat strip ---------- */

@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero/Hero";
 import SuccessStoriesSection from "@/components/SuccessStoriesSection/SuccessStoriesSection";
-import NewAboutSection from "@/components/NewAboutSection/NewAboutSection";
+// import NewAboutSection from "@/components/NewAboutSection/NewAboutSection";
 import CoursesSection from "@/components/CoursesSection/CoursesSection";
 import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSection";
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
@@ -17,7 +17,7 @@ export default function Home() {
     <main>
       <Hero />
       <SuccessStoriesSection />
-      <NewAboutSection />
+      {/* <NewAboutSection /> */}
       <CoursesSection />
       <UniversitiesSection />
       <DirectorsSection />

@@ -33,42 +33,35 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.85rem;
-}
-
-.eyebrowLine {
-  display: inline-block;
-  width: 32px;
-  height: 3px;
-  background: #ff5a4e;
-  border-radius: 999px;
+  margin-bottom: 0.9rem;
 }
 
 .eyebrow {
+  display: inline-block;
   font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #ff5a4e;
 }
 
 .title {
   margin: 0 0 1rem;
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.2;
   color: #14161c;
 }
 
 .title span {
-  display: inline-block;
-  background: #ffcf3f;
-  color: #14161c;
-  padding: 0.05em 0.35em;
-  border: 3px solid #14161c;
-  border-radius: 8px;
-  transform: rotate(-1deg);
-  box-shadow: 3px 3px 0 #14161c;
+  color: #ff5a4e;
+  display: inline;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  box-shadow: none;
 }
 
 .subtitle {

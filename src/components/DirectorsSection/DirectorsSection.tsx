@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import "./tims-directors-section.css";
 
 type Director = {
@@ -62,8 +63,36 @@ function PersonIcon() {
 }
 
 export default function DirectorsSection() {
+  const [directors, setDirectors] = useState<Director[]>(directorsList);
+
+  useEffect(() => {
+    async function loadBackendDirectors() {
+      try {
+        const res = await fetch("/api/directors");
+        const data = await res.json();
+        if (data.directors && Array.isArray(data.directors) && data.directors.length > 0) {
+          const published = data.directors.filter((d: any) => d.isPublished);
+          if (published.length > 0) {
+            setDirectors(
+              published.map((item: any) => ({
+                id: item.id,
+                name: item.name,
+                role: item.role,
+                image: item.image || undefined,
+                accentBg: item.accentBg || "#14161c",
+              }))
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load directors from DB:", err);
+      }
+    }
+    loadBackendDirectors();
+  }, []);
+
   // Duplicate directors list for seamless infinite right-to-left marquee loop
-  const loopDirectors = [...directorsList, ...directorsList];
+  const loopDirectors = [...directors, ...directors];
 
   return (
     <section className="tims-directors-section">

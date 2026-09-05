@@ -1,0 +1,125 @@
+.hero {
+  position: relative;
+  width: 100%;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+  background: #F4F0D3;
+  color: #14161c;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  overflow: hidden;
+  box-sizing: border-box;
+  border-bottom: 2px solid rgba(20, 22, 28, 0.08);
+}
+
+.hero *,
+.hero *::before,
+.hero *::after {
+  box-sizing: border-box;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 25%, rgba(255, 90, 78, 0.12), transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(255, 207, 63, 0.25), transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(20, 22, 28, 0.02) 0px,
+      rgba(20, 22, 28, 0.02) 2px,
+      transparent 2px,
+      transparent 14px
+    );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 1.25rem;
+  padding: 0.45rem 1.25rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #ff5a4e;
+  border: 2px solid #14161c;
+  box-shadow: 3px 3px 0 #14161c;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: #14161c;
+}
+
+.title span {
+  color: #ff5a4e;
+  display: inline;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  transform: none;
+  box-shadow: none;
+}
+
+.subtitle {
+  margin: 0 auto 2.25rem;
+  max-width: 680px;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.7;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.featuresStrip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.featureBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #14161c;
+  border: 2px solid #14161c;
+  border-radius: 12px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.84375rem;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 #14161c;
+}
+
+.featureBadgeIcon {
+  color: #ff5a4e;
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .featuresStrip {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .featureBadge {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+}

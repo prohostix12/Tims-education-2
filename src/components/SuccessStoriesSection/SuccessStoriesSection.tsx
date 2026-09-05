@@ -99,7 +99,39 @@ export default function SuccessStoriesSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
 
-  const totalStories = INITIAL_STORIES.length;
+  useEffect(() => {
+    async function loadBackendStories() {
+      try {
+        const res = await fetch("/api/success-stories");
+        const data = await res.json();
+        if (data.stories && Array.isArray(data.stories) && data.stories.length > 0) {
+          const publishedStories = data.stories.filter((s: any) => s.isPublished);
+          if (publishedStories.length > 0) {
+            setCards(
+              publishedStories.map((item: any) => ({
+                id: item.id,
+                title: item.title,
+                caption: item.caption,
+                imageSrc: item.imageSrc,
+                imageAlt: item.imageAlt || item.title,
+                category: item.category || "EVENT",
+                tagBg: item.tagBg || "#ffe4e2",
+                tagColor: item.tagColor || "#dc2626",
+                dateLocation: item.dateLocation || "",
+                studentName: item.studentName || undefined,
+                role: item.role || undefined,
+              }))
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load success stories from DB:", err);
+      }
+    }
+    loadBackendStories();
+  }, []);
+
+  const totalStories = cards.length;
   const touchStartX = useRef<number | null>(null);
 
   // Next Slide: Top card slides out to the left and places at the BACK of the stack
@@ -173,7 +205,6 @@ export default function SuccessStoriesSection() {
           {/* Left Column: Fixed Header & Interactive Controls */}
           <div className={styles.leftColumn}>
             <div className={styles.eyebrowWrapper}>
-              <span className={styles.eyebrowLine} aria-hidden="true" />
               <span className={styles.eyebrow}>REAL IMPACT &amp; SUCCESS</span>
             </div>
 
@@ -234,7 +265,7 @@ export default function SuccessStoriesSection() {
 
             {/* Pagination Dots */}
             <div className={styles.dotsRow}>
-              {INITIAL_STORIES.map((_, idx) => (
+              {cards.map((_, idx) => (
                 <span
                   key={idx}
                   className={`${styles.dot} ${idx === activeStoryIndex ? styles.dotActive : ""}`}

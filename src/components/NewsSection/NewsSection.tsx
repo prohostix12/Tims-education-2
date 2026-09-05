@@ -1,78 +1,18 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "./tims-news-section.css";
 
 type NewsItem = {
-  slug: string;
-  day: string;
-  month: string;
-  year: string;
+  id: string;
+  type: string;
   tag: string;
   title: string;
-  excerpt: string;
+  description: string;
+  eventDate?: string;
+  createdAt?: string;
 };
-
-const newsItems: NewsItem[] = [
-  {
-    slug: "admissions-2026-open",
-    day: "02",
-    month: "Feb",
-    year: "2026",
-    tag: "Admissions",
-    title: "TIMS Education Announces New Admission Batch for 2026",
-    excerpt:
-      "Applications are now open for the upcoming academic session across distance, online, and skill-based programs. Free counselling slots are available for interested students.",
-  },
-  {
-    slug: "convocation-ceremony-2026",
-    day: "28",
-    month: "Jan",
-    year: "2026",
-    tag: "Events",
-    title: "Annual Convocation Ceremony & Graduation Day Announced",
-    excerpt:
-      "The annual graduation day ceremony for completed degree and postgraduate batches will take place next month. Registered students can collect their admit passes.",
-  },
-  {
-    slug: "svsu-december-2025-results",
-    day: "13",
-    month: "Jan",
-    year: "2026",
-    tag: "Results",
-    title: "SVSU Examination Session Results Published",
-    excerpt:
-      "Results for the recent examination session are now available online. Students can check their scorecards or contact student support for marklist delivery.",
-  },
-  {
-    slug: "new-ugc-online-mba",
-    day: "08",
-    month: "Jan",
-    year: "2026",
-    tag: "Courses",
-    title: "New UGC-Approved Online MBA Program Added",
-    excerpt:
-      "TIMS Education has partnered with leading UGC-approved universities to launch online MBA specialisations in Finance, Marketing, HR, and Operations.",
-  },
-  {
-    slug: "university-tie-ups-expansion",
-    day: "22",
-    month: "Dec",
-    year: "2025",
-    tag: "Partnerships",
-    title: "TIMS Education Expands Partner University Tie-ups Across Kerala",
-    excerpt:
-      "New university affiliations provide students more flexibility in choosing recognised degree, diploma, and postgraduate programs close to home.",
-  },
-  {
-    slug: "scholarship-applications-open",
-    day: "10",
-    month: "Dec",
-    year: "2025",
-    tag: "Scholarships",
-    title: "Merit Scholarship Applications Open for Distance Education Students",
-    excerpt:
-      "Eligible students pursuing distance and online degree programs can now apply for merit scholarship waivers for the upcoming term.",
-  },
-];
 
 function ArrowIcon() {
   return (
@@ -95,6 +35,39 @@ function ArrowIcon() {
 }
 
 export default function NewsSection() {
+  const [items, setItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadNews() {
+      try {
+        const res = await fetch("/api/news-events");
+        const data = await res.json();
+        if (data.items && Array.isArray(data.items)) {
+          setItems(data.items);
+        }
+      } catch (error) {
+        console.error("Failed to load news items:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadNews();
+  }, []);
+
+  const formatDateString = (dateStr?: string, createdAt?: string) => {
+    if (dateStr && dateStr.trim().length > 0) {
+      return dateStr;
+    }
+    if (createdAt) {
+      const d = new Date(createdAt);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+      }
+    }
+    return "Recent";
+  };
+
   return (
     <section className="tims-news-section">
       <div className="tims-news-inner">
@@ -106,26 +79,33 @@ export default function NewsSection() {
           </p>
         </div>
 
-        <div className="tims-news-list">
-          {newsItems.map((item) => (
-            <article className="tims-news-item" key={item.slug}>
-              <div className="tims-news-date">
-                <span className="tims-news-date-day">{item.day}</span>
-                <span className="tims-news-date-month">{item.month}</span>
-              </div>
+        {loading ? (
+          <p style={{ textAlign: "center", color: "#6b7280", padding: "2rem" }}>Loading latest news &amp; events...</p>
+        ) : items.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#6b7280", padding: "2rem" }}>No news or events posted yet.</p>
+        ) : (
+          <div className="tims-news-list">
+            {items.map((item) => (
+              <article className="tims-news-item" key={item.id}>
+                <div className="tims-news-date">
+                  <span className="tims-news-date-day">
+                    {formatDateString(item.eventDate, item.createdAt)}
+                  </span>
+                </div>
 
-              <div className="tims-news-content">
-                <span className="tims-news-tag">{item.tag}</span>
-                <h2 className="tims-news-title">{item.title}</h2>
-                <p className="tims-news-excerpt">{item.excerpt}</p>
-                <Link href="/contact" className="tims-news-link">
-                  <span>Enquire Now</span>
-                  <ArrowIcon />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+                <div className="tims-news-content">
+                  <span className="tims-news-tag">{item.tag}</span>
+                  <h2 className="tims-news-title">{item.title}</h2>
+                  <p className="tims-news-excerpt">{item.description}</p>
+                  <Link href="/contact" className="tims-news-link">
+                    <span>Enquire Now</span>
+                    <ArrowIcon />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
