@@ -84,8 +84,8 @@ export default function FindCourseSection() {
           <div className="tims-find-image-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/find-course-university.jpg"
-              alt="Students exploring course and university options with an advisor"
+              src="/images/perfect_course.png"
+              alt="Find your perfect course and university"
               className="tims-find-image"
             />
           </div>

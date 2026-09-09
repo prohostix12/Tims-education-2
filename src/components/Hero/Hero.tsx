@@ -116,6 +116,52 @@ export default function Hero() {
       /> */}
       <div className={styles.backdrop} aria-hidden="true" />
 
+      {/* Scattered Logo Doodles Background */}
+      <div className={styles.doodleContainer} aria-hidden="true">
+        <img
+          src="/images/tims_logo/logo.webp"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "4%", left: "2%", width: "160px", opacity: 0.14, "--rot": "-15deg", animationDelay: "0s", animationDuration: "6s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/tims_favicon.png"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "10%", left: "46%", width: "95px", opacity: 0.12, "--rot": "25deg", animationDelay: "1.2s", animationDuration: "8s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/logo.webp"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "50%", left: "3%", width: "185px", opacity: 0.10, "--rot": "12deg", animationDelay: "2.5s", animationDuration: "7s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/tims_favicon.png"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "3%", left: "82%", width: "110px", opacity: 0.15, "--rot": "-28deg", animationDelay: "0.5s", animationDuration: "9s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/logo.webp"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "60%", left: "88%", width: "170px", opacity: 0.11, "--rot": "35deg", animationDelay: "1.8s", animationDuration: "7.5s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/tims_favicon.png"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "76%", left: "1%", width: "115px", opacity: 0.13, "--rot": "-40deg", animationDelay: "3s", animationDuration: "8.5s" } as React.CSSProperties}
+        />
+        <img
+          src="/images/tims_logo/logo.webp"
+          alt=""
+          className={styles.doodle}
+          style={{ top: "80%", left: "42%", width: "140px", opacity: 0.10, "--rot": "18deg", animationDelay: "2.1s", animationDuration: "6.5s" } as React.CSSProperties}
+        />
+      </div>
+
       <div className={styles.inner}>
         <div className={styles.content}>
           <div className={styles.eyebrow}>

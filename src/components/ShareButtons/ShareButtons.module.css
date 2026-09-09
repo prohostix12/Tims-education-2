@@ -1,0 +1,65 @@
+.shareContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  margin: 2.5rem 0;
+  flex-wrap: wrap;
+}
+
+.shareLabel {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #14161c;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.buttonRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.shareButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.shareButton:hover {
+  background: #14161c;
+  color: #ffffff;
+  border-color: #14161c;
+}
+
+.shareButton.copied {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+}
+
+.shareButton.whatsapp:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+}
+
+.shareButton.twitter:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}

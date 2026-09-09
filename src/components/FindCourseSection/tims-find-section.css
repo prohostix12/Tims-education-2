@@ -150,9 +150,10 @@
 /* ---------- Image ---------- */
 
 .tims-find-image-wrap {
+  border: 3px solid var(--tf-border);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 7px 7px 0 #14161c;
+  box-shadow: 6px 6px 0 #14161c;
   min-height: 260px;
   background: linear-gradient(135deg, #dfe6f1 0%, #ccd6e6 100%);
 }

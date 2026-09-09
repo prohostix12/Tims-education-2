@@ -87,33 +87,42 @@
   box-shadow: 7px 7px 0 #14161c;
 }
 
-/* ---------- Empty image placeholder ---------- */
+/* ---------- Card Media & Image ---------- */
 
 .tims-blog-archive-media {
   position: relative;
-  aspect-ratio: 16 / 11;
-  background: repeating-linear-gradient(
-    135deg,
-    #f6f2e7,
-    #f6f2e7 10px,
-    #e5ebf3 10px,
-    #e5ebf3 20px
-  );
-  border-bottom: 1px dashed rgba(20, 22, 28, 0.18);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  color: rgba(20, 22, 28, 0.32);
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--ba-navy);
+  border-bottom: 3px solid var(--ba-border);
+  overflow: hidden;
+  text-decoration: none;
 }
 
-.tims-blog-archive-media-hint {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+.tims-blog-archive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tims-blog-archive-card:hover .tims-blog-archive-image {
+  transform: scale(1.06);
+}
+
+.tims-blog-archive-category {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  background: var(--ba-red);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(20, 22, 28, 0.4);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 #14161c;
 }
 
 /* ---------- Body ---------- */
@@ -124,16 +133,26 @@
   padding: 1.5rem 1.5rem 1.75rem;
 }
 
+.tims-blog-archive-title-link {
+  text-decoration: none;
+}
+
 .tims-blog-archive-title {
   margin: 0 0 0.65rem;
   font-size: 1.1875rem;
   font-weight: 800;
   line-height: 1.4;
   color: var(--ba-navy);
+  transition: color 0.2s ease;
+}
+
+.tims-blog-archive-title-link:hover .tims-blog-archive-title {
+  color: var(--ba-red);
 }
 
 .tims-blog-archive-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.85rem;
@@ -146,7 +165,7 @@
 }
 
 .tims-blog-archive-excerpt {
-  margin: 0 0 1.1rem;
+  margin: 0 0 1.25rem;
   font-size: 0.9375rem;
   line-height: 1.7;
   color: #5f6b7a;
@@ -161,7 +180,7 @@
   text-decoration: none;
   font-weight: 700;
   font-size: 0.875rem;
-  cursor: default;
+  cursor: pointer;
 }
 
 .tims-blog-archive-link-arrow {
@@ -171,6 +190,7 @@
 .tims-blog-archive-link:hover .tims-blog-archive-link-arrow {
   transform: translateX(3px);
 }
+
 
 /* ---------- Responsive ---------- */
 

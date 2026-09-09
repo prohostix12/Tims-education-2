@@ -1,54 +1,6 @@
+import Link from "next/link";
+import { fetchAllBlogPostsFromDb, BlogPost } from "@/data/blogData";
 import "./tims-blog-archive.css";
-
-type ArchivePost = {
-  slug: string;
-  title: string;
-  date: string;
-  comments: number;
-  excerpt: string;
-};
-
-const posts: ArchivePost[] = [
-  {
-    slug: "best-distance-education-kerala",
-    title: "Best Distance Education Institution in Kerala",
-    date: "January 8, 2026",
-    comments: 0,
-    excerpt:
-      "Kerala is known for having great schools, and it has a lot of schools that offer distance learning. Because there…",
-  },
-  {
-    slug: "online-degree-vs-distance-degree",
-    title: "Online Degree vs Distance Degree: Which One Is Better?",
-    date: "January 8, 2026",
-    comments: 0,
-    excerpt:
-      "Choosing between an online degree and a distance degree can be confusing for many students. Here’s what sets them apart…",
-  },
-  {
-    slug: "svsu-december-2025-results",
-    title: "SVSU December 2025 Session Exam Results Published",
-    date: "March 13, 2026",
-    comments: 0,
-    excerpt:
-      "Swami Vivekanand Subharti University has released the results for the December 2025 examination session. Students can now…",
-  },
-];
-
-function ImagePlaceholderIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" aria-hidden="true">
-      <rect x="3" y="4.5" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="m4.5 17 4.8-5 3.4 3.6 2.4-2.6 4.4 4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function ArrowIcon() {
   return (
@@ -71,7 +23,9 @@ function ArrowIcon() {
   );
 }
 
-export default function BlogArchiveSection() {
+export default async function BlogArchiveSection({ initialPosts }: { initialPosts?: BlogPost[] }) {
+  const posts = initialPosts || (await fetchAllBlogPostsFromDb());
+
   return (
     <section className="tims-blog-archive">
       <div className="tims-blog-archive-inner">
@@ -86,28 +40,38 @@ export default function BlogArchiveSection() {
         <div className="tims-blog-archive-grid">
           {posts.map((post) => (
             <article className="tims-blog-archive-card" key={post.slug}>
-              <div className="tims-blog-archive-media">
-                <ImagePlaceholderIcon />
-                <span className="tims-blog-archive-media-hint">Image coming soon</span>
-              </div>
+              <Link href={`/blog/${post.slug}`} className="tims-blog-archive-media">
+                {Boolean(post.image) && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={post.image} alt={post.title} className="tims-blog-archive-image" />
+                )}
+                <span className="tims-blog-archive-category">{post.category}</span>
+              </Link>
+
 
               <div className="tims-blog-archive-body">
-                <h3 className="tims-blog-archive-title">{post.title}</h3>
+                <Link href={`/blog/${post.slug}`} className="tims-blog-archive-title-link">
+                  <h3 className="tims-blog-archive-title">{post.title}</h3>
+                </Link>
 
                 <div className="tims-blog-archive-meta">
-                  <span>{post.date}</span>
+                  <span>{post.dateString}</span>
                   <span className="tims-blog-archive-meta-divider" aria-hidden="true">
                     /
                   </span>
-                  <span>{post.comments === 0 ? "No Comments" : `${post.comments} Comments`}</span>
+                  <span>{post.readTime}</span>
+                  <span className="tims-blog-archive-meta-divider" aria-hidden="true">
+                    /
+                  </span>
+                  <span>{post.author}</span>
                 </div>
 
                 <p className="tims-blog-archive-excerpt">{post.excerpt}</p>
 
-                <span className="tims-blog-archive-link" aria-disabled="true">
-                  <span>Read More</span>
+                <Link href={`/blog/${post.slug}`} className="tims-blog-archive-link">
+                  <span>Read Full Article</span>
                   <ArrowIcon />
-                </span>
+                </Link>
               </div>
             </article>
           ))}
@@ -116,3 +80,5 @@ export default function BlogArchiveSection() {
     </section>
   );
 }
+
+

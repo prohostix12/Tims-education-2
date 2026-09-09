@@ -1,26 +1,27 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: clamp(370px, 53.8vh, 538px);
+  min-height: clamp(320px, 45vh, 480px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, #14161c 0%, #123061 55%, #14161c 100%);
-  color: #ffffff;
+  background: #F4F0D3;
+  color: #14161c;
   font-family: var(--font-nav, "Segoe UI", sans-serif);
+  border-bottom: 2px solid rgba(20, 22, 28, 0.08);
 }
 
 .backdrop {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255, 90, 78, 0.35), transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(255, 90, 78, 0.25), transparent 45%),
+    radial-gradient(circle at 12% 25%, rgba(255, 90, 78, 0.12), transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(255, 207, 63, 0.25), transparent 40%),
     repeating-linear-gradient(
       45deg,
-      rgba(255, 255, 255, 0.03) 0px,
-      rgba(255, 255, 255, 0.03) 2px,
+      rgba(20, 22, 28, 0.02) 0px,
+      rgba(20, 22, 28, 0.02) 2px,
       transparent 2px,
       transparent 14px
     );
@@ -32,28 +33,30 @@
   z-index: 1;
   max-width: 900px;
   margin: 0 auto;
-  padding: clamp(2rem, 6vw, 3rem) 1.5rem;
+  padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
   text-align: center;
 }
 
 .eyebrow {
   display: inline-block;
-  margin: 0 0 1rem;
-  padding: 0.4rem 1rem;
+  margin: 0 0 1.25rem;
+  padding: 0.45rem 1.25rem;
   border-radius: 999px;
   background: #ffffff;
-  color: #14161c;
+  color: #ff5a4e;
   border: 2px solid #14161c;
   box-shadow: 3px 3px 0 #14161c;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .title {
   margin: 0;
-  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-  font-weight: 700;
+  font-size: clamp(1.85rem, 4.5vw, 3rem);
+  font-weight: 800;
   line-height: 1.2;
+  color: #14161c;
 }
+

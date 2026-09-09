@@ -196,6 +196,44 @@
   transform: translateX(3px);
 }
 
+/* ---------- View More Button ---------- */
+
+.tims-blog-view-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.tims-blog-view-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  background: var(--tb-navy);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(20, 22, 28, 0.15);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tims-blog-view-more-btn:hover {
+  background: var(--tb-red);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 90, 78, 0.35);
+}
+
+.tims-blog-view-more-btn .tims-blog-card-arrow {
+  transition: transform 0.25s ease;
+}
+
+.tims-blog-view-more-btn:hover .tims-blog-card-arrow {
+  transform: translateX(4px);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -222,3 +260,4 @@
     padding-right: 1rem;
   }
 }
+

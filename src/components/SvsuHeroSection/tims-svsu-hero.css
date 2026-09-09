@@ -7,11 +7,31 @@
   --sv-red: #ff5a4e;
   --sv-text-muted: #5f6b7a;
 
-  background: #ffffff;
+  position: relative;
+  background: #F4F0D3;
   color: var(--sv-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  padding: clamp(3rem, 7vw, 5rem) 1.5rem 0;
+  padding: clamp(3rem, 7vw, 4.5rem) 1.5rem 2.5rem;
   box-sizing: border-box;
+  overflow: hidden;
+  border-bottom: 2px solid rgba(20, 22, 28, 0.08);
+}
+
+.tims-svsu-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 25%, rgba(255, 90, 78, 0.12), transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(255, 207, 63, 0.25), transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(20, 22, 28, 0.02) 0px,
+      rgba(20, 22, 28, 0.02) 2px,
+      transparent 2px,
+      transparent 14px
+    );
+  pointer-events: none;
 }
 
 .tims-svsu-hero-section *,
@@ -21,6 +41,8 @@
 }
 
 .tims-svsu-hero-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1140px;
   margin: 0 auto;
 }

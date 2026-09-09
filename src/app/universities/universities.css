@@ -11,24 +11,29 @@
 /* ---------- Hero Banner ---------- */
 
 .universities-hero {
-  background: linear-gradient(135deg, #14161c 0%, #1c212d 100%);
-  color: #ffffff;
-  padding: 5rem 1.5rem 4rem;
+  background: #F4F0D3;
+  color: #14161c;
+  padding: 4.5rem 1.5rem 3.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  border-bottom: 2px solid rgba(20, 22, 28, 0.08);
 }
 
 .universities-hero::before {
   content: "";
   position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 90, 78, 0.12);
-  border-radius: 50%;
-  filter: blur(50px);
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 25%, rgba(255, 90, 78, 0.12), transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(255, 207, 63, 0.25), transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(20, 22, 28, 0.02) 0px,
+      rgba(20, 22, 28, 0.02) 2px,
+      transparent 2px,
+      transparent 14px
+    );
   pointer-events: none;
 }
 
@@ -42,16 +47,22 @@
 .universities-label {
   display: inline-block;
   font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  background: #ffffff;
   color: #ff5a4e;
-  margin-bottom: 0.85rem;
+  border: 2px solid #14161c;
+  box-shadow: 3px 3px 0 #14161c;
+  padding: 0.45rem 1.25rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
 }
 
 .universities-title {
   font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 800;
+  color: #14161c;
   margin: 0 0 1rem;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -59,7 +70,8 @@
 
 .universities-subtitle {
   font-size: clamp(1rem, 2vw, 1.15rem);
-  color: #94a3b8;
+  color: #4a5568;
+  font-weight: 500;
   max-width: 680px;
   margin: 0 auto;
   line-height: 1.6;

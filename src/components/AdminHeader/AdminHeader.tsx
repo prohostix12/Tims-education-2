@@ -26,6 +26,7 @@ const navStructure: NavItem[] = [
   {
     label: "Content & Media",
     children: [
+      { label: "Blog Posts", href: "/admin/blog", description: "Manage articles, guides & news content" },
       { label: "Directors & Leadership", href: "/admin/directors", description: "Manage director profiles & photos" },
       { label: "Success Stories", href: "/admin/success-stories", description: "Manage Real Impact & Success cards" },
       { label: "News & Events", href: "/admin/news", description: "Manage announcements & marquee" },

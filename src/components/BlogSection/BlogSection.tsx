@@ -1,49 +1,6 @@
 import Link from "next/link";
+import { fetchFeaturedHomeBlogPostsFromDb } from "@/data/blogData";
 import "./tims-blog-section.css";
-
-type BlogPost = {
-  slug: string;
-  day: string;
-  month: string;
-  year: string;
-  title: string;
-  author: string;
-  comments: number;
-  image: string;
-};
-
-const posts: BlogPost[] = [
-  {
-    slug: "svsu-december-2025-results",
-    day: "13",
-    month: "Mar",
-    year: "2026",
-    title: "SVSU December 2025 Session Exam Results Published",
-    author: "Tims",
-    comments: 0,
-    image: "/images/blog/svsu-results.jpg",
-  },
-  {
-    slug: "best-distance-education-kerala",
-    day: "08",
-    month: "Jan",
-    year: "2026",
-    title: "Best Distance Education Institution in Kerala",
-    author: "Tims",
-    comments: 0,
-    image: "/images/blog/best-distance-education-kerala.jpg",
-  },
-  {
-    slug: "online-degree-vs-distance-degree",
-    day: "08",
-    month: "Jan",
-    year: "2026",
-    title: "Online Degree vs Distance Degree: Which One Is Better?",
-    author: "Tims",
-    comments: 0,
-    image: "/images/blog/online-vs-distance-degree.jpg",
-  },
-];
 
 function CommentIcon() {
   return (
@@ -63,8 +20,8 @@ function ArrowIcon() {
     <svg
       className="tims-blog-card-arrow"
       viewBox="0 0 24 24"
-      width="15"
-      height="15"
+      width="16"
+      height="16"
       fill="none"
       aria-hidden="true"
     >
@@ -79,7 +36,10 @@ function ArrowIcon() {
   );
 }
 
-export default function BlogSection() {
+export default async function BlogSection() {
+  const posts = await fetchFeaturedHomeBlogPostsFromDb(3);
+
+
   return (
     <section className="tims-blog-section">
       <div className="tims-blog-inner">
@@ -91,10 +51,13 @@ export default function BlogSection() {
         <div className="tims-blog-grid">
           {posts.map((post) => (
             <article className="tims-blog-card" key={post.slug}>
-              <Link href="#" className="tims-blog-card-media">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={post.image} alt={post.title} className="tims-blog-card-image" />
+              <Link href={`/blog/${post.slug}`} className="tims-blog-card-media">
+                {Boolean(post.image) && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={post.image} alt={post.title} className="tims-blog-card-image" />
+                )}
                 <span className="tims-blog-card-scrim" aria-hidden="true" />
+
 
                 <span className="tims-blog-card-date">
                   <span className="tims-blog-card-date-day">{post.day}</span>
@@ -116,7 +79,7 @@ export default function BlogSection() {
                   </span>
                 </span>
 
-                <Link href="#" className="tims-blog-card-link">
+                <Link href={`/blog/${post.slug}`} className="tims-blog-card-link">
                   <span>Read More</span>
                   <ArrowIcon />
                 </Link>
@@ -124,7 +87,15 @@ export default function BlogSection() {
             </article>
           ))}
         </div>
+
+        <div className="tims-blog-view-more-wrap">
+          <Link href="/blog" className="tims-blog-view-more-btn">
+            <span>View More Articles</span>
+            <ArrowIcon />
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
+
