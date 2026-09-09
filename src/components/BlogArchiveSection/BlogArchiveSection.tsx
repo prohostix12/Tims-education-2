@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { fetchAllBlogPostsFromDb, BlogPost } from "@/data/blogData";
+import { fetchAllBlogPostsFromDb } from "@/lib/blogDb";
+import { BlogPost } from "@/data/blogData";
 import "./tims-blog-archive.css";
 
 function ArrowIcon() {

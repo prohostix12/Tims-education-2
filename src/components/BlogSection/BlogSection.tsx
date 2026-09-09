@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchFeaturedHomeBlogPostsFromDb } from "@/data/blogData";
+import { fetchFeaturedHomeBlogPostsFromDb } from "@/lib/blogDb";
 import "./tims-blog-section.css";
 
 function CommentIcon() {

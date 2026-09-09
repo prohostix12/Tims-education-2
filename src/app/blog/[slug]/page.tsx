@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { fetchBlogPostBySlugFromDb, fetchRelatedPostsFromDb } from "@/data/blogData";
+import { fetchBlogPostBySlugFromDb, fetchRelatedPostsFromDb } from "@/lib/blogDb";
 import BlogHero from "@/components/BlogHero/BlogHero";
 import ShareButtons from "@/components/ShareButtons/ShareButtons";
 import styles from "./page.module.css";
