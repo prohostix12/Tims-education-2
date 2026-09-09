@@ -40,7 +40,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 800;
@@ -64,7 +64,7 @@
 .takeawaysCard {
   background: #fefced;
   border: 2px solid #f6e05e;
-  border-left: 6px solid #ff5a4e;
+  border-left: 6px solid #E91D24;
   border-radius: 12px;
   padding: 1.5rem 1.75rem;
   margin-bottom: 2.5rem;
@@ -122,7 +122,7 @@
   margin: 1.75rem 0;
   padding: 1.25rem 1.75rem;
   background: #ffffff;
-  border-left: 4px solid #ff5a4e;
+  border-left: 4px solid #E91D24;
   border-radius: 0 12px 12px 0;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
 }
@@ -198,7 +198,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff5a4e 0%, #d9382b 100%);
+  background: linear-gradient(135deg, #E91D24 0%, #d9382b 100%);
   color: #ffffff;
   font-weight: 800;
   font-size: 1.5rem;
@@ -224,7 +224,7 @@
   margin: 0 0 0.5rem;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #ff5a4e;
+  color: #E91D24;
 }
 
 .authorBio {
@@ -258,7 +258,7 @@
 
 .guidanceBadge {
   background: rgba(255, 90, 78, 0.2);
-  color: #ff5a4e;
+  color: #E91D24;
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -286,7 +286,7 @@
   display: block;
   width: 100%;
   padding: 0.85rem;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   font-weight: 800;
   font-size: 0.9375rem;
@@ -312,7 +312,7 @@
 }
 
 .guidanceSecondaryCta:hover {
-  color: #ff5a4e;
+  color: #E91D24;
 }
 
 /* Related Widget */
@@ -374,7 +374,7 @@
 .relatedCategory {
   font-size: 0.6875rem;
   font-weight: 800;
-  color: #ff5a4e;
+  color: #E91D24;
   text-transform: uppercase;
 }
 
@@ -438,7 +438,7 @@
 }
 
 .backButton:hover {
-  background: #ff5a4e;
+  background: #E91D24;
 }
 
 /* Responsive */

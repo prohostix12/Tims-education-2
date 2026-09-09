@@ -51,7 +51,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: #ffffff;
-  color: #ff5a4e;
+  color: #E91D24;
   border: 2px solid #14161c;
   box-shadow: 3px 3px 0 #14161c;
   padding: 0.45rem 1.25rem;
@@ -125,9 +125,9 @@
 }
 
 .uni-tab-btn.active {
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   box-shadow: 0 4px 12px rgba(255, 90, 78, 0.3);
 }
 
@@ -152,7 +152,7 @@
 }
 
 .uni-search-input:focus {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(255, 90, 78, 0.15);
 }
@@ -257,7 +257,7 @@
 }
 
 .uni-badge-red {
-  background: linear-gradient(135deg, #ff6b60 0%, #ff5a4e 100%);
+  background: linear-gradient(135deg, #ff6b60 0%, #E91D24 100%);
 }
 
 .uni-badge-dark {
@@ -301,8 +301,8 @@
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
-  border: 1.5px solid #ff5a4e;
-  color: #ff5a4e;
+  border: 1.5px solid #E91D24;
+  color: #E91D24;
   background: #ffffff;
   transition: all 0.3s ease;
   margin-top: auto;
@@ -310,7 +310,7 @@
 }
 
 .uni-card-btn:hover {
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(255, 90, 78, 0.3);
   transform: translateY(-1px);

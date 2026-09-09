@@ -56,13 +56,13 @@
 }
 
 .tims-svsu-online-sidebar-btn-active {
-  background: #ff5a4e;
+  background: #E91D24;
   border-color: #14161c;
   color: #ffffff;
 }
 
 .tims-svsu-online-sidebar-btn-active:hover {
-  background: #ff5a4e;
+  background: #E91D24;
 }
 
 /* ---------- Empty state ---------- */

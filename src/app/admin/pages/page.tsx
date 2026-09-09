@@ -10,8 +10,8 @@ const pages = [
   { name: "B.Tech / M.Tech", path: "/courses/btech-mtech" },
   { name: "Diploma", path: "/courses/diploma" },
   { name: "Apprenticeship Program", path: "/courses/apprenticeship-program" },
-  { name: "Certificate Attestation", path: "/service/attestation" },
-  { name: "Credit Transfer", path: "/service/credit-transfer" },
+  // { name: "Certificate Attestation", path: "/service/attestation" },
+  // { name: "Credit Transfer", path: "/service/credit-transfer" },
   { name: "Syllabus", path: "/students/syllabus" },
   { name: "Contact", path: "/contact" },
 ];

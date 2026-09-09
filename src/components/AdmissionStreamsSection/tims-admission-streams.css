@@ -4,7 +4,7 @@
 
 .tims-admission-section {
   --ad-navy: #14161c;
-  --ad-red: #ff5a4e;
+  --ad-red: #E91D24;
   --ad-text-muted: #5f6b7a;
   --ad-bg: #f6f2e7;
   --ad-card-bg: #ffffff;
@@ -153,7 +153,7 @@
   color: #ffffff;
   font-size: 1rem;
   font-weight: 800;
-  box-shadow: 5px 5px 0 #ff5a4e;
+  box-shadow: 5px 5px 0 #E91D24;
 }
 
 /* ---------- Card body ---------- */

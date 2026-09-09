@@ -509,7 +509,7 @@ export default function AdminBlogPage() {
             <div className={styles.statLabel}>Total Articles</div>
             <div className={styles.statValue}>{posts.length}</div>
           </div>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff5a4e" strokeWidth="2">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E91D24" strokeWidth="2">
             <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10l5 5v11a2 2 0 0 1-2 2z" />
             <polyline points="14 4 14 9 19 9" />
           </svg>

@@ -5,7 +5,7 @@
 .tims-career-section {
   --ca-navy: #14161c;
   --ca-navy-deep: #0c0d11;
-  --ca-red: #ff5a4e;
+  --ca-red: #E91D24;
 
   background: #ffffff;
   font-family: var(--font-nav, "Segoe UI", sans-serif);
@@ -82,7 +82,7 @@
   padding: 0.75rem 1.1rem;
   font-size: 0.8125rem;
   font-weight: 700;
-  box-shadow: 6px 6px 0 #ff5a4e;
+  box-shadow: 6px 6px 0 #E91D24;
   max-width: 180px;
   line-height: 1.35;
 }

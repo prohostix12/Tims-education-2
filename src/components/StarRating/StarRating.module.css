@@ -25,6 +25,6 @@
 }
 
 .inputButton:focus-visible {
-  outline: 2px solid #ff5a4e;
+  outline: 2px solid #E91D24;
   outline-offset: 2px;
 }

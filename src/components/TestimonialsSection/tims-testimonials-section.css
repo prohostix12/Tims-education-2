@@ -4,14 +4,18 @@
 
 .tims-testimonials-section {
   --tt-navy: #14161c;
-  --tt-red: #ff5a4e;
+  --tt-red: #E91D24;
   --tt-gold: #d9a441;
   --tt-text-muted: #5f6b7a;
-  --tt-card-bg: #fbf5e9;
+  --tt-card-bg: #ffffff;
   --tt-border: #14161c;
 
   position: relative;
-  background: #FEFCED;
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--tt-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;

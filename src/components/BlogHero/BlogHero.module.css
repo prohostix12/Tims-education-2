@@ -2,7 +2,7 @@
   position: relative;
   background-color: #F4F0D3;
   color: #14161c;
-  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(5.5rem, 10vw, 7.5rem) 1.5rem clamp(3rem, 6vw, 4.5rem);
   overflow: hidden;
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   border-bottom: 2px solid rgba(20, 22, 28, 0.08);
@@ -67,7 +67,7 @@
 }
 
 .breadcrumbLink:hover {
-  color: #ff5a4e;
+  color: #E91D24;
 }
 
 .breadcrumbSeparator {
@@ -75,7 +75,7 @@
 }
 
 .breadcrumbCurrent {
-  color: #ff5a4e;
+  color: #E91D24;
   font-weight: 700;
 }
 
@@ -83,7 +83,7 @@
 .categoryBadge {
   display: inline-block;
   background: #ffffff;
-  color: #ff5a4e;
+  color: #E91D24;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -141,7 +141,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff5a4e 0%, #e03b2f 100%);
+  background: linear-gradient(135deg, #E91D24 0%, #e03b2f 100%);
   color: #ffffff;
   font-weight: 800;
   font-size: 0.875rem;

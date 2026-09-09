@@ -4,14 +4,18 @@
 
 .tims-distance-section {
   --td2-navy: #14161c;
-  --td2-red: #ff5a4e;
+  --td2-red: #E91D24;
   --td2-text-muted: #5f6b7a;
-  --td2-bg: #F4F0D3;
+  --td2-bg: #FEFCED;
   --td2-card-bg: #ffffff;
   --td2-border: #14161c;
 
   position: relative;
-  background: var(--td2-bg);
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--td2-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3.5rem, 9vw, 7rem) 1.5rem;
@@ -221,7 +225,7 @@
 .tims-distance-cta:hover {
   background: #e0473c;
   transform: translateY(-2px);
-  box-shadow: 6px 6px 0 #ff5a4e;
+  box-shadow: 6px 6px 0 #E91D24;
 }
 
 /* ---------- Responsive ---------- */

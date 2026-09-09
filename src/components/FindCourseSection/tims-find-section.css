@@ -4,13 +4,17 @@
 
 .tims-find-section {
   --tf-navy: #14161c;
-  --tf-red: #ff5a4e;
+  --tf-red: #E91D24;
   --tf-text-muted: #5f6b7a;
-  --tf-bg: #F4F0D3;
+  --tf-bg: #FEFCED;
   --tf-card-bg: #ffffff;
   --tf-border: #14161c;
 
-  background: var(--tf-bg);
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--tf-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;

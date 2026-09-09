@@ -14,8 +14,8 @@ const services = [
   "Admission Guidance & Processing",
   "Study Materials & Exam Prep",
   "Career Counseling",
-  "Credit Transfer Programs",
-  "Attestation Services",
+  // "Credit Transfer Programs",
+  // "Attestation Services",
   "International University Partnerships",
   "NIOS Pathway Guidance",
 ];

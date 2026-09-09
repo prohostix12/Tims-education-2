@@ -353,7 +353,7 @@ export default function AdminSuccessStoriesPage() {
             <div className={styles.statLabel}>Total Cards</div>
             <div className={styles.statValue}>{stories.length}</div>
           </div>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff5a4e" strokeWidth="2">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E91D24" strokeWidth="2">
             <rect x="3" y="3" width="18" height="18" rx="2" />
             <path d="M3 9h18M9 21V9" />
           </svg>

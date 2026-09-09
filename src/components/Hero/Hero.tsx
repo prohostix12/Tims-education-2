@@ -179,7 +179,13 @@ export default function Hero() {
 
           <div className={styles.actions}>
             <a href="https://findyouruniversity.com/" className={styles.primaryButton}>
-              Explore Programs &rarr;
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/tims_logo/FindYourUniversity_logo.png"
+                alt=""
+                className={styles.buttonIcon}
+              />
+              <span>Find Your University</span>
             </a>
             <a href="#hero-name" className={styles.secondaryButton}>
               Talk to an Advisor

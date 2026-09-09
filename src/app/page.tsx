@@ -6,6 +6,7 @@ import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSe
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
 import FindCourseSection from "@/components/FindCourseSection/FindCourseSection";
 import TestimonialsSection from "@/components/TestimonialsSection/TestimonialsSection";
+import FaqSection from "@/components/FaqSection/FaqSection";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import DreamSection from "@/components/DreamSection/DreamSection";
 import BlogSection from "@/components/BlogSection/BlogSection";
@@ -19,11 +20,12 @@ export default function Home() {
       <SuccessStoriesSection />
       {/* <NewAboutSection /> */}
       <CoursesSection />
-      <UniversitiesSection />
+      {/* <UniversitiesSection /> */}
       <DirectorsSection />
       <FindCourseSection />
-      <PartnersSection />
       <TestimonialsSection />
+      <PartnersSection />
+      <FaqSection />
       <DreamSection />
       <BlogSection />
       <DistanceEducationSection />

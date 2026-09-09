@@ -1,12 +1,16 @@
 .tims-directors-section {
   --dr-navy: #14161c;
-  --dr-red: #ff5a4e;
+  --dr-red: #E91D24;
   --dr-gold: #ffcf3f;
   --dr-text-muted: #4a5568;
   --dr-bg: #FEFCED;
 
   position: relative;
-  background: var(--dr-bg);
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--dr-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3.5rem, 7vw, 6rem) 1.5rem;
@@ -54,7 +58,7 @@
 }
 
 .tims-directors-heading span {
-  color: #ff5a4e;
+  color: #E91D24;
   display: inline;
   background: transparent;
   padding: 0;
@@ -115,51 +119,68 @@
   }
 }
 
-/* ---------- Skewed Director Card Design ---------- */
+/* ---------- Clean Gray Background Director Card Design (Matching Reference Image) ---------- */
 
 .tims-director-card {
   position: relative;
-  width: clamp(260px, 23vw, 295px);
+  width: clamp(270px, 24vw, 310px);
+  height: clamp(380px, 34vw, 440px);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  background: #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .tims-director-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+  background: #e2e2e2;
 }
 
-/* Skewed Polygon Frame (Matching reference image backdrop shape) */
+/* Header Text (Role + Name) at the top of the card */
 
-.tims-director-skew-frame {
-  position: relative;
-  width: 100%;
-  height: clamp(310px, 27vw, 345px);
-  border-radius: 26px 12px 26px 12px;
-  border: 3.5px solid var(--dr-navy);
-  box-shadow: 8px 8px 0 var(--dr-navy);
-  transform: skewX(-5deg);
-  overflow: hidden;
-  transition: box-shadow 0.3s ease;
-}
-
-.tims-director-card:hover .tims-director-skew-frame {
-  box-shadow: 12px 12px 0 var(--dr-navy);
-}
-
-/* Unskew content inside the frame so text & icon stay upright */
-
-.tims-director-unskew-content {
-  width: 100%;
-  height: 100%;
-  transform: skewX(5deg);
+.tims-director-card-header {
+  padding: 1.5rem 1.25rem 0.5rem;
+  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 0.35rem;
+  z-index: 2;
+}
+
+.tims-director-card-role {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.tims-director-card-name {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  font-weight: 700;
+  color: #14161c;
+  line-height: 1.25;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+}
+
+/* Photo Container at the bottom of the card */
+
+.tims-director-photo-container {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
+  overflow: hidden;
   position: relative;
+  margin-top: 0.5rem;
 }
 
 .tims-director-portrait-img {
@@ -168,6 +189,11 @@
   object-fit: cover;
   object-position: top center;
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.tims-director-card:hover .tims-director-portrait-img {
+  transform: scale(1.04);
 }
 
 /* Reserved space for director photo */
@@ -177,96 +203,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  gap: 0.5rem;
+  color: #94a3b8;
   text-align: center;
-  border: 2.5px dashed rgba(255, 255, 255, 0.35);
-  border-radius: 22px;
-  padding: 1.5rem 1rem;
-  width: 88%;
-  height: 88%;
-  background: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
 }
 
 .tims-director-placeholder-space svg {
-  color: rgba(255, 255, 255, 0.85);
+  color: #94a3b8;
   width: 48px;
   height: 48px;
 }
 
 .tims-director-placeholder-text {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* Bottom Overlay Name & Role Badge */
-
-.tims-director-info-badge {
-  position: relative;
-  width: 92%;
-  margin-top: -30px;
-  z-index: 10;
-  background: var(--dr-navy);
-  color: #ffffff;
-  padding: 0.8rem 1rem 0.85rem;
-  border-radius: 16px;
-  border: 3px solid var(--dr-navy);
-  box-shadow: 4px 4px 0 var(--dr-red);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.tims-director-card:hover .tims-director-info-badge {
-  transform: scale(1.03);
-  box-shadow: 6px 6px 0 var(--dr-red);
-}
-
-.tims-director-name {
-  margin: 0 0 0.2rem;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.25;
-}
-
-.tims-director-role {
-  margin: 0;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--dr-gold);
-  font-style: italic;
+  color: #94a3b8;
 }
 
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1120px) {
   .tims-director-card {
-    width: clamp(240px, 32vw, 280px);
-  }
-
-  .tims-director-skew-frame {
-    height: clamp(280px, 34vw, 330px);
+    width: clamp(240px, 30vw, 280px);
+    height: clamp(350px, 38vw, 390px);
   }
 }
 
 @media (max-width: 680px) {
   .tims-director-card {
-    width: clamp(230px, 68vw, 270px);
-  }
-
-  .tims-director-skew-frame {
-    height: 280px;
-  }
-
-  .tims-director-info-badge {
-    margin-top: -26px;
-    padding: 0.65rem 0.85rem;
-  }
-
-  .tims-director-name {
-    font-size: 0.98rem;
+    width: clamp(230px, 70vw, 260px);
+    height: 350px;
   }
 }

@@ -49,7 +49,6 @@ export default function HomeGallerySection() {
           if (contentType && contentType.includes("application/json")) {
             const data = await res.json();
             if (data && Array.isArray(data.sections)) {
-              // Extract all images from all published sections
               const allFetchedImages: string[] = [];
               data.sections.forEach((sec: { images?: string[] }) => {
                 if (Array.isArray(sec.images)) {
@@ -59,7 +58,7 @@ export default function HomeGallerySection() {
 
               if (allFetchedImages.length > 0) {
                 let combined = [...allFetchedImages];
-                while (combined.length < 9) {
+                while (combined.length < 5) {
                   combined = combined.concat(fallbackImages);
                 }
                 setImages(combined);
@@ -75,25 +74,13 @@ export default function HomeGallerySection() {
     fetchGalleryImages();
   }, []);
 
-  // Column 1: Moves Bottom to Top
-  const col1 = [
-    { src: images[0] || fallbackImages[0], ratio: styles.ratioTall },
-    { src: images[1] || fallbackImages[1], ratio: styles.ratioShort },
-    { src: images[2] || fallbackImages[2], ratio: styles.ratioMedium },
-  ];
-
-  // Column 2: Moves Top to Bottom
-  const col2 = [
-    { src: images[3] || fallbackImages[3], ratio: styles.ratioShort },
-    { src: images[4] || fallbackImages[4], ratio: styles.ratioSquare },
-    { src: images[5] || fallbackImages[5], ratio: styles.ratioTall },
-  ];
-
-  // Column 3: Moves Bottom to Top
-  const col3 = [
-    { src: images[6] || fallbackImages[6], ratio: styles.ratioMedium },
-    { src: images[7] || fallbackImages[7], ratio: styles.ratioTall },
-    { src: images[8] || fallbackImages[8], ratio: styles.ratioShort },
+  // Sequential diagonal editorial stack items
+  const displayItems = [
+    { src: images[0] || fallbackImages[0], className: styles.item1 },
+    { src: images[1] || fallbackImages[1], className: styles.item2 },
+    { src: images[2] || fallbackImages[2], className: styles.item3 },
+    { src: images[3] || fallbackImages[3], className: styles.item4 },
+    { src: images[4] || fallbackImages[4], className: styles.item5 },
   ];
 
   return (
@@ -114,57 +101,25 @@ export default function HomeGallerySection() {
           </Link>
         </div>
 
-        {/* Right 3 Vertical Infinite Moving Columns */}
-        <div className={styles.rightCollage}>
-          {/* Column 1: Bottom to Top */}
-          <div className={styles.collageColumn}>
-            <div className={`${styles.collageColumnTrack} ${styles.moveUp}`}>
-              {[...col1, ...col1].map((item, idx) => (
-                <div key={idx} className={`${styles.collageCard} ${item.ratio}`}>
-                  <img
-                    src={item.src}
-                    alt={`TIMS Gallery highlight 1-${idx + 1}`}
-                    className={styles.collageImg}
-                    loading="lazy"
-                  />
-                  <div className={styles.cardHoverFrame} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 2: Top to Bottom */}
-          <div className={styles.collageColumn}>
-            <div className={`${styles.collageColumnTrack} ${styles.moveDown}`}>
-              {[...col2, ...col2].map((item, idx) => (
-                <div key={idx} className={`${styles.collageCard} ${item.ratio}`}>
-                  <img
-                    src={item.src}
-                    alt={`TIMS Gallery highlight 2-${idx + 1}`}
-                    className={styles.collageImg}
-                    loading="lazy"
-                  />
-                  <div className={styles.cardHoverFrame} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 3: Bottom to Top */}
-          <div className={`${styles.collageColumn} ${styles.col3Hide}`}>
-            <div className={`${styles.collageColumnTrack} ${styles.moveUpAlt}`}>
-              {[...col3, ...col3].map((item, idx) => (
-                <div key={idx} className={`${styles.collageCard} ${item.ratio}`}>
-                  <img
-                    src={item.src}
-                    alt={`TIMS Gallery highlight 3-${idx + 1}`}
-                    className={styles.collageImg}
-                    loading="lazy"
-                  />
-                  <div className={styles.cardHoverFrame} />
-                </div>
-              ))}
-            </div>
+        {/* Right Animated Diagonal Editorial Collage */}
+        <div className={styles.rightContainer}>
+          <div className={styles.diagonalCanvas}>
+            {displayItems.map((item, idx) => (
+              <Link
+                key={`diag-item-${idx}`}
+                href="/gallery"
+                className={`${styles.diagonalItem} ${item.className}`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.src}
+                  alt={`TIMS Gallery highlight ${idx + 1}`}
+                  className={styles.diagonalImg}
+                  loading="lazy"
+                />
+                <span className={styles.cardGlow} aria-hidden="true" />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

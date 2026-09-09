@@ -1,7 +1,11 @@
 .section {
   min-height: 100vh;
-  padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
-  background: #FEFCED;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   border-top: 1px solid #e2e8f0;
   border-bottom: 1px solid #e2e8f0;
   overflow: hidden;
@@ -17,21 +21,9 @@
   width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: clamp(2.5rem, 5vw, 4.5rem);
   align-items: center;
-}
-
-@media (max-width: 1024px) {
-  .section {
-    min-height: auto;
-    padding: 3.5rem 1.25rem;
-  }
-
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
 }
 
 /* Left Content */
@@ -43,42 +35,42 @@
 
 .eyebrow {
   display: inline-block;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #ed1c24;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.9rem;
 }
 
 .heading {
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  font-size: clamp(1.6rem, 3vw, 2.375rem);
+  font-size: clamp(2rem, 3.6vw, 2.75rem);
   font-weight: 800;
-  line-height: 1.28;
+  line-height: 1.25;
   color: #14161c;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.35rem;
   letter-spacing: normal;
 }
 
 .subtitle {
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  font-size: 0.9375rem;
-  line-height: 1.8;
+  font-size: clamp(1.05rem, 1.8vw, 1.15rem);
+  line-height: 1.75;
   color: #5f6b7a;
-  margin: 0 0 1.75rem;
-  max-width: 420px;
+  margin: 0 0 2rem;
+  max-width: 520px;
 }
 
 .exploreBtn {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
-  padding: 0.85rem 1.75rem;
+  padding: 0.95rem 2rem;
   background: #14161c;
   color: #ffffff;
   font-family: var(--font-nav, "Segoe UI", sans-serif);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   border-radius: 12px;
   text-decoration: none;
@@ -100,143 +92,172 @@
   transform: translateX(4px);
 }
 
-/* Right Collage Container - 3 Vertical Infinite Moving Columns */
-.rightCollage {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
+/* Right Editorial Diagonal Stack Composition */
+.rightContainer {
+  position: relative;
   width: 100%;
-  height: clamp(620px, 88vh, 880px);
-  overflow: hidden;
-  position: relative;
-  border-radius: 0;
-  background: #000000;
-  padding: 0.5rem;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-}
-
-@media (max-width: 640px) {
-  .rightCollage {
-    grid-template-columns: repeat(2, 1fr);
-    height: 480px;
-  }
-
-  .col3Hide {
-    display: none;
-  }
-}
-
-.collageColumn {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  background: #000000;
-}
-
-.collageColumnTrack {
+  height: clamp(520px, 75vh, 740px);
   display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  background: #000000;
-  will-change: transform;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Vertical Scrolling Animations */
-@keyframes scrollUp {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
-}
-
-@keyframes scrollDown {
-  0% {
-    transform: translateY(-50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/* First Column: Bottom to Top */
-.moveUp {
-  animation: scrollUp 24s linear infinite;
-}
-
-/* Second Column: Top to Bottom */
-.moveDown {
-  animation: scrollDown 22s linear infinite;
-}
-
-/* Third Column: Bottom to Top */
-.moveUpAlt {
-  animation: scrollUp 26s linear infinite;
-}
-
-/* Pause animation on hover so user can hover over images */
-.rightCollage:hover .moveUp,
-.rightCollage:hover .moveDown,
-.rightCollage:hover .moveUpAlt {
-  animation-play-state: paused;
-}
-
-.collageCard {
+.diagonalCanvas {
   position: relative;
   width: 100%;
-  border-radius: 0;
-  overflow: hidden;
-  background: #e2e8f0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  flex-shrink: 0;
+  height: 100%;
+  max-width: 650px;
+  max-height: 650px;
+  background: transparent;
+  overflow: visible;
+  box-shadow: none;
 }
 
-.collageImg {
+/* Square Editorial Item */
+.diagonalItem {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f1f5f9;
+  box-shadow: 0 14px 32px rgba(20, 22, 28, 0.12), 0 4px 10px rgba(20, 22, 28, 0.06);
+  will-change: transform, opacity;
+  animation: diagonalExpand 4.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transition: transform 0.35s ease, z-index 0.35s ease, box-shadow 0.35s ease;
+  text-decoration: none;
+}
+
+.diagonalImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease;
+  transition: transform 0.4s ease;
 }
 
-.collageCard:hover .collageImg {
-  transform: scale(1.06);
-}
-
-/* Inset Grey Border Hover Frame */
-.cardHoverFrame {
+.cardGlow {
   position: absolute;
-  inset: 8px;
-  border: 2px solid #cbd5e1;
-  border-radius: 0;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(20, 22, 28, 0.08);
   pointer-events: none;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+/* Hover Interaction: Scale up & bring to front */
+.diagonalItem:hover {
+  z-index: 30 !important;
+  transform: scale(1.06) translate(0, -4px) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.48), 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.diagonalItem:hover .diagonalImg {
+  transform: scale(1.08);
+}
+
+/* Diagonal Position Stagger & z-index Layers */
+
+.item1 {
+  left: 4%;
+  top: 4%;
+  width: 44%;
+  z-index: 1;
+  animation-delay: 0s;
+}
+
+.item2 {
+  left: 19%;
+  top: 19%;
+  width: 45%;
   z-index: 2;
+  animation-delay: 0.3s;
 }
 
-.collageCard:hover .cardHoverFrame {
-  opacity: 1;
-  transform: scale(1);
-  border-color: #94a3b8;
+.item3 {
+  left: 35%;
+  top: 35%;
+  width: 44%;
+  z-index: 3;
+  animation-delay: 0.6s;
 }
 
-/* Aspect ratio variations for dynamic aesthetic */
-.ratioTall {
-  aspect-ratio: 3 / 4.2;
+.item4 {
+  left: 48%;
+  top: 49%;
+  width: 45%;
+  z-index: 4;
+  animation-delay: 0.9s;
 }
 
-.ratioShort {
-  aspect-ratio: 4 / 3;
+.item5 {
+  left: 56%;
+  top: 58%;
+  width: 41%;
+  z-index: 5;
+  animation-delay: 1.2s;
 }
 
-.ratioSquare {
-  aspect-ratio: 1 / 1;
+/* Coordinated Timeline Animation: Initial hidden -> expand & stack -> hold -> smooth reset */
+
+@keyframes diagonalExpand {
+  0% {
+    opacity: 0;
+    transform: translate(-45px, -45px) scale(0.6) rotate(-2deg);
+  }
+  4% {
+    opacity: 0;
+    transform: translate(-45px, -45px) scale(0.6) rotate(-2deg);
+  }
+  16% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  88% {
+    opacity: 0;
+    transform: translate(15px, 15px) scale(0.95) rotate(1deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-45px, -45px) scale(0.6) rotate(-2deg);
+  }
 }
 
-.ratioMedium {
-  aspect-ratio: 3 / 3.8;
+/* Responsive Layout */
+
+@media (max-width: 1024px) {
+  .section {
+    min-height: auto;
+    padding: 3.5rem 1.25rem;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .rightContainer {
+    height: clamp(440px, 70vw, 560px);
+  }
+
+  .diagonalCanvas {
+    max-width: 520px;
+    max-height: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rightContainer {
+    height: clamp(340px, 85vw, 440px);
+  }
+
+  .diagonalCanvas {
+    border-radius: 18px;
+  }
+
+  .diagonalItem {
+    border-radius: 10px;
+  }
 }

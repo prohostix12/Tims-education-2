@@ -28,7 +28,7 @@
 .brandMark {
   font-size: 1.125rem;
   font-weight: 800;
-  color: #ff5a4e;
+  color: #E91D24;
   letter-spacing: 0.02em;
 }
 
@@ -75,7 +75,7 @@
 
 .navLinkActive {
   color: #ffffff;
-  background: #ff5a4e;
+  background: #E91D24;
 }
 
 .navLinkActive:hover {
@@ -149,7 +149,7 @@
 
 .dropdownItemActive {
   background: rgba(255, 90, 78, 0.18);
-  border-left: 3px solid #ff5a4e;
+  border-left: 3px solid #E91D24;
 }
 
 .dropdownItemLabel {

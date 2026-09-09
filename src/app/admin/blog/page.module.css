@@ -33,7 +33,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   border: none;
   padding: 0.75rem 1.35rem;
@@ -120,7 +120,7 @@
 }
 
 .searchInput:focus {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
 }
 
 .categorySelect {
@@ -187,7 +187,7 @@
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   font-size: 0.6875rem;
   font-weight: 800;
@@ -429,7 +429,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #ff5a4e;
+  color: #E91D24;
   padding-top: 0.5rem;
   border-top: 1px solid #f1f5f9;
   margin-top: 0.5rem;
@@ -480,7 +480,7 @@
 
 .input:focus,
 .textarea:focus {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
 }
 
 /* Drop Zone */
@@ -495,7 +495,7 @@
 }
 
 .dropZoneHover {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   background: #fefced;
 }
 
@@ -544,7 +544,7 @@
 
 .addSmallBtn {
   background: #f1f5f9;
-  color: #ff5a4e;
+  color: #E91D24;
   border: 1px solid #ffd0cc;
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
@@ -554,7 +554,7 @@
 }
 
 .addSmallBtn:hover {
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
 }
 
@@ -610,7 +610,7 @@
 .checkbox {
   width: 18px;
   height: 18px;
-  accent-color: #ff5a4e;
+  accent-color: #E91D24;
 }
 
 .modalFooter {
@@ -636,7 +636,7 @@
 .saveBtn {
   padding: 0.7rem 1.5rem;
   border-radius: 10px;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #ffffff;
   border: none;
   font-weight: 700;

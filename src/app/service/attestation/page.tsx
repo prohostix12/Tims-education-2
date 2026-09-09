@@ -11,9 +11,11 @@ export const metadata: Metadata = {
 export default function AttestationPage() {
   return (
     <main>
+      {/*
       <PageHero title="Certificate Attestation" />
       <AttestationSection />
       <AttestationTrustSection />
+      */}
     </main>
   );
 }

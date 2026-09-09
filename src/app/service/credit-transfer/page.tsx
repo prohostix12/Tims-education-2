@@ -12,10 +12,12 @@ export const metadata: Metadata = {
 export default function CreditTransferPage() {
   return (
     <main>
+      {/*
       <PageHero title="Credit Transfer" />
       <CreditTransferSection />
       <CreditTransferProcessSection />
       <CreditTransferRestartSection />
+      */}
     </main>
   );
 }

@@ -40,6 +40,7 @@ const navItems: NavLink[] = [
       { label: "Skill Courses", href: "#" },
     ],
   },
+  /*
   {
     label: "Service",
     href: "",
@@ -48,6 +49,7 @@ const navItems: NavLink[] = [
       { label: "Credit Transfer", href: "/service/credit-transfer" },
     ],
   },
+  */
   {
     label: "Universities",
     href: "/universities",
@@ -159,16 +161,253 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
+function renderNavIcon(label: string) {
+  const norm = label.trim().toLowerCase();
+
+  if (norm === "find university" || norm.includes("findyouruniversity")) {
+    return (
+      /* eslint-disable-next-line @next/next/no-img-element */
+      <img
+        src="/images/tims_logo/FindYourUniversity_logo.png"
+        alt=""
+        className={styles.navIconImg}
+      />
+    );
+  }
+
+  if (norm === "home") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "about") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "directors") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "gallery") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21 15 16 10 5 21" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "blog") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "news") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M9 12h6m-6 4h6" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "courses") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+          <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("sslc") || norm.includes("plus two")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("online degree")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("post graduation") || norm.includes("pg")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="8" r="7" />
+          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("btech") || norm.includes("mtech")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("diploma")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("apprenticeship") || norm.includes("skill")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "service") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polyline points="2 17 12 22 22 17" />
+          <polyline points="2 12 12 17 22 12" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("attestation")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("credit transfer")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="17 1 21 5 17 9" />
+          <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+          <polyline points="7 23 3 19 7 15" />
+          <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm.includes("universit")) {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="3" y1="21" x2="21" y2="21" />
+          <line x1="6" y1="18" x2="6" y2="11" />
+          <line x1="10" y1="18" x2="10" y2="11" />
+          <line x1="14" y1="18" x2="14" y2="11" />
+          <line x1="18" y1="18" x2="18" y2="11" />
+          <polygon points="12 3 2 8 22 8 12 3" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (norm === "contact") {
+    return (
+      <span className={styles.navIconSvg}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+        </svg>
+      </span>
+    );
+  }
+
+  return (
+    <span className={styles.navIconSvg}>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3" fill="currentColor" />
+      </svg>
+    </span>
+  );
+}
+
 /* ---------- Dropdown menus (desktop) ---------- */
 
 function DropdownMenu({
   items,
   open,
   depth,
+  onItemClick,
 }: {
   items: NavLink[];
   open: boolean;
   depth: number;
+  onItemClick?: () => void;
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -187,13 +426,26 @@ function DropdownMenu({
           onMouseLeave={() => item.children && setHovered(null)}
         >
           <Link
-            href={item.href}
+            href={item.href || "#"}
             className={styles.dropdownLink}
             role="menuitem"
             aria-haspopup={item.children ? "true" : undefined}
             aria-expanded={item.children ? hovered === item.label : undefined}
+            onClick={(e) => {
+              if (item.children) {
+                if (!item.href || item.href === "#") {
+                  e.preventDefault();
+                }
+                setHovered((prev) => (prev === item.label ? null : item.label));
+              } else if (onItemClick) {
+                onItemClick();
+              }
+            }}
           >
-            {item.label}
+            <span className={styles.dropdownLinkLabel}>
+              {renderNavIcon(item.label)}
+              <span>{item.label}</span>
+            </span>
             {item.children && (
               <ChevronDownIcon className={styles.subChevron} />
             )}
@@ -204,6 +456,7 @@ function DropdownMenu({
               items={item.children}
               open={hovered === item.label}
               depth={depth + 1}
+              onItemClick={onItemClick}
             />
           )}
         </li>
@@ -225,8 +478,9 @@ function MobileSubList({
     <ul className={styles.mobileSubList}>
       {items.map((item) => (
         <li key={item.label}>
-          <Link href={item.href} onClick={onNavigate}>
-            {item.label}
+          <Link href={item.href || "#"} onClick={onNavigate} className={styles.mobileLinkFlex}>
+            {renderNavIcon(item.label)}
+            <span>{item.label}</span>
           </Link>
           {item.children && (
             <MobileSubList items={item.children} onNavigate={onNavigate} />
@@ -252,9 +506,6 @@ export default function Header() {
     };
   }, []);
 
-  // A single click should navigate home like any normal logo link, but a
-  // double-click should jump to the admin panel instead — so the first
-  // click's navigation is held back briefly in case a second click follows.
   const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
@@ -280,17 +531,18 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!mobileOpen) return;
+    if (!mobileOpen && !openDropdown) return;
 
     function handleClickOutside(event: MouseEvent) {
       if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
         setMobileOpen(false);
+        setOpenDropdown(null);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [mobileOpen]);
+  }, [mobileOpen, openDropdown]);
 
   const isActive = (href: string) =>
     href !== "" &&
@@ -332,12 +584,23 @@ export default function Header() {
                   onMouseLeave={() => item.children && setOpenDropdown(null)}
                 >
                   <Link
-                    href={item.href}
+                    href={item.href || "#"}
                     className={`${styles.navLink} ${isSectionActive(item) ? styles.navLinkActive : ""}`}
                     aria-haspopup={item.children ? "true" : undefined}
                     aria-expanded={item.children ? openDropdown === item.label : undefined}
+                    onClick={(e) => {
+                      if (item.children) {
+                        if (!item.href || item.href === "#") {
+                          e.preventDefault();
+                        }
+                        setOpenDropdown((prev) => (prev === item.label ? null : item.label));
+                      } else {
+                        setOpenDropdown(null);
+                      }
+                    }}
                   >
-                    {item.label}
+                    {renderNavIcon(item.label)}
+                    <span>{item.label}</span>
                     {item.children && <ChevronDownIcon className={styles.chevron} />}
                   </Link>
 
@@ -346,6 +609,7 @@ export default function Header() {
                       items={item.children}
                       open={openDropdown === item.label}
                       depth={0}
+                      onItemClick={() => setOpenDropdown(null)}
                     />
                   )}
                 </li>
@@ -393,9 +657,10 @@ export default function Header() {
               <Link
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={isSectionActive(item) ? styles.mobileLinkActive : ""}
+                className={`${isSectionActive(item) ? styles.mobileLinkActive : ""} ${styles.mobileLinkFlex}`}
               >
-                {item.label}
+                {renderNavIcon(item.label)}
+                <span>{item.label}</span>
               </Link>
               {item.children && (
                 <MobileSubList

@@ -32,7 +32,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #14161c;
   font-weight: 800;
   font-size: 0.9375rem;
@@ -114,7 +114,7 @@
 }
 
 .searchInput:focus {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   background: #ffffff;
 }
 
@@ -231,7 +231,7 @@
 .dateLocText {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #ff5a4e;
+  color: #E91D24;
   margin: 0 0 0.4rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -434,7 +434,7 @@
 .input:focus,
 .textarea:focus,
 .select:focus {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   background: #ffffff;
 }
 
@@ -456,12 +456,12 @@
 }
 
 .dropZoneHover {
-  border-color: #ff5a4e;
+  border-color: #E91D24;
   background: rgba(255, 90, 78, 0.05);
 }
 
 .dropZoneIcon {
-  color: #ff5a4e;
+  color: #E91D24;
   margin-bottom: 0.5rem;
 }
 
@@ -537,7 +537,7 @@
 .checkbox {
   width: 18px;
   height: 18px;
-  accent-color: #ff5a4e;
+  accent-color: #E91D24;
   cursor: pointer;
 }
 
@@ -571,7 +571,7 @@
   padding: 0.75rem 1.6rem;
   border-radius: 12px;
   border: 2.5px solid #14161c;
-  background: #ff5a4e;
+  background: #E91D24;
   color: #14161c;
   font-weight: 800;
   font-size: 0.9rem;

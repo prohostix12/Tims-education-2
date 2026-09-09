@@ -116,33 +116,28 @@ export default function DirectorsSection() {
                 className="tims-director-card"
                 key={`${director.id}-${index}`}
               >
-                {/* Skewed Geometric Photo Frame matching reference design */}
-                <div
-                  className="tims-director-skew-frame"
-                  style={{ backgroundColor: director.accentBg || "#14161c" }}
-                >
-                  <div className="tims-director-unskew-content">
-                    {director.image ? (
-                      <img
-                        src={director.image}
-                        alt={director.name}
-                        className="tims-director-portrait-img"
-                      />
-                    ) : (
-                      <div className="tims-director-placeholder-space">
-                        <PersonIcon />
-                        <span className="tims-director-placeholder-text">
-                          Director Photo Space
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                {/* Header (Role & Name) at top of gray card */}
+                <div className="tims-director-card-header">
+                  <span className="tims-director-card-role">{director.role}</span>
+                  <h3 className="tims-director-card-name">{director.name}</h3>
                 </div>
 
-                {/* Bottom Overlay Badge for Name & Role */}
-                <div className="tims-director-info-badge">
-                  <h3 className="tims-director-name">{director.name}</h3>
-                  <p className="tims-director-role">{director.role}</p>
+                {/* Director Photo Container */}
+                <div className="tims-director-photo-container">
+                  {director.image ? (
+                    <img
+                      src={director.image}
+                      alt={director.name}
+                      className="tims-director-portrait-img"
+                    />
+                  ) : (
+                    <div className="tims-director-placeholder-space">
+                      <PersonIcon />
+                      <span className="tims-director-placeholder-text">
+                        Director Photo
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

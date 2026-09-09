@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: Props) {
                           style={{
                             width: "100%",
                             height: "100%",
-                            background: "#ff5a4e",
+                            background: "#E91D24",
                             color: "#ffffff",
                             display: "flex",
                             alignItems: "center",

@@ -39,7 +39,6 @@ function ArrowIcon() {
 export default async function BlogSection() {
   const posts = await fetchFeaturedHomeBlogPostsFromDb(3);
 
-
   return (
     <section className="tims-blog-section">
       <div className="tims-blog-inner">
@@ -49,42 +48,48 @@ export default async function BlogSection() {
         </div>
 
         <div className="tims-blog-grid">
-          {posts.map((post) => (
-            <article className="tims-blog-card" key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="tims-blog-card-media">
-                {Boolean(post.image) && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={post.image} alt={post.title} className="tims-blog-card-image" />
-                )}
-                <span className="tims-blog-card-scrim" aria-hidden="true" />
-
-
-                <span className="tims-blog-card-date">
-                  <span className="tims-blog-card-date-day">{post.day}</span>
-                  <span className="tims-blog-card-date-month">
-                    {post.month} {post.year}
+          {posts.map((post, index) => (
+            <div
+              className={`tims-blog-paper-wrapper torn-variant-${(index % 3) + 1}`}
+              key={post.slug}
+            >
+              <article className="tims-blog-paper-card">
+                <Link href={`/blog/${post.slug}`} className="tims-blog-paper-image-wrap">
+                  {Boolean(post.image) && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={post.image} alt={post.title} className="tims-blog-paper-image" />
+                  )}
+                  <span className="tims-blog-paper-date">
+                    <span className="tims-blog-paper-date-day">{post.day}</span>
+                    <span className="tims-blog-paper-date-month">
+                      {post.month} {post.year}
+                    </span>
                   </span>
-                </span>
-
-                <h3 className="tims-blog-card-title">{post.title}</h3>
-              </Link>
-
-              <div className="tims-blog-card-footer">
-                <span className="tims-blog-card-meta">
-                  <span className="tims-blog-card-author">{post.author}</span>
-                  <span className="tims-blog-card-meta-divider" aria-hidden="true" />
-                  <span className="tims-blog-card-comments">
-                    <CommentIcon />
-                    {post.comments} Comments
-                  </span>
-                </span>
-
-                <Link href={`/blog/${post.slug}`} className="tims-blog-card-link">
-                  <span>Read More</span>
-                  <ArrowIcon />
                 </Link>
-              </div>
-            </article>
+
+                <div className="tims-blog-paper-content">
+                  <h3 className="tims-blog-paper-title">
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+
+                  <div className="tims-blog-paper-footer">
+                    <div className="tims-blog-paper-meta">
+                      <span className="tims-blog-paper-author">{post.author}</span>
+                      <span className="tims-blog-paper-meta-divider" aria-hidden="true" />
+                      <span className="tims-blog-paper-comments">
+                        <CommentIcon />
+                        {post.comments} Comments
+                      </span>
+                    </div>
+
+                    <Link href={`/blog/${post.slug}`} className="tims-blog-paper-link">
+                      <span>Read More</span>
+                      <ArrowIcon />
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            </div>
           ))}
         </div>
 

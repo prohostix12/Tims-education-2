@@ -302,7 +302,7 @@ export default function AdminDirectorsPage() {
             <div className={styles.statLabel}>Total Directors</div>
             <div className={styles.statValue}>{directors.length}</div>
           </div>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff5a4e" strokeWidth="2">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E91D24" strokeWidth="2">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
             <circle cx="9" cy="7" r="4" />
             <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
