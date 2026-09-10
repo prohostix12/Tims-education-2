@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./tims-faq-section.css";
 
 type FaqItem = {
@@ -8,45 +8,6 @@ type FaqItem = {
   question: string;
   answer: string;
 };
-
-const defaultFaqs: FaqItem[] = [
-  {
-    id: "faq-1",
-    question: "What courses and programs are offered at TIMS Education?",
-    answer:
-      "TIMS Education provides guidance and admissions for SSLC / Plus Two (NIOS & open schooling boards), Online & Distance Undergraduate degrees (BA, BCom, BSc, BBA, BCA), Postgraduate programs (MA, MCom, MSc, MBA, MCA), BTech/MTech admissions, and specialized diploma & skill development courses.",
-  },
-  {
-    id: "faq-2",
-    question: "Are the university degrees UGC-approved and valid for jobs?",
-    answer:
-      "Yes, all programs facilitated by TIMS Education are affiliated with UGC, DEB, AICTE, and MHRD-approved universities. The degrees earned are valid worldwide for private sector jobs, government competitive exams, and further higher education.",
-  },
-  {
-    id: "faq-3",
-    question: "Can I complete 10th or Plus Two if I discontinued my studies?",
-    answer:
-      "Absolutely. Through NIOS and recognized open schooling boards, you can complete your 10th (SSLC) or Plus Two (+2) regardless of your age or study gap. Credit transfer (TOC) is also available to carry forward marks from previous failed attempts.",
-  },
-  {
-    id: "faq-4",
-    question: "How does distance and online learning work for working professionals?",
-    answer:
-      "Our distance and online education models are designed for flexibility. You receive comprehensive study material, digital learning resources, mentor guidance, and weekend/online support so you can continue your education without disturbing your work routine.",
-  },
-  {
-    id: "faq-5",
-    question: "How can I apply or get expert academic counseling?",
-    answer:
-      "You can fill out our online enquiry form on the website or visit your nearest TIMS Education branch. Our experienced academic counselors will help you choose the right course, verify your eligibility, and assist you with the entire admission procedure.",
-  },
-  {
-    id: "faq-6",
-    question: "What support is provided during exam preparation and assignments?",
-    answer:
-      "Our mentors assist you throughout your learning journey with syllabus guidance, previous year question papers, assignment submissions, hall ticket collection, and exam center updates to ensure a smooth academic experience.",
-  },
-];
 
 function PlusMinusIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -67,7 +28,26 @@ function PlusMinusIcon({ isOpen }: { isOpen: boolean }) {
 }
 
 export default function FaqSection() {
+  const [faqs, setFaqs] = useState<FaqItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [openId, setOpenId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadFaqs() {
+      try {
+        const res = await fetch("/api/faqs");
+        if (res.ok) {
+          const data = await res.json();
+          setFaqs(data.faqs || []);
+        }
+      } catch (err) {
+        console.error("Failed to load FAQs:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadFaqs();
+  }, []);
 
   const toggleFaq = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -87,7 +67,7 @@ export default function FaqSection() {
 
         {/* FAQ 2-Column Side-by-Side Accordion Grid */}
         <div className="tims-faq-accordion">
-          {defaultFaqs.map((faq) => {
+          {faqs.map((faq) => {
             const isOpen = openId === faq.id;
             return (
               <div

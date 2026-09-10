@@ -72,7 +72,7 @@ export default function DistanceEducationSection() {
               <GraduationIcon />
             </span>
             <div>
-              <p className="tims-distance-badge-value">15+ Years</p>
+              <p className="tims-distance-badge-value">18+ Years</p>
               <p className="tims-distance-badge-label">Guiding Students Forward</p>
             </div>
           </div>

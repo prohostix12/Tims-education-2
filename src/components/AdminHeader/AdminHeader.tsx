@@ -125,6 +125,7 @@ const navStructure: NavItem[] = [
       { label: "Directors & Leadership", href: "/admin/directors", description: "Manage director profiles & photos" },
       { label: "Success Stories", href: "/admin/success-stories", description: "Manage Real Impact cards" },
       { label: "News & Events", href: "/admin/news", description: "Manage announcements & marquee" },
+      { label: "FAQ", href: "/admin/faq", description: "Manage frequently asked questions" },
       { label: "Site Pages", href: "/admin/pages", description: "Edit page content & metadata" },
       { label: "Media Gallery", href: "/admin/gallery", description: "Manage photos & event albums" },
     ],

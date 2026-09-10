@@ -651,6 +651,30 @@ export default function Header() {
         className={`${styles.mobileDrawer} ${mobileOpen ? styles.mobileDrawerOpen : ""}`}
         aria-label="Mobile navigation"
       >
+        <div className={styles.mobileDrawerHeader}>
+          <span className={styles.mobileDrawerTitle}>Menu</span>
+          <button
+            type="button"
+            className={styles.mobileCloseBtn}
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
         <ul>
           {navItems.map((item) => (
             <li key={item.label}>
@@ -690,7 +714,13 @@ export default function Header() {
         </div>
       </nav>
 
-      {mobileOpen && <div className={styles.mobileScrim} aria-hidden="true" />}
+      {mobileOpen && (
+        <div
+          className={styles.mobileScrim}
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
     </header>
   );
 }

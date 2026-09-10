@@ -147,7 +147,7 @@ export default function DreamSection() {
           <p className="tims-dream-subtitle">
             Provide better education to the society in an affordable cost
           </p>
-          <Link href="#" className="tims-dream-cta">
+          <Link href="/contact" className="tims-dream-cta">
             <span>Get Started</span>
             <ArrowIcon />
           </Link>
