@@ -56,7 +56,8 @@
   transition: background 0.3s ease;
 }
 
-.navLink {
+.navLink,
+.navLink:visited {
   color: #ffffff;
 }
 
@@ -107,7 +108,9 @@
 }
 
 .headerHero.headerScrolled .navLink,
-.headerScrolled .navLink {
+.headerHero.headerScrolled .navLink:visited,
+.headerScrolled .navLink,
+.headerScrolled .navLink:visited {
   color: #ffffff;
 }
 
@@ -181,12 +184,13 @@
   position: relative;
 }
 
-.navLink {
+.navLink,
+.navLink:visited {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  color: var(--navy-ink);
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.98rem;
   font-weight: 700;
@@ -198,6 +202,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: #ffffff;
 }
 
 .navIconImg {
@@ -233,7 +238,7 @@
   flex-shrink: 0;
   width: 12px;
   height: 12px;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   transition: transform 0.15s ease;
 }
 
