@@ -1,6 +1,12 @@
 .galleryPageWrapper {
-  background-color: #F6F2E7;
+  position: relative;
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   width: 100%;
+  overflow: hidden;
 }
 
 .gallerySection {
@@ -8,7 +14,7 @@
   max-width: 1280px;
   margin: 0 auto;
   font-family: inherit;
-  background-color: #F6F2E7;
+  background: transparent;
 }
 
 .intro {
@@ -61,7 +67,7 @@
 /* Section Blocks */
 .eventBlock {
   margin-bottom: 3.5rem;
-  background-color: #F6F2E7;
+  background: transparent;
 }
 
 .eventBlock:last-child {

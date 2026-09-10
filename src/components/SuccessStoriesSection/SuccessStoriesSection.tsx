@@ -274,14 +274,24 @@ export default function SuccessStoriesSection() {
             </div>
 
             {/* Action Buttons */}
-            <div className={styles.ctaGroup}>
+            {/* <div className={styles.ctaGroup}>
               <a href="https://findyouruniversity.com/" className={styles.primaryBtn}>
                 Find Your Program
               </a>
-              <Link href="#contact" className={styles.secondaryBtn}>
+              <button
+                type="button"
+                className={styles.secondaryBtn}
+                onClick={() => {
+                  window.dispatchEvent(
+                    new CustomEvent("open-enquiry-modal", {
+                      detail: { title: "Connect With an Advisor", source: "success-stories-advisor" },
+                    })
+                  );
+                }}
+              >
                 Talk to Advisor
-              </Link>
-            </div>
+              </button>
+            </div> */}
           </div>
 
           {/* Right Column: Infinite Image Card Deck Stage */}

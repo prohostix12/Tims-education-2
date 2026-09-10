@@ -1,211 +1,281 @@
-.header {
+/* Sidebar Container */
+
+.sidebar {
+  width: 270px;
+  min-width: 270px;
+  background-color: #16171a;
+  background-image: linear-gradient(180deg, #181a1e 0%, #121316 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: #14161c;
-  border-bottom: 3px solid #14161c;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  height: 100vh;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 100;
+  overflow-y: auto;
 }
 
-.inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0.85rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+/* Brand Logo */
+.sidebarTop {
+  padding: 0.25rem 0.5rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.25rem;
 }
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
-  flex-shrink: 0;
 }
 
 .brandMark {
-  font-size: 1.125rem;
+  background: #E91D24;
+  color: #ffffff;
   font-weight: 800;
-  color: #E91D24;
-  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 8px;
+  letter-spacing: 0.05em;
 }
 
 .brandLabel {
-  font-size: 1.125rem;
-  font-weight: 700;
   color: #ffffff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
 }
 
-.nav {
+/* Menu Section */
+.menuSection {
   flex: 1;
 }
 
+.sectionTitle {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7b8392;
+  margin: 0 0 1rem 0.6rem;
+}
+
+.nav {
+  width: 100%;
+}
+
 .navList {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
+/* Nav Item Link (Pill design matching reference image) */
 .navLink {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: background 0.15s ease, color 0.15s ease;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
   background: transparent;
+  color: #a2acbc;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
   border: none;
   cursor: pointer;
-  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.navLinkLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8c97a8;
+  transition: color 0.2s ease;
 }
 
 .navLink:hover {
+  background: rgba(255, 255, 255, 0.07);
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
 }
 
+.navLink:hover .navIcon {
+  color: #ffffff;
+}
+
+/* Active Item Pill Highlight (Dark rounded pill background) */
 .navLinkActive {
+  background: #2b2e38;
   color: #ffffff;
-  background: #E91D24;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-.navLinkActive:hover {
-  background: #e0473c;
+.navLinkActive .navIcon {
+  color: #E91D24;
 }
 
-/* ---------- Dropdown Container & Menu Card ---------- */
-
-.dropdownContainer {
-  position: relative;
-}
-
-.dropdownTrigger {
-  outline: none;
-}
-
-.dropdownTriggerOpen {
-  background: rgba(255, 255, 255, 0.12);
+.navLinkGroupActive {
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
+  font-weight: 700;
 }
 
+.navLinkGroupActive .navIcon {
+  color: #E91D24;
+}
+
+/* Chevron */
 .chevron {
-  transition: transform 0.2s ease;
-  opacity: 0.8;
+  transition: transform 0.25s ease;
+  color: #8c97a8;
 }
 
 .chevronRotated {
   transform: rotate(180deg);
 }
 
-.dropdownMenu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  min-width: 240px;
-  background: #1e222d;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  padding: 0.5rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-  z-index: 60;
+/* Nested Sub List */
+.groupContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.dropdownItem {
+.subList {
   display: flex;
   flex-direction: column;
-  padding: 0.65rem 0.85rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.15s ease;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+  margin-left: 1.35rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.dropdownItem:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.dropdownItemActive {
-  background: rgba(255, 90, 78, 0.18);
-  border-left: 3px solid #E91D24;
-}
-
-.dropdownItemLabel {
-  color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 700;
-}
-
-.dropdownItemDesc {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.75rem;
-  margin-top: 0.15rem;
-  line-height: 1.35;
-}
-
-/* ---------- View Site Button ---------- */
-
-.viewSite {
-  flex-shrink: 0;
-  display: inline-flex;
+.subLink {
+  display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  color: #8c97a8;
   text-decoration: none;
-  font-size: 0.8125rem;
+  font-size: 0.83rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.subLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.subLinkActive {
+  background: #E91D24;
+  color: #ffffff;
   font-weight: 700;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  box-shadow: 0 2px 8px rgba(233, 29, 36, 0.35);
 }
 
-.viewSite:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+/* Sidebar Footer */
+.sidebarFooter {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 1.25rem;
 }
 
+.viewSiteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a2acbc;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.viewSiteBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile Top Header (Hidden on Desktop) */
+.mobileHeader {
+  display: none;
+}
+
+.mobileToggleBtn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 6px;
+}
+
+.mobileOverlay {
+  display: none;
+}
+
+/* Responsive Media Queries */
 @media (max-width: 900px) {
-  .inner {
-    flex-wrap: wrap;
-    gap: 1rem;
+  .mobileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background: #16171a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 150;
   }
 
-  .nav {
-    order: 3;
-    flex-basis: 100%;
+  .mobileOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 195;
   }
 
-  .navList {
-    flex-wrap: wrap;
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
   }
 
-  .dropdownMenu {
-    position: static;
-    min-width: 100%;
-    margin-top: 0.5rem;
-    box-shadow: none;
-    background: #181b24;
+  .sidebarMobileOpen {
+    transform: translateX(0);
   }
 }

@@ -3,9 +3,14 @@
   --c-ink: #14161c;
   --c-red: #ed1c24;
   --c-muted: #6b7686;
-  --c-bg: #f6f2e7;
+  --c-bg: #FEFCED;
 
-  background: var(--c-bg);
+  position: relative;
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--c-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 7vw, 5rem) 1.5rem;

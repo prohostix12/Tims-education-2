@@ -6,10 +6,32 @@ import { useEnquiryForm } from "@/lib/useEnquiryForm";
 
 export default function EnquiryModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { status, errorMessage, handleSubmit } = useEnquiryForm("popup-modal");
+  const [modalTitle, setModalTitle] = useState("Connect With an Advisor");
+  const [modalSource, setModalSource] = useState("advisor-modal");
+  const { status, errorMessage, handleSubmit } = useEnquiryForm(modalSource);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenModal = (event: Event) => {
+      const customEvent = event as CustomEvent<{ title?: string; source?: string }>;
+      if (customEvent.detail?.title) {
+        setModalTitle(customEvent.detail.title);
+      } else {
+        setModalTitle("Connect With an Advisor");
+      }
+      if (customEvent.detail?.source) {
+        setModalSource(customEvent.detail.source);
+      }
+      setIsOpen(true);
+    };
+
+    window.addEventListener("open-enquiry-modal", handleOpenModal);
+    return () => {
+      window.removeEventListener("open-enquiry-modal", handleOpenModal);
+    };
   }, []);
 
   useEffect(() => {
@@ -82,7 +104,7 @@ export default function EnquiryModal() {
           </div>
 
           <h2 id="modal-title" className={styles.title}>
-            Start Your Journey
+            {modalTitle}
           </h2>
         </div>
 

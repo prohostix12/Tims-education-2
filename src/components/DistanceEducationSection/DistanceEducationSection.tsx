@@ -115,7 +115,7 @@ export default function DistanceEducationSection() {
             ))}
           </ul>
 
-          <Link href="#" className="tims-distance-cta">
+          <Link href="/courses/online-degree" className="tims-distance-cta">
             <span>Explore Programs</span>
             <ArrowIcon />
           </Link>

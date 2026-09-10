@@ -1,19 +1,22 @@
-/* Isolated, standalone section. All selectors are scoped under
+/* Isolated, standalone section for blog archive page. All selectors are scoped under
    .tims-blog-archive so this file cannot collide with any existing
    styles on the site. */
 
 .tims-blog-archive {
-  --ba-navy: #14161c;
-  --ba-red: #E91D24;
-  --ba-text-muted: #8892a0;
-  --ba-bg: #f6f2e7;
-  --ba-card-bg: #ffffff;
-  --ba-border: #14161c;
+  --tb-navy: #14161c;
+  --tb-red: #E91D24;
+  --tb-text-muted: #5f6b7a;
 
-  background: var(--ba-bg);
-  color: var(--ba-navy);
+  position: relative;
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--tb-navy);
   font-family: var(--font-nav, "Segoe UI", sans-serif);
   padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -24,7 +27,7 @@
 }
 
 .tims-blog-archive-inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -32,8 +35,7 @@
 
 .tims-blog-archive-header {
   text-align: center;
-  max-width: 640px;
-  margin: 0 auto clamp(2.5rem, 6vw, 3.5rem);
+  margin-bottom: clamp(2.25rem, 5vw, 3.25rem);
 }
 
 .tims-blog-archive-label {
@@ -42,23 +44,25 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ba-red);
-  margin-bottom: 0.75rem;
+  color: var(--tb-red);
+  margin-bottom: 0.6rem;
 }
 
 .tims-blog-archive-heading {
-  margin: 0 0 0.75rem;
+  margin: 0 auto 0.6rem;
+  max-width: 30ch;
   font-size: clamp(1.75rem, 3.6vw, 2.5rem);
   font-weight: 800;
   line-height: 1.25;
-  color: var(--ba-navy);
+  color: var(--tb-navy);
 }
 
 .tims-blog-archive-subtitle {
-  margin: 0;
+  margin: 0 auto;
+  max-width: 600px;
   font-size: 1rem;
-  line-height: 1.7;
-  color: var(--ba-text-muted);
+  line-height: 1.6;
+  color: var(--tb-text-muted);
 }
 
 /* ---------- Grid ---------- */
@@ -66,131 +70,231 @@
 .tims-blog-archive-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.5rem, 3vw, 2rem);
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  align-items: stretch;
 }
 
-/* ---------- Card: plain layout, image on top, content stacked below ---------- */
+/* ---------- Torn Paper Container ---------- */
 
-.tims-blog-archive-card {
+.tims-blog-paper-wrapper {
+  position: relative;
+  /* Filter drop-shadow follows clip-path edges seamlessly */
+  filter: drop-shadow(0 10px 16px rgba(20, 22, 28, 0.12)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.06));
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease;
+  height: 100%;
+  display: flex;
+}
+
+.tims-blog-paper-wrapper:hover {
+  transform: translateY(-6px) rotate(-0.5deg);
+  filter: drop-shadow(0 16px 28px rgba(20, 22, 28, 0.18)) drop-shadow(0 6px 12px rgba(233, 29, 36, 0.12));
+}
+
+.tims-blog-paper-card {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--ba-card-bg);
-  border: 3px solid var(--ba-border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 6px 6px 0 #14161c;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0),
+    linear-gradient(180deg, #ffffff 0%, #fdfbf7 100%);
+  background-size: 8px 8px, 100% 100%;
+  padding: 1.25rem 1.25rem 1.5rem 1.25rem;
+  box-sizing: border-box;
 }
 
-.tims-blog-archive-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 7px 7px 0 #14161c;
+/* Torn Edge Polygon Variants - emulates organic ripped paper sheets */
+.torn-variant-1 .tims-blog-paper-card {
+  clip-path: polygon(
+    0% 1.5%, 3% 0.5%, 7% 2%, 12% 0.3%, 17% 1.8%, 23% 0.5%, 29% 2.1%, 34% 0.4%, 40% 1.6%, 46% 0.2%, 52% 2%, 58% 0.6%, 64% 1.8%, 70% 0.3%, 76% 2.2%, 82% 0.5%, 88% 1.9%, 93% 0.4%, 97% 2%, 100% 0.8%,
+    99.2% 4%, 98.4% 9%, 99.6% 14%, 98.1% 20%, 99.5% 26%, 98.3% 32%, 99.8% 38%, 98.2% 44%, 99.6% 50%, 98.5% 56%, 99.7% 62%, 98.1% 68%, 99.4% 74%, 98.3% 80%, 99.6% 86%, 98.2% 92%, 99.5% 97%, 100% 100%,
+    97% 99.2%, 92% 98.3%, 86% 99.6%, 80% 98.1%, 74% 99.5%, 68% 98.2%, 62% 99.7%, 56% 98.4%, 50% 99.6%, 44% 98.1%, 38% 99.5%, 32% 98.3%, 26% 99.8%, 20% 98.2%, 14% 99.6%, 8% 98.4%, 3% 99.7%, 0% 98.5%,
+    0.8% 94%, 1.7% 88%, 0.3% 82%, 1.6% 76%, 0.4% 70%, 1.8% 64%, 0.2% 58%, 1.5% 52%, 0.5% 46%, 1.9% 40%, 0.3% 34%, 1.6% 28%, 0.4% 22%, 1.8% 16%, 0.2% 10%, 1.5% 5%
+  );
 }
 
-/* ---------- Card Media & Image ---------- */
+.torn-variant-2 .tims-blog-paper-card {
+  clip-path: polygon(
+    0.5% 0.8%, 5% 2.1%, 10% 0.4%, 15% 1.9%, 20% 0.3%, 26% 2.2%, 32% 0.6%, 38% 1.8%, 44% 0.4%, 50% 2.1%, 56% 0.5%, 62% 1.9%, 68% 0.3%, 74% 2.2%, 80% 0.7%, 86% 1.8%, 92% 0.4%, 97% 2.1%, 100% 0.5%,
+    98.5% 5%, 99.7% 11%, 98.2% 17%, 99.6% 23%, 98.4% 29%, 99.8% 35%, 98.1% 41%, 99.5% 47%, 98.3% 53%, 99.7% 59%, 98.2% 65%, 99.6% 71%, 98.4% 77%, 99.8% 83%, 98.1% 89%, 99.5% 95%, 98.8% 99%,
+    95% 98.2%, 89% 99.6%, 83% 98.1%, 77% 99.5%, 71% 98.3%, 65% 99.7%, 59% 98.2%, 53% 99.6%, 47% 98.4%, 41% 99.8%, 35% 98.1%, 29% 99.5%, 23% 98.3%, 17% 99.7%, 11% 98.2%, 5% 99.6%, 0% 99%,
+    1.5% 93%, 0.3% 87%, 1.8% 81%, 0.4% 75%, 1.7% 69%, 0.2% 63%, 1.6% 57%, 0.5% 51%, 1.9% 45%, 0.3% 39%, 1.7% 33%, 0.4% 27%, 1.8% 21%, 0.2% 15%, 1.6% 9%, 0.5% 3%
+  );
+}
 
-.tims-blog-archive-media {
+.torn-variant-3 .tims-blog-paper-card {
+  clip-path: polygon(
+    0.2% 2%, 6% 0.3%, 11% 1.8%, 16% 0.5%, 22% 2.1%, 28% 0.4%, 34% 1.9%, 40% 0.2%, 46% 2.1%, 52% 0.6%, 58% 1.8%, 64% 0.3%, 70% 2.2%, 76% 0.5%, 82% 1.9%, 88% 0.4%, 94% 2.1%, 99% 0.3%, 100% 1.5%,
+    99.4% 7%, 98.1% 13%, 99.6% 19%, 98.3% 25%, 99.7% 31%, 98.2% 37%, 99.5% 43%, 98.4% 49%, 99.8% 55%, 98.1% 61%, 99.6% 67%, 98.3% 73%, 99.7% 79%, 98.2% 85%, 99.5% 91%, 98.4% 97%, 100% 100%,
+    96% 99.6%, 90% 98.1%, 84% 99.5%, 78% 98.3%, 72% 99.7%, 66% 98.2%, 60% 99.6%, 54% 98.4%, 48% 99.8%, 42% 98.1%, 36% 99.5%, 30% 98.3%, 24% 99.7%, 18% 98.2%, 12% 99.6%, 6% 98.3%, 1% 99.5%, 0% 97%,
+    1.8% 91%, 0.4% 85%, 1.7% 79%, 0.3% 73%, 1.9% 67%, 0.5% 61%, 1.8% 55%, 0.2% 49%, 1.6% 43%, 0.4% 37%, 1.8% 31%, 0.3% 25%, 1.7% 19%, 0.5% 13%, 1.9% 7%
+  );
+}
+
+/* Image inside Paper */
+.tims-blog-paper-image-wrap {
   position: relative;
   display: block;
+  width: 100%;
   aspect-ratio: 16 / 10;
-  background: var(--ba-navy);
-  border-bottom: 3px solid var(--ba-border);
+  border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
+  background: #e5e9f0;
 }
 
-.tims-blog-archive-image {
+.tims-blog-paper-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
-.tims-blog-archive-card:hover .tims-blog-archive-image {
-  transform: scale(1.06);
+.tims-blog-paper-wrapper:hover .tims-blog-paper-image {
+  transform: scale(1.05);
 }
 
-.tims-blog-archive-category {
+/* Date Badge inside Paper */
+.tims-blog-paper-date {
   position: absolute;
-  top: 0.85rem;
-  left: 0.85rem;
-  background: var(--ba-red);
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.35rem 0.75rem;
-  border-radius: 6px;
-  box-shadow: 3px 3px 0 #14161c;
-}
-
-/* ---------- Body ---------- */
-
-.tims-blog-archive-body {
+  top: 0.75rem;
+  left: 0.75rem;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1.5rem 1.75rem;
+  align-items: center;
+  background: var(--tb-red);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0.3rem 0.65rem;
+  line-height: 1.15;
+  box-shadow: 2px 2px 0 rgba(20, 22, 28, 0.8);
+  z-index: 2;
 }
 
-.tims-blog-archive-title-link {
-  text-decoration: none;
-}
-
-.tims-blog-archive-title {
-  margin: 0 0 0.65rem;
-  font-size: 1.1875rem;
+.tims-blog-paper-date-day {
+  font-size: 0.95rem;
   font-weight: 800;
-  line-height: 1.4;
-  color: var(--ba-navy);
+}
+
+.tims-blog-paper-date-month {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* Category Badge inside Paper */
+.tims-blog-paper-category {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(20, 22, 28, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+/* Content Area inside Paper */
+.tims-blog-paper-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 1.15rem;
+}
+
+.tims-blog-paper-title {
+  margin: 0 0 0.65rem 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--tb-navy);
+}
+
+.tims-blog-paper-title a {
+  color: var(--tb-navy);
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.tims-blog-archive-title-link:hover .tims-blog-archive-title {
-  color: var(--ba-red);
+.tims-blog-paper-title a:hover {
+  color: var(--tb-red);
 }
 
-.tims-blog-archive-meta {
+.tims-blog-paper-excerpt {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--tb-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer Meta & Link inside Paper */
+.tims-blog-paper-footer {
+  margin-top: auto;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(20, 22, 28, 0.18);
+}
+
+.tims-blog-paper-meta {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.85rem;
   font-size: 0.8125rem;
-  color: var(--ba-text-muted);
+  color: var(--tb-text-muted);
 }
 
-.tims-blog-archive-meta-divider {
-  color: rgba(20, 22, 28, 0.25);
+.tims-blog-paper-author {
+  font-weight: 700;
+  color: var(--tb-navy);
 }
 
-.tims-blog-archive-excerpt {
-  margin: 0 0 1.25rem;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: #5f6b7a;
+.tims-blog-paper-meta-divider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--tb-text-muted);
 }
 
-.tims-blog-archive-link {
+.tims-blog-paper-comments {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tims-blog-paper-link {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  align-self: flex-start;
-  color: var(--ba-red);
+  flex-shrink: 0;
+  color: var(--tb-red);
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
+  font-size: 0.8125rem;
+  white-space: nowrap;
 }
 
-.tims-blog-archive-link-arrow {
-  transition: transform 0.25s ease;
-}
-
-.tims-blog-archive-link:hover .tims-blog-archive-link-arrow {
+.tims-blog-paper-link:hover .tims-blog-card-arrow {
   transform: translateX(3px);
 }
 
+.tims-blog-card-arrow {
+  transition: transform 0.25s ease;
+}
 
 /* ---------- Responsive ---------- */
 
@@ -205,6 +309,10 @@
     grid-template-columns: 1fr;
     max-width: 420px;
     margin: 0 auto;
+  }
+
+  .tims-blog-paper-image-wrap {
+    aspect-ratio: 16 / 11;
   }
 }
 

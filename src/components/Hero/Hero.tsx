@@ -187,9 +187,19 @@ export default function Hero() {
               />
               <span>Find Your University</span>
             </a>
-            <a href="#hero-name" className={styles.secondaryButton}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent("open-enquiry-modal", {
+                    detail: { title: "Connect With an Advisor", source: "hero-advisor" },
+                  })
+                );
+              }}
+            >
               Talk to an Advisor
-            </a>
+            </button>
           </div>
         </div>
 
