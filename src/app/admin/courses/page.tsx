@@ -47,6 +47,15 @@ const courseCategories = [
     icon: "📄",
   },
   {
+    id: "skill-courses",
+    name: "Skill Courses",
+    href: "/admin/courses/skill-courses",
+    description: "Job-oriented short-term and professional skill development programs.",
+    count: "Active Courses",
+    badge: "Skill Dev",
+    icon: "🚀",
+  },
+  {
     id: "apprenticeship",
     name: "Apprenticeship",
     href: "/admin/courses/apprenticeship",

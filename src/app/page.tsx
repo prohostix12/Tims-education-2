@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero/Hero";
 import SuccessStoriesSection from "@/components/SuccessStoriesSection/SuccessStoriesSection";
+import StatsMarqueeSection from "@/components/StatsMarqueeSection/StatsMarqueeSection";
 // import NewAboutSection from "@/components/NewAboutSection/NewAboutSection";
 import CoursesSection from "@/components/CoursesSection/CoursesSection";
 import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSection";
@@ -19,6 +20,7 @@ export default function Home() {
     <main>
       <Hero />
       <SuccessStoriesSection />
+      <StatsMarqueeSection />
       {/* <NewAboutSection /> */}
       <CoursesSection />
       {/* <UniversitiesSection /> */}

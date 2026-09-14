@@ -25,12 +25,12 @@ export default function SslcDistanceEducationSection() {
     <section className="tims-sslc-distance-section">
       <div className="tims-sslc-distance-inner">
         <div className="tims-sslc-distance-media">
-          <div className="tims-sslc-distance-media-placeholder">
-            <span className="tims-sslc-distance-media-icon">
-              <ImageIcon />
-            </span>
-            <span className="tims-sslc-distance-media-hint">Image coming soon</span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/stories/second_chance_sslc.jpg"
+            alt="SSLC Distance Education - Second Chance Learning at TIMS Education"
+            className="tims-sslc-distance-img"
+          />
         </div>
 
         <div>

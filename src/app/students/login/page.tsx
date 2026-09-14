@@ -2,17 +2,52 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
 
 export default function StudentLoginPage() {
+  const router = useRouter();
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Pure frontend preview implementation as requested
+    setErrorMessage("");
+    setSuccessMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentId: studentId.trim(),
+          email: studentId.trim(),
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSuccessMessage("Signed in successfully! Redirecting...");
+        setTimeout(() => {
+          router.push("/");
+          router.refresh();
+        }, 800);
+      } else {
+        setErrorMessage(data.error || "Login service is temporarily unavailable.");
+      }
+    } catch (err) {
+      setErrorMessage("Login service is temporarily unavailable. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -31,11 +66,43 @@ export default function StudentLoginPage() {
           <span className={styles.badge}>Student Portal</span>
           <h1 className={styles.title}>Welcome Back</h1>
           <p className={styles.subtitle}>
-            Sign in to access your course materials, hall tickets & exam updates
+            Sign in to access your course materials, hall tickets &amp; exam updates
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
+          {errorMessage && (
+            <div
+              style={{
+                padding: "0.75rem 1rem",
+                borderRadius: "8px",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                background: "rgba(239, 68, 68, 0.12)",
+                color: "#b91c1c",
+                border: "1px solid rgba(239, 68, 68, 0.25)",
+              }}
+            >
+              {errorMessage}
+            </div>
+          )}
+
+          {successMessage && (
+            <div
+              style={{
+                padding: "0.75rem 1rem",
+                borderRadius: "8px",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                background: "rgba(34, 197, 94, 0.12)",
+                color: "#15803d",
+                border: "1px solid rgba(34, 197, 94, 0.25)",
+              }}
+            >
+              {successMessage}
+            </div>
+          )}
+
           <div className={styles.fieldGroup}>
             <label htmlFor="studentId" className={styles.label}>
               Register No. / Email Address
@@ -54,6 +121,7 @@ export default function StudentLoginPage() {
                 placeholder="Enter Email Address"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
+                disabled={isLoading}
                 required
               />
             </div>
@@ -77,6 +145,7 @@ export default function StudentLoginPage() {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
                 required
               />
               <button
@@ -116,12 +185,14 @@ export default function StudentLoginPage() {
             </a>
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            <span>Sign In to Portal</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
+          <button type="submit" className={styles.submitBtn} disabled={isLoading}>
+            <span>{isLoading ? "Signing in..." : "Sign In to Portal"}</span>
+            {!isLoading && (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            )}
           </button>
         </form>
       </div>

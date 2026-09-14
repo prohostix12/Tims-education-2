@@ -25,12 +25,14 @@ function ArticleSection({
   title,
   reverse,
   alt,
+  imageSrc,
   children,
 }: {
   eyebrow: string;
   title: string;
   reverse?: boolean;
   alt?: boolean;
+  imageSrc?: string;
   children: ReactNode;
 }) {
   return (
@@ -41,10 +43,19 @@ function ArticleSection({
     >
       <div className="tims-article-inner">
         <div className="tims-article-media">
-          <div className="tims-article-media-placeholder">
-            <ImagePlaceholderIcon />
-            <span className="tims-article-media-hint">Image coming soon</span>
-          </div>
+          {imageSrc ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={imageSrc}
+              alt={title}
+              className="tims-article-image"
+            />
+          ) : (
+            <div className="tims-article-media-placeholder">
+              <ImagePlaceholderIcon />
+              <span className="tims-article-media-hint">Image coming soon</span>
+            </div>
+          )}
         </div>
 
         <div className="tims-article-content">
@@ -63,7 +74,11 @@ function ArticleSection({
 export default function ArticleInsightsSection() {
   return (
     <>
-      <ArticleSection eyebrow="From the Blog" title="Insights &amp; Guidance for Smarter Distance Learning">
+      <ArticleSection
+        eyebrow="From the Blog"
+        title="Insights &amp; Guidance for Smarter Distance Learning"
+        imageSrc="/images/LongDistance.png"
+      >
         <p className="tims-article-text">
           The TIMS Education blog section is a place where students can find practical advice
           and real experiences that make learning easier. Many readers come here looking for{" "}

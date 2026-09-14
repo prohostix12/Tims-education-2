@@ -7,21 +7,21 @@ import styles from "./Footer.module.css";
 import AdminLoginModal from "@/components/AdminLoginModal/AdminLoginModal";
 
 const exploreLinks = [
-  { label: "Home", href: "#" },
-  { label: "About", href: "#" },
-  { label: "Blog", href: "#" },
-  { label: "News", href: "#" },
-  { label: "Contact", href: "#" },
-  { label: "Terms and Conditions", href: "#" },
-  { label: "Privacy Policy", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/directors" },
+  { label: "Blog", href: "/blog" },
+  { label: "News", href: "/news" },
+  { label: "Contact", href: "/contact" },
+  { label: "Terms and Conditions", href: "/contact" },
+  { label: "Privacy Policy", href: "/contact" },
 ];
 
 const universityLinks = [
-  { label: "Guru Kashi University", href: "#" },
-  { label: "Andhra University", href: "#" },
-  { label: "Swami Vivekanand Subharti University", href: "#" },
-  { label: "Mizoram University", href: "#" },
-  { label: "Aligarh Muslim University", href: "#" },
+  { label: "Guru Kashi University", href: "/universities/degree-pg/guru-kashi-university" },
+  { label: "Andhra University", href: "/universities" },
+  { label: "Swami Vivekanand Subharti University", href: "/universities/degree-pg/swami-vivekanand-subharti-university" },
+  { label: "Mizoram University", href: "/universities/degree-pg/mizoram-university" },
+  { label: "Aligarh Muslim University", href: "/universities/degree-pg/aligarh-muslim-university" },
 ];
 
 const socialLinks = [
@@ -209,16 +209,16 @@ export default function Footer() {
             <p className={styles.companyText}>
               TIMS ( Tirur Institute of Management Studies) is an educational institution. It
               was established in 2009 with the sole purpose of providing education accessible
-              to every section of society, ... <Link href="#" className={styles.readMore}>[Read More]</Link>
+              to every section of society, ... <Link href="/directors" className={styles.readMore}>[Read More]</Link>
             </p>
           </div>
 
           <div className={styles.column}>
             <h3 className={styles.columnTitle}>Explore</h3>
             <ul>
-              {exploreLinks.map((link, index) => (
+              {exploreLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className={index === 0 ? styles.activeLink : undefined}>
+                  <Link href={link.href}>
                     {link.label}
                   </Link>
                 </li>
@@ -241,13 +241,13 @@ export default function Footer() {
             <h3 className={styles.columnTitle}>Head Office</h3>
             <ul className={styles.contactList}>
               <li>
-                <a href="#" className={styles.contactRow}>
+                <a href="mailto:info@timseducation.com" className={styles.contactRow}>
                   <MailIcon />
                   <span>info@timseducation.com</span>
                 </a>
               </li>
               <li>
-                <a href="#" className={styles.contactRow}>
+                <a href="tel:+919961967777" className={styles.contactRow}>
                   <PhoneIcon />
                   <span>+91 9961967777</span>
                 </a>
@@ -262,13 +262,13 @@ export default function Footer() {
             <h3 className={styles.columnTitle}>Edapal Office</h3>
             <ul className={styles.contactList}>
               <li>
-                <a href="#" className={styles.contactRow}>
+                <a href="mailto:info@timseducation.com" className={styles.contactRow}>
                   <MailIcon />
                   <span>info@timseducation.com</span>
                 </a>
               </li>
               <li>
-                <a href="#" className={styles.contactRow}>
+                <a href="tel:+919526387777" className={styles.contactRow}>
                   <PhoneIcon />
                   <span>+91 9526387777</span>
                 </a>

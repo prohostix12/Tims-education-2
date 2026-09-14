@@ -123,9 +123,9 @@ export default function Hero() {
             <span>YOUR NEXT ACADEMIC STEP STARTS HERE</span>
           </div>
           <h1 className={styles.title}>
-            Learn Without Limits.
+            18+ Years of Experience.
             <br />
-            <span className={styles.titleTeal}>Build the Future You Want.</span>
+            <span className={styles.titleTeal}>One Commitment to Your Future.</span>
           </h1>
           <p className={styles.subtitle}>
             Explore 10th &amp; Plus Two, degree, postgraduate, diploma and skill programs with expert guidance to help you choose the right course and university.
