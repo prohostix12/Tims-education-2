@@ -1,20 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../OnlineDegreeSection/tims-online-degree.css";
 
 type Course = {
   name: string;
   eligibility: string;
+  status?: string;
+  order?: number;
 };
 
 type Category = {
   id: string;
   label: string;
+  status?: string;
+  order?: number;
   courses: Course[];
 };
 
-const categories: Category[] = [
+const initialCategories: Category[] = [
   {
     id: "diploma",
     label: "Diploma",
@@ -71,7 +75,61 @@ function ArrowIcon() {
 }
 
 export default function DiplomaSection() {
-  const [activeId, setActiveId] = useState(categories[0].id);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [activeId, setActiveId] = useState<string>(initialCategories[0].id);
+
+  useEffect(() => {
+    // 1. Try local storage cache
+    try {
+      const cached = localStorage.getItem("tims_diploma_streams");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const published = parsed
+            .filter((s: any) => s.status === "Published")
+            .map((s: any) => ({
+              id: s.streamId || s.id,
+              label: s.label,
+              courses: (s.courses || [])
+                .filter((c: any) => c.status === "Published")
+                .sort((a: any, b: any) => (a.order || 0) - (b.order || 0)),
+            }));
+          if (published.length > 0) {
+            setCategories(published);
+            setActiveId(published[0].id);
+          }
+        }
+      }
+    } catch {}
+
+    // 2. Fetch fresh data from API
+    fetch("/api/diploma-streams")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.streams) && data.streams.length > 0) {
+          const published = data.streams
+            .filter((s: any) => s.status === "Published")
+            .map((s: any) => ({
+              id: s.streamId || s.id,
+              label: s.label,
+              courses: (s.courses || [])
+                .filter((c: any) => c.status === "Published")
+                .sort((a: any, b: any) => (a.order || 0) - (b.order || 0)),
+            }));
+
+          if (published.length > 0) {
+            setCategories(published);
+            setActiveId((prev) => (published.some((c: Category) => c.id === prev) ? prev : published[0].id));
+          }
+
+          try {
+            localStorage.setItem("tims_diploma_streams", JSON.stringify(data.streams));
+          } catch {}
+        }
+      })
+      .catch((err) => console.error("Failed to fetch diploma streams:", err));
+  }, []);
+
   const activeCategory = categories.find((category) => category.id === activeId) ?? categories[0];
 
   return (
@@ -105,26 +163,32 @@ export default function DiplomaSection() {
           </nav>
 
           <div className="tims-online-degree-panel">
-            <h2 className="tims-online-degree-panel-title">{activeCategory.label}</h2>
+            <h2 className="tims-online-degree-panel-title">{activeCategory?.label || "Category"}</h2>
 
-            <div className="tims-online-degree-table-wrap">
-              <table className="tims-online-degree-table">
-                <thead>
-                  <tr>
-                    <th>Courses</th>
-                    <th>Eligibility</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {activeCategory.courses.map((course) => (
-                    <tr key={course.name}>
-                      <td className="tims-online-degree-course-name">{course.name}</td>
-                      <td className="tims-online-degree-eligibility">{course.eligibility}</td>
+            {activeCategory?.courses && activeCategory.courses.length > 0 ? (
+              <div className="tims-online-degree-table-wrap">
+                <table className="tims-online-degree-table">
+                  <thead>
+                    <tr>
+                      <th>Courses</th>
+                      <th>Eligibility</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {activeCategory.courses.map((course, idx) => (
+                      <tr key={`${course.name}-${idx}`}>
+                        <td className="tims-online-degree-course-name">{course.name}</td>
+                        <td className="tims-online-degree-eligibility">{course.eligibility}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="tims-online-degree-empty">
+                Course list for this category is coming soon.
+              </p>
+            )}
           </div>
         </div>
       </div>

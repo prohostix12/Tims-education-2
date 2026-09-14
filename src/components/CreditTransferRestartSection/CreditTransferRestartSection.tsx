@@ -22,7 +22,7 @@ function Highlight({ children }: { children: ReactNode }) {
 
 export default function CreditTransferRestartSection() {
   return (
-    <section className="tims-sslc-distance-section">
+    <section className="tims-sslc-distance-section" style={{ backgroundColor: "#F6F2E7" }}>
       <div className="tims-sslc-distance-inner">
         <div className="tims-sslc-distance-media">
           <div className="tims-sslc-distance-media-placeholder">

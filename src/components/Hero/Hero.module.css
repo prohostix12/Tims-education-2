@@ -35,33 +35,7 @@
   pointer-events: none;
 }
 
-.doodleContainer {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-  user-select: none;
-}
 
-.doodle {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  object-fit: contain;
-  height: auto;
-  filter: grayscale(10%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06));
-  animation: floatDoodle 7s ease-in-out infinite alternate;
-}
-
-@keyframes floatDoodle {
-  0% {
-    transform: translateY(0px) rotate(var(--rot, 0deg));
-  }
-  100% {
-    transform: translateY(-16px) rotate(calc(var(--rot, 0deg) + 5deg));
-  }
-}
 
 .inner {
   position: relative;
@@ -317,11 +291,23 @@
   font-weight: 600;
 }
 
+@media (max-width: 1080px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .inner {
+    padding-top: clamp(5.5rem, 7vh, 7rem);
+    padding-bottom: clamp(2rem, 3.5vh, 3rem);
+    gap: 2.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
     text-align: center;
-    padding-top: clamp(2.5rem, 6vw, 4rem);
+    padding-top: clamp(5rem, 6vw, 6rem);
   }
 
   .content {

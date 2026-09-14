@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./AdminHeader.module.css";
 
@@ -20,6 +20,14 @@ function ContentIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+    </svg>
+  );
+}
+
+function CoursesIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
     </svg>
   );
 }
@@ -50,12 +58,14 @@ function SettingsIcon() {
   );
 }
 
-function ViewSiteIcon() {
+
+
+function LogoutIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      <polyline points="15 3 21 3 21 9" />
-      <line x1="10" y1="14" x2="21" y2="3" />
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
     </svg>
   );
 }
@@ -97,6 +107,15 @@ function CloseIcon() {
   );
 }
 
+function SslcIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+      <path d="M10 8h6M10 12h6" />
+    </svg>
+  );
+}
+
 type NavSingleItem = {
   label: string;
   href: string;
@@ -122,12 +141,35 @@ const navStructure: NavItem[] = [
     icon: ContentIcon,
     children: [
       { label: "Blog Posts", href: "/admin/blog", description: "Manage articles & news content" },
+      { label: "Student Video Reels", href: "/admin/video-stories", description: "Manage Student Success Video Reels" },
+      { label: "Distance Education Video", href: "/admin/distance-education", description: "Manage Distance Education section video" },
       { label: "Directors & Leadership", href: "/admin/directors", description: "Manage director profiles & photos" },
+      { label: "Our Team Members", href: "/admin/team-members", description: "Manage staff & team member profiles" },
       { label: "Success Stories", href: "/admin/success-stories", description: "Manage Real Impact cards" },
       { label: "News & Events", href: "/admin/news", description: "Manage announcements & marquee" },
       { label: "FAQ", href: "/admin/faq", description: "Manage frequently asked questions" },
       { label: "Site Pages", href: "/admin/pages", description: "Edit page content & metadata" },
       { label: "Media Gallery", href: "/admin/gallery", description: "Manage photos & event albums" },
+    ],
+  },
+  {
+    label: "SSLC & Plus Two",
+    icon: SslcIcon,
+    children: [
+      { label: "Content Cards", href: "/admin/courses/sslc-plus-two", description: "Manage Admission, On Demand & Course Structure cards" },
+      { label: "Verified Documents & Recognitions", href: "/admin/courses/sslc-plus-two/verified-documents", description: "Manage NIOS & SSLC recognition PDF documents" },
+    ],
+  },
+  {
+    label: "Courses",
+    icon: CoursesIcon,
+    children: [
+      { label: "All Courses", href: "/admin/courses", description: "Overview of all course categories" },
+      { label: "Online Degree", href: "/admin/courses/online-degree", description: "UGC Approved Online Degree programs" },
+      { label: "Post graduation", href: "/admin/courses/post-graduation", description: "Postgraduate & Masters programs" },
+      { label: "B-Tech/M-Tech", href: "/admin/courses/btech-mtech", description: "Engineering & Technology degrees" },
+      { label: "Diploma", href: "/admin/courses/diploma", description: "Polytechnic & Executive diplomas" },
+      { label: "Apprenticeship", href: "/admin/courses/apprenticeship", description: "Industry apprenticeship & training" },
     ],
   },
   {
@@ -156,12 +198,23 @@ const navStructure: NavItem[] = [
 
 export default function AdminHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   const isLinkActive = (href: string) => {
-    if (href === "/admin") return pathname === "/admin";
-    return pathname.startsWith(href);
+    if (href === "/admin" || href === "/admin/courses") return pathname === href;
+    return pathname === href || pathname.startsWith(href + "/");
   };
 
   const isGroupActive = (group: NavDropdownGroup) => {
@@ -289,10 +342,10 @@ export default function AdminHeader() {
         </div>
 
         <div className={styles.sidebarFooter}>
-          <Link href="/" className={styles.viewSiteBtn}>
-            <span>View Website</span>
-            <ViewSiteIcon />
-          </Link>
+          <button type="button" className={styles.logoutBtn} onClick={handleLogout}>
+            <span>Sign Out</span>
+            <LogoutIcon />
+          </button>
         </div>
       </aside>
     </>

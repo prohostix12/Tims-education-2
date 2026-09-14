@@ -4,8 +4,9 @@ import SuccessStoriesSection from "@/components/SuccessStoriesSection/SuccessSto
 import CoursesSection from "@/components/CoursesSection/CoursesSection";
 import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSection";
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
-import FindCourseSection from "@/components/FindCourseSection/FindCourseSection";
+import TeamMembersSection from "@/components/TeamMembersSection/TeamMembersSection";
 import TestimonialsSection from "@/components/TestimonialsSection/TestimonialsSection";
+import StudentVideoStoriesSection from "@/components/StudentVideoStoriesSection/StudentVideoStoriesSection";
 import FaqSection from "@/components/FaqSection/FaqSection";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import DreamSection from "@/components/DreamSection/DreamSection";
@@ -22,8 +23,9 @@ export default function Home() {
       <CoursesSection />
       {/* <UniversitiesSection /> */}
       <DirectorsSection />
-      <FindCourseSection />
+      <TeamMembersSection />
       <TestimonialsSection />
+      <StudentVideoStoriesSection />
       <PartnersSection />
       <FaqSection />
       <DreamSection />

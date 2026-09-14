@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CreditTransferSection from "@/components/CreditTransferSection/CreditTransferSection";
 import CreditTransferProcessSection from "@/components/CreditTransferProcessSection/CreditTransferProcessSection";
 import CreditTransferRestartSection from "@/components/CreditTransferRestartSection/CreditTransferRestartSection";
+import CreditTransferEnquirySection from "@/components/CreditTransferEnquirySection/CreditTransferEnquirySection";
 import PageHero from "@/components/PageHero/PageHero";
 
 export const metadata: Metadata = {
@@ -12,12 +13,11 @@ export const metadata: Metadata = {
 export default function CreditTransferPage() {
   return (
     <main>
-      {/*
       <PageHero title="Credit Transfer" />
       <CreditTransferSection />
       <CreditTransferProcessSection />
       <CreditTransferRestartSection />
-      */}
+      <CreditTransferEnquirySection />
     </main>
   );
 }

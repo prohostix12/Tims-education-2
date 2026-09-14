@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { GridFSBucket } from "mongodb";
+import { getDb } from "@/lib/mongodb";
+import { Readable } from "stream";
 
 export async function POST(request: Request) {
   try {
@@ -14,22 +15,35 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create unique filename to prevent overwrites
+    // Create unique filename to prevent collisions
     const timestamp = Date.now();
     const sanitizedFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
     const filename = `${timestamp}_${sanitizedFilename}`;
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadDir, { recursive: true });
+    const db = await getDb();
+    const bucket = new GridFSBucket(db, { bucketName: "uploads" });
 
-    const filePath = path.join(uploadDir, filename);
-    await writeFile(filePath, buffer);
+    // Store in MongoDB GridFS (No local files written to disk)
+    const uploadStream = bucket.openUploadStream(filename, {
+      metadata: {
+        contentType: file.type || "application/octet-stream",
+        originalName: file.name,
+      },
+    });
 
-    const publicUrl = `/uploads/${filename}`;
+    await new Promise<void>((resolve, reject) => {
+      const readable = Readable.from(buffer);
+      readable.pipe(uploadStream);
+      uploadStream.on("finish", () => resolve());
+      uploadStream.on("error", (err) => reject(err));
+    });
+
+    // Public URL pointing to MongoDB dynamic file handler
+    const publicUrl = `/api/files/${encodeURIComponent(filename)}`;
 
     return NextResponse.json({ success: true, url: publicUrl }, { status: 201 });
   } catch (error) {
-    console.error("Failed to upload file:", error);
+    console.error("Failed to upload file to MongoDB:", error);
     return NextResponse.json({ error: "File upload failed." }, { status: 500 });
   }
 }

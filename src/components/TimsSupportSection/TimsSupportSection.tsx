@@ -1,15 +1,15 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import "./tims-support-section.css";
 
-const documents = [
-  { title: "Gazette For NOS", file: "gazette-for-nos.pdf" },
-  { title: "NCTE Recognition Order", file: "ncte-recognition-order.pdf" },
-  { title: "NIOS Equivalence Letter", file: "nios-equivalence-letter.pdf" },
-  { title: "NIOS in Gazette of India", file: "nios-in-gazette-of-india.pdf" },
-  { title: "NIOS Recognition Certificate", file: "nios-recognition-certificate.pdf" },
-  { title: "UGC Equivalence Order", file: "ugc-equivalence-order.pdf" },
-  { title: "AICTE Approval Letter", file: "aicte-approval-letter.pdf" },
-  { title: "State Govt Recognition Order", file: "state-government-recognition-order.pdf" },
-];
+interface DocItem {
+  id?: string;
+  title: string;
+  pdfUrl: string;
+}
+
+
 
 function DocumentIcon() {
   return (
@@ -48,6 +48,60 @@ function DownloadArrowIcon() {
 }
 
 export default function TimsSupportSection() {
+  const [documents, setDocuments] = useState<DocItem[] | null>(null);
+
+  useEffect(() => {
+    // 1. Try local cache
+    try {
+      const cached = localStorage.getItem("tims_verified_documents");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) {
+          const published = parsed
+            .filter((d: any) => d.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+          if (published.length > 0) {
+            setDocuments(
+              published.map((d: any) => ({
+                id: d.id,
+                title: d.title,
+                pdfUrl: d.pdfUrl,
+              }))
+            );
+          } else {
+            setDocuments([]);
+          }
+        }
+      }
+    } catch {}
+
+    // 2. Fetch from API
+    fetch("/api/verified-documents")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.documents)) {
+          try {
+            localStorage.setItem("tims_verified_documents", JSON.stringify(data.documents));
+          } catch {}
+          const published = data.documents
+            .filter((d: any) => d.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+          if (published.length > 0) {
+            setDocuments(
+              published.map((d: any) => ({
+                id: d.id,
+                title: d.title,
+                pdfUrl: d.pdfUrl,
+              }))
+            );
+          } else {
+            setDocuments([]);
+          }
+        }
+      })
+      .catch((err) => console.error("Failed to load verified documents:", err));
+  }, []);
+
   return (
     <section className="tims-support-section">
       <div className="tims-support-inner">
@@ -72,30 +126,34 @@ export default function TimsSupportSection() {
           </p>
         </div>
 
-        <h3 className="tims-support-docs-title">Verified Documents &amp; Recognitions</h3>
-        <div className="tims-support-docs-grid">
-          {documents.map((doc) => (
-            <a
-              key={doc.file}
-              href={`/documents/${doc.file}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tims-support-doc"
-            >
-              <span className="tims-support-doc-icon">
-                <DocumentIcon />
-              </span>
-              <span className="tims-support-doc-body">
-                <span className="tims-support-doc-title">{doc.title}</span>
-                <span className="tims-support-doc-meta">PDF Document</span>
-              </span>
-              <span className="tims-support-doc-action">
-                <span>View PDF</span>
-                <DownloadArrowIcon />
-              </span>
-            </a>
-          ))}
-        </div>
+        {documents && documents.length > 0 && (
+          <>
+            <h3 className="tims-support-docs-title">Verified Documents &amp; Recognitions</h3>
+            <div className="tims-support-docs-grid">
+              {documents.map((doc, idx) => (
+                <a
+                  key={doc.id || doc.pdfUrl || idx}
+                  href={doc.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tims-support-doc"
+                >
+                  <span className="tims-support-doc-icon">
+                    <DocumentIcon />
+                  </span>
+                  <span className="tims-support-doc-body">
+                    <span className="tims-support-doc-title">{doc.title}</span>
+                    <span className="tims-support-doc-meta">PDF Document</span>
+                  </span>
+                  <span className="tims-support-doc-action">
+                    <span>View PDF</span>
+                    <DownloadArrowIcon />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

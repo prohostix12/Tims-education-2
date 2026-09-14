@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
 import "./tims-admission-streams.css";
 
 function ImageIcon() {
@@ -16,71 +18,85 @@ function ImageIcon() {
   );
 }
 
-function CertificateIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
-      <circle cx="12" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="m8.5 12.5-1.2 6 4.7-2.3 4.7 2.3-1.2-6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Highlight({ children }: { children: ReactNode }) {
-  return <strong className="tims-admission-highlight">{children}</strong>;
-}
-
 type Item = {
   badge: ReactNode;
   title: string;
   text: ReactNode;
+  image?: string;
 };
 
-const items: Item[] = [
-  {
-    badge: "03",
-    title: "Admission Stream 3 & 4 (NIOS On Demand Exam)",
-    text: (
-      <p className="tims-admission-card-text">
-        This stream is only for students who failed in board exams of class 10th and 12th
-        from CBSE board or any other recognized state board in India. If you have failed in a
-        board exam, according to the rules you can appear again the next year from the same
-        board &mdash; but every student&rsquo;s one precious year is lost, as they have to
-        re-appear the next year for the same exam in all subjects, even if they passed 2 or
-        more subjects. NIOS On Demand Exam is the way to{" "}
-        <Highlight>save that precious year</Highlight>: a student who failed from any
-        recognized board can appear in board exams of class 10th or 12th within the same year,
-        only in the failed subjects. Under the{" "}
-        <Highlight>credit transfer scheme of NIOS</Highlight>, subjects already passed are
-        transferred to the NIOS board (maximum 2 subjects), so the student only needs to
-        appear for the failed subjects within the same year.
-      </p>
-    ),
-  },
-  {
-    badge: <CertificateIcon />,
-    title: "Value of NIOS Board SSLC & Plus Two Certificates",
-    text: (
-      <div className="tims-admission-card-text">
-        <p>
-          NIOS is an <Highlight>autonomous board under the HR Ministry</Highlight>, Government
-          of India. So the certificates issued for NIOS 10th standard or 12th standard exams
-          are merited equal to Central Board of Secondary Education. All the states of India
-          have recognized these certificates issued to Academia Study Center students.
-        </p>
-        <p>
-          Those passing 10th class can join any school in India for 11th class. 12th class
-          passed students can join any college or university in India or abroad for further
-          studies in engineering, medical, computer science and other faculty courses opened
-          up by Academia Study Center. They can also{" "}
-          <Highlight>get employment in State and Central Government vacancies</Highlight>{" "}
-          (PSC, UPSC), equal to other candidates of formal schooling.
-        </p>
-      </div>
-    ),
-  },
-];
-
 export default function CertificateValueSection() {
+  const [dynamicItems, setDynamicItems] = useState<Item[] | null>(null);
+
+  useEffect(() => {
+    // 1. Try loading cached cards from localStorage
+    try {
+      const cached = localStorage.getItem("tims_sslc_cards");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) {
+          const published = parsed
+            .filter((c: any) => c.section === "on-demand" && c.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+          if (published.length > 0) {
+            setDynamicItems(
+              published.map((c: any, idx: number) => ({
+                badge: c.number || String(idx + 1).padStart(2, "0"),
+                title: c.heading,
+                image: c.image,
+                text: (
+                  <div
+                    className="tims-admission-card-text"
+                    dangerouslySetInnerHTML={{ __html: c.descriptionHtml }}
+                  />
+                ),
+              }))
+            );
+          } else {
+            setDynamicItems([]);
+          }
+        }
+      }
+    } catch {}
+
+    // 2. Fetch latest cards from API
+    fetch("/api/sslc-content-cards")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.cards)) {
+          try {
+            localStorage.setItem("tims_sslc_cards", JSON.stringify(data.cards));
+          } catch {}
+          const publishedOnDemandCards = data.cards
+            .filter((c: any) => c.section === "on-demand" && c.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+
+          if (publishedOnDemandCards.length > 0) {
+            const mapped: Item[] = publishedOnDemandCards.map((c: any, idx: number) => ({
+              badge: c.number || String(idx + 1).padStart(2, "0"),
+              title: c.heading,
+              image: c.image,
+              text: (
+                <div
+                  className="tims-admission-card-text"
+                  dangerouslySetInnerHTML={{ __html: c.descriptionHtml }}
+                />
+              ),
+            }));
+            setDynamicItems(mapped);
+          } else {
+            setDynamicItems([]);
+          }
+        }
+      })
+      .catch((err) => console.error("Failed to load on-demand cards:", err));
+  }, []);
+
+  // Only show cards when added/published from admin panel
+  if (!dynamicItems || dynamicItems.length === 0) {
+    return null;
+  }
+
   return (
     <section className="tims-admission-section tims-admission-section--alt">
       <span className="tims-admission-blob" aria-hidden="true" />
@@ -96,19 +112,33 @@ export default function CertificateValueSection() {
         </div>
 
         <div className="tims-admission-grid">
-          {items.map((item) => (
-            <article className="tims-admission-card" key={item.title}>
+          {dynamicItems.map((item, idx) => (
+            <article className="tims-admission-card" key={item.title + idx}>
               <div className="tims-admission-card-media">
                 <span className="tims-admission-card-number">{item.badge}</span>
-                <span className="tims-admission-card-media-icon">
-                  <ImageIcon />
-                </span>
-                <span className="tims-admission-card-media-hint">Image coming soon</span>
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="tims-admission-card-media-img"
+                  />
+                ) : (
+                  <>
+                    <span className="tims-admission-card-media-icon">
+                      <ImageIcon />
+                    </span>
+                    <span className="tims-admission-card-media-hint">Image coming soon</span>
+                  </>
+                )}
               </div>
 
               <div className="tims-admission-card-body">
                 <h3 className="tims-admission-card-title">{item.title}</h3>
-                {item.text}
+                {typeof item.text === "string" ? (
+                  <p className="tims-admission-card-text">{item.text}</p>
+                ) : (
+                  item.text
+                )}
               </div>
             </article>
           ))}

@@ -4,16 +4,16 @@ import "./tims-new-courses-section.css";
 type CourseLink = {
   label: string;
   href: string;
-  icon: "transfer" | "graduation" | "certificate" | "monitor" | "layers" | "book";
+  icon: "transfer" | "graduation" | "certificate" | "monitor" | "skill" | "book";
   accent: "navy" | "red";
 };
 
 const courseLinks: CourseLink[] = [
-  { label: "Credit Transfer", href: "https://www.edumentora.com/b-tech-credit-transfer", icon: "transfer", accent: "navy" },
+  { label: "Credit Transfer", href: "/service/credit-transfer", icon: "transfer", accent: "navy" },
   { label: "Post Graduation", href: "/courses/post-graduation", icon: "graduation", accent: "red" },
   { label: "Diploma", href: "/courses/diploma", icon: "certificate", accent: "red" },
   { label: "Online Degree", href: "/courses/online-degree", icon: "monitor", accent: "navy" },
-  { label: "Btech / Mtech", href: "/courses/btech-mtech", icon: "layers", accent: "navy" },
+  { label: "Skill Education", href: "/courses/skill-courses", icon: "skill", accent: "navy" },
   { label: "SSLC / PLUS TWO", href: "/courses/sslc-plus-two", icon: "book", accent: "red" },
 ];
 
@@ -76,17 +76,12 @@ function MonitorIcon() {
   );
 }
 
-function LayersIcon() {
+function SkillIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <circle cx="12" cy="8" r="5" stroke="currentColor" strokeWidth="1.7" />
       <path
-        d="M12 3.5 3 8l9 4.5 9-4.5-9-4.5Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m3 12 9 4.5 9-4.5M3 16l9 4.5 9-4.5"
+        d="m8.5 12.5-1.5 8 5-2.5 5 2.5-1.5-8"
         stroke="currentColor"
         strokeWidth="1.7"
         strokeLinecap="round"
@@ -136,7 +131,7 @@ const iconComponents = {
   graduation: GraduationIcon,
   certificate: CertificateIcon,
   monitor: MonitorIcon,
-  layers: LayersIcon,
+  skill: SkillIcon,
   book: BookIcon,
 };
 

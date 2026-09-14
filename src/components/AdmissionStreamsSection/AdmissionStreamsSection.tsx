@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
 import "./tims-admission-streams.css";
 
 function ImageIcon() {
@@ -16,50 +18,85 @@ function ImageIcon() {
   );
 }
 
-function Highlight({ children }: { children: ReactNode }) {
-  return <strong className="tims-admission-highlight">{children}</strong>;
-}
-
 type Stream = {
   number: string;
   title: string;
   text: ReactNode;
+  image?: string;
 };
 
-const streams: Stream[] = [
-  {
-    number: "01",
-    title: "Admission Stream 1: For SSLC & Plus Two",
-    text: (
-      <>
-        If you were a regular school student failed in class 9th then you take direct
-        admission from class 10th from NIOS board and if you are a student failed in class
-        11th then you have an option for <Highlight>direct admission in class 12th</Highlight>.
-        This stream is also for the students who have passed 10th. If you want to take
-        admission, contact us immediately &mdash; our counsellors will help you in your
-        admission procedure and classes for board exam preparation.
-      </>
-    ),
-  },
-  {
-    number: "02",
-    title: "Admission Stream 2: For SSLC & Plus Two",
-    text: (
-      <>
-        This stream is only for students who failed in board exams of class 10th and 12th
-        from CBSE board or any other recognized state board in India. Normally, a failed
-        student loses one full year re-appearing for every subject. NIOS Admission Stream 2
-        is the way to <Highlight>save that precious year</Highlight>: a student can appear in
-        board exams of class 10th or 12th within the same year, only in the failed subjects.
-        Under the <Highlight>credit transfer scheme of NIOS</Highlight>, subjects already
-        passed are transferred (maximum 2 subjects), so the student only re-appears for the
-        failed ones.
-      </>
-    ),
-  },
-];
-
 export default function AdmissionStreamsSection() {
+  const [dynamicCards, setDynamicCards] = useState<Stream[] | null>(null);
+
+  useEffect(() => {
+    // 1. Try loading cached cards from localStorage
+    try {
+      const cached = localStorage.getItem("tims_sslc_cards");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) {
+          const published = parsed
+            .filter((c: any) => c.section === "admission" && c.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+          if (published.length > 0) {
+            setDynamicCards(
+              published.map((c: any, idx: number) => ({
+                number: c.number || String(idx + 1).padStart(2, "0"),
+                title: c.heading,
+                image: c.image,
+                text: (
+                  <div
+                    className="tims-admission-card-text"
+                    dangerouslySetInnerHTML={{ __html: c.descriptionHtml }}
+                  />
+                ),
+              }))
+            );
+          } else {
+            setDynamicCards([]);
+          }
+        }
+      }
+    } catch {}
+
+    // 2. Fetch latest cards from API
+    fetch("/api/sslc-content-cards")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.cards)) {
+          try {
+            localStorage.setItem("tims_sslc_cards", JSON.stringify(data.cards));
+          } catch {}
+          const publishedAdmissionCards = data.cards
+            .filter((c: any) => c.section === "admission" && c.status === "Published")
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+
+          if (publishedAdmissionCards.length > 0) {
+            const mapped: Stream[] = publishedAdmissionCards.map((c: any, idx: number) => ({
+              number: c.number || String(idx + 1).padStart(2, "0"),
+              title: c.heading,
+              image: c.image,
+              text: (
+                <div
+                  className="tims-admission-card-text"
+                  dangerouslySetInnerHTML={{ __html: c.descriptionHtml }}
+                />
+              ),
+            }));
+            setDynamicCards(mapped);
+          } else {
+            setDynamicCards([]);
+          }
+        }
+      })
+      .catch((err) => console.error("Failed to load admission cards:", err));
+  }, []);
+
+  // Only show cards when added/published from admin panel
+  if (!dynamicCards || dynamicCards.length === 0) {
+    return null;
+  }
+
   return (
     <section className="tims-admission-section">
       <span className="tims-admission-blob" aria-hidden="true" />
@@ -75,19 +112,33 @@ export default function AdmissionStreamsSection() {
         </div>
 
         <div className="tims-admission-grid">
-          {streams.map((stream) => (
-            <article className="tims-admission-card" key={stream.number}>
+          {dynamicCards.map((stream, idx) => (
+            <article className="tims-admission-card" key={stream.title + idx}>
               <div className="tims-admission-card-media">
                 <span className="tims-admission-card-number">{stream.number}</span>
-                <span className="tims-admission-card-media-icon">
-                  <ImageIcon />
-                </span>
-                <span className="tims-admission-card-media-hint">Image coming soon</span>
+                {stream.image ? (
+                  <img
+                    src={stream.image}
+                    alt={stream.title}
+                    className="tims-admission-card-media-img"
+                  />
+                ) : (
+                  <>
+                    <span className="tims-admission-card-media-icon">
+                      <ImageIcon />
+                    </span>
+                    <span className="tims-admission-card-media-hint">Image coming soon</span>
+                  </>
+                )}
               </div>
 
               <div className="tims-admission-card-body">
                 <h3 className="tims-admission-card-title">{stream.title}</h3>
-                <p className="tims-admission-card-text">{stream.text}</p>
+                {typeof stream.text === "string" ? (
+                  <p className="tims-admission-card-text">{stream.text}</p>
+                ) : (
+                  stream.text
+                )}
               </div>
             </article>
           ))}

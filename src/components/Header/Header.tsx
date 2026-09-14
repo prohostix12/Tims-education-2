@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import styles from "./Header.module.css";
+import AdminLoginModal from "@/components/AdminLoginModal/AdminLoginModal";
 
 const LOGO_CLICK_DELAY = 250;
 
@@ -37,7 +38,7 @@ const navItems: NavLink[] = [
       { label: "Btech / Mtech", href: "/courses/btech-mtech" },
       { label: "Diploma", href: "/courses/diploma" },
       { label: "Apprenticeship Program", href: "/courses/apprenticeship-program" },
-      { label: "Skill Courses", href: "#" },
+      { label: "Skill Courses", href: "/courses/skill-courses" },
     ],
   },
   /*
@@ -497,6 +498,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [adminModalOpen, setAdminModalOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const logoClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -514,13 +516,23 @@ export default function Header() {
     }, LOGO_CLICK_DELAY);
   };
 
-  const handleLogoDoubleClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+  const handleLogoDoubleClick = async (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (logoClickTimer.current) {
       clearTimeout(logoClickTimer.current);
       logoClickTimer.current = null;
     }
-    router.push("/admin");
+    try {
+      const res = await fetch("/api/admin/check-auth");
+      const data = await res.json();
+      if (data.authenticated) {
+        router.push("/admin");
+      } else {
+        setAdminModalOpen(true);
+      }
+    } catch {
+      setAdminModalOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -618,15 +630,13 @@ export default function Header() {
           </nav>
 
           <div className={styles.actions}>
-            <a
-              href="https://pypeerm.com/login"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/students/login"
               className={styles.studentLoginBtn}
             >
               <UserIcon />
               <span>Student Login</span>
-            </a>
+            </Link>
 
             <a href="tel:+917736111588" className={styles.mobilePhoneButton} aria-label="Call TIMS Education">
               <PhoneIcon />
@@ -697,16 +707,14 @@ export default function Header() {
         </ul>
 
         <div className={styles.mobileDrawerFooter}>
-          <a
-            href="https://pypeerm.com/login"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/students/login"
             className={styles.mobileStudentLoginBtn}
             onClick={() => setMobileOpen(false)}
           >
             <UserIcon />
             <span>Student Login</span>
-          </a>
+          </Link>
           <a href="tel:+917736111588" className={styles.mobileDrawerPhone}>
             <PhoneIcon />
             <span>+91 7736 1115 88</span>
@@ -721,6 +729,11 @@ export default function Header() {
           aria-hidden="true"
         />
       )}
+
+      <AdminLoginModal
+        isOpen={adminModalOpen}
+        onClose={() => setAdminModalOpen(false)}
+      />
     </header>
   );
 }

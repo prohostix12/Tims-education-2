@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Footer.module.css";
+import AdminLoginModal from "@/components/AdminLoginModal/AdminLoginModal";
 
 const exploreLinks = [
   { label: "Home", href: "#" },
@@ -129,12 +132,48 @@ const socialIcons = {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const router = useRouter();
+  const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const logoClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
+    logoClickTimer.current = setTimeout(() => {
+      router.push("/");
+    }, 250);
+  };
+
+  const handleLogoDoubleClick = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (logoClickTimer.current) {
+      clearTimeout(logoClickTimer.current);
+      logoClickTimer.current = null;
+    }
+    try {
+      const res = await fetch("/api/admin/check-auth");
+      const data = await res.json();
+      if (data.authenticated) {
+        router.push("/admin");
+      } else {
+        setAdminModalOpen(true);
+      }
+    } catch {
+      setAdminModalOpen(true);
+    }
+  };
 
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brandRow}>
-          <Link href="/" className={styles.logoLink} aria-label="TIMS Education home">
+          <Link
+            href="/"
+            className={styles.logoLink}
+            aria-label="TIMS Education home. Double-click for admin access."
+            onClick={handleLogoClick}
+            onDoubleClick={handleLogoDoubleClick}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/tims_logo/logo.webp"
@@ -267,6 +306,11 @@ export default function Footer() {
       >
         <ArrowUpIcon />
       </button>
+
+      <AdminLoginModal
+        isOpen={adminModalOpen}
+        onClose={() => setAdminModalOpen(false)}
+      />
     </footer>
   );
 }

@@ -1,0 +1,249 @@
+.tims-team-section {
+  --tm-navy: #14161c;
+  --tm-blue: #2563eb;
+  --tm-red: #E91D24;
+  --tm-text-muted: #64748b;
+  --tm-bg: #FEFCED;
+
+  position: relative;
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--tm-navy);
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  padding: clamp(3rem, 6vw, 5rem) 1.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.tims-team-section *,
+.tims-team-section *::before,
+.tims-team-section *::after {
+  box-sizing: border-box;
+}
+
+.tims-team-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.tims-team-heading-wrap {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+}
+
+.tims-team-label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tm-red);
+  margin-bottom: 0.75rem;
+}
+
+.tims-team-heading {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.75rem, 3.8vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--tm-navy);
+}
+
+.tims-team-heading span {
+  color: var(--tm-red);
+  display: inline;
+  background: transparent;
+}
+
+.tims-team-subtitle {
+  margin: 0 auto;
+  font-size: clamp(0.9rem, 1.6vw, 1rem);
+  line-height: 1.6;
+  color: var(--tm-text-muted);
+}
+
+/* ---------- Infinite Left-to-Right Continuous Loop Marquee ---------- */
+
+.tims-team-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem 0 2rem;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+}
+
+.tims-team-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  width: max-content;
+  animation: scrollLeftToRight 28s linear infinite;
+}
+
+.tims-team-marquee:hover .tims-team-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeftToRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* ---------- Compact Distinct Team Card Design ---------- */
+
+.tims-team-card {
+  position: relative;
+  width: clamp(210px, 18vw, 240px);
+  height: clamp(290px, 26vw, 330px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.tims-team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(233, 29, 36, 0.14);
+  border-color: #fca5a5;
+}
+
+/* Header Text (Role Pill Badge + Name) */
+
+.tims-team-card-header {
+  padding: 1.25rem 1rem 0.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 2;
+}
+
+.tims-team-card-role {
+  display: inline-block;
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: var(--tm-red);
+  background: rgba(233, 29, 36, 0.08);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(233, 29, 36, 0.2);
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tims-team-card-name {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+}
+
+/* Photo Container */
+
+.tims-team-photo-container {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0.4rem;
+  background: #f8fafc;
+}
+
+.tims-team-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.tims-team-card:hover .tims-team-portrait-img {
+  transform: scale(1.05);
+}
+
+/* Placeholder space for team member photo */
+
+.tims-team-placeholder-space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #cbd5e1;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+
+.tims-team-placeholder-space svg {
+  color: #cbd5e1;
+  width: 40px;
+  height: 40px;
+}
+
+.tims-team-placeholder-text {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1120px) {
+  .tims-team-card {
+    width: clamp(200px, 22vw, 230px);
+    height: clamp(270px, 30vw, 310px);
+  }
+}
+
+@media (max-width: 680px) {
+  .tims-team-card {
+    width: clamp(190px, 55vw, 220px);
+    height: 290px;
+  }
+}

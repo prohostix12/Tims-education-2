@@ -32,12 +32,19 @@ async function createClientPromise(): Promise<MongoClientType> {
   }
 
   if (!directUri) {
-    const dns = await import("node:dns");
-    dns.setServers(["8.8.8.8", "1.1.1.1", ...dns.getServers()]);
+    try {
+      const dns = await import("node:dns");
+      dns.setServers(["8.8.8.8", "1.1.1.1", ...dns.getServers()]);
+    } catch {
+      // Ignore if setServers fails
+    }
   }
 
   const { MongoClient } = await import("mongodb");
-  return new MongoClient(uri).connect();
+  return new MongoClient(uri, {
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 5000,
+  }).connect();
 }
 
 // A plain module-scope variable is enough to reuse the connection across
@@ -49,13 +56,19 @@ let clientPromise: Promise<MongoClientType> | undefined;
 function getClientPromise(): Promise<MongoClientType> {
   if (process.env.NODE_ENV === "development") {
     if (!global._mongoClientPromise) {
-      global._mongoClientPromise = createClientPromise();
+      global._mongoClientPromise = createClientPromise().catch((err) => {
+        global._mongoClientPromise = undefined;
+        throw err;
+      });
     }
     return global._mongoClientPromise;
   }
 
   if (!clientPromise) {
-    clientPromise = createClientPromise();
+    clientPromise = createClientPromise().catch((err) => {
+      clientPromise = undefined;
+      throw err;
+    });
   }
   return clientPromise;
 }

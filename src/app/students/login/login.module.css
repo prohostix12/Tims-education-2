@@ -1,0 +1,242 @@
+.loginPage {
+  min-height: 100vh;
+  padding: 8rem 1.5rem 4rem;
+  background-color: #FEFCED;
+  background-image:
+    linear-gradient(to right, rgba(20, 22, 28, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 22, 28, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border: 3px solid #14161c;
+  border-radius: 1.5rem;
+  box-shadow: 8px 8px 0 #14161c;
+  padding: 2.5rem 2.25rem;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.logoImage {
+  height: 48px;
+  width: auto;
+}
+
+.badge {
+  display: inline-block;
+  background: #fdecec;
+  color: var(--red, #E91D24);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--red, #E91D24);
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #14161c;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.92rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #14161c;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #14161c;
+  background: #f8fafc;
+  border: 2px solid #14161c;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  background: #ffffff;
+  border-color: var(--red, #E91D24);
+  box-shadow: 0 0 0 4px rgba(233, 29, 36, 0.12);
+}
+
+.togglePassBtn {
+  position: absolute;
+  right: 0.85rem;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.togglePassBtn:hover {
+  color: #14161c;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--red, #E91D24);
+  cursor: pointer;
+}
+
+.forgotLink {
+  color: var(--red, #E91D24);
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  margin-top: 0.5rem;
+  background: var(--red, #E91D24);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  border: 2.5px solid #14161c;
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 #14161c;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submitBtn:hover {
+  background: #ff3b42;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #14161c;
+}
+
+.submitBtn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #14161c;
+}
+
+.cardFooter {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #e2e8f0;
+  text-align: center;
+}
+
+.footerText {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 0.75rem;
+}
+
+.supportLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #14161c;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.supportLink:hover {
+  color: var(--red, #E91D24);
+}
+
+@media (max-width: 480px) {
+  .loginCard {
+    padding: 1.85rem 1.35rem;
+  }
+}

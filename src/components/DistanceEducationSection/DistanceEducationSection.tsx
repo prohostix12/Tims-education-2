@@ -1,12 +1,9 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import "./tims-distance-section.css";
-
-const highlights = [
-  "Simple Admission Procedures",
-  "Clear, Ongoing Support",
-  "Experienced Mentors",
-  "Reliable University Tie-ups",
-];
+import { DistanceEducationData, DEFAULT_DISTANCE_EDUCATION_DATA } from "@/types/distanceEducation";
 
 function CheckIcon() {
   return (
@@ -51,20 +48,153 @@ function ArrowIcon() {
   );
 }
 
-export default function DistanceEducationSection() {
+function VolumeMutedIcon() {
   return (
-    <section className="tims-distance-section">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <line x1="23" y1="9" x2="17" y2="15" />
+      <line x1="17" y1="9" x2="23" y2="15" />
+    </svg>
+  );
+}
+
+function VolumeHighIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+    </svg>
+  );
+}
+
+export default function DistanceEducationSection() {
+  const [settings, setSettings] = useState<DistanceEducationData>(DEFAULT_DISTANCE_EDUCATION_DATA);
+  const [isMuted, setIsMuted] = useState(true);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Load settings from API
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        const res = await fetch("/api/distance-education");
+        const data = await res.json();
+        if (data.settings) {
+          setSettings(data.settings);
+        }
+      } catch (err) {
+        console.error("Failed to load distance education section settings:", err);
+      }
+    }
+    loadSettings();
+  }, []);
+
+  // IntersectionObserver to handle Autoplay on Scroll into view
+  useEffect(() => {
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
+
+    // Ensure video is initially muted for autoplay compatibility
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+              playPromise.catch(() => {
+                // Autoplay blocked fallback or pending user interaction
+              });
+            }
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [settings.videoUrl]);
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    const newMutedState = !isMuted;
+    videoRef.current.muted = newMutedState;
+    setIsMuted(newMutedState);
+  };
+
+  // Helper for embed URLs (YouTube / Instagram)
+  const isInstagram = settings.videoUrl.includes("instagram.com");
+  const isYouTube = settings.videoUrl.includes("youtube.com") || settings.videoUrl.includes("youtu.be");
+  const isEmbed = isInstagram || isYouTube;
+
+  const getEmbedSrc = () => {
+    if (isInstagram) {
+      const match = settings.videoUrl.match(/reel\/([A-Za-z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://www.instagram.com/reel/${match[1]}/embed`;
+      }
+    }
+    if (isYouTube) {
+      const match = settings.videoUrl.match(/(?:v=|\/embed\/|\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://www.youtube.com/embed/${match[1]}?autoplay=1&mute=1&loop=1&playlist=${match[1]}&controls=0`;
+      }
+    }
+    return settings.videoUrl;
+  };
+
+  return (
+    <section ref={sectionRef} className="tims-distance-section">
       <span className="tims-distance-blob" aria-hidden="true" />
 
       <div className="tims-distance-inner">
         <div className="tims-distance-media">
           <div className="tims-distance-image-wrap">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/distance-education-student.jpg"
-              alt="TIMS Education student"
-              className="tims-distance-image"
-            />
+            {isEmbed ? (
+              <iframe
+                src={getEmbedSrc()}
+                title="Distance Education Video"
+                className="tims-distance-video-iframe"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <>
+                <video
+                  ref={videoRef}
+                  src={settings.videoUrl}
+                  className="tims-distance-video"
+                  autoPlay
+                  muted={isMuted}
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+
+                {/* Single Control Button: Mute / Unmute Audio Button */}
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  className="tims-distance-audio-btn"
+                  aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
+                  title={isMuted ? "Unmute Audio" : "Mute Audio"}
+                >
+                  {isMuted ? <VolumeMutedIcon /> : <VolumeHighIcon />}
+                  <span className="tims-distance-audio-label">
+                    {isMuted ? "Sound Off" : "Sound On"}
+                  </span>
+                </button>
+              </>
+            )}
           </div>
 
           <div className="tims-distance-badge">
@@ -72,18 +202,15 @@ export default function DistanceEducationSection() {
               <GraduationIcon />
             </span>
             <div>
-              <p className="tims-distance-badge-value">18+ Years</p>
-              <p className="tims-distance-badge-label">Guiding Students Forward</p>
+              <p className="tims-distance-badge-value">{settings.badgeValue}</p>
+              <p className="tims-distance-badge-label">{settings.badgeLabel}</p>
             </div>
           </div>
         </div>
 
         <div className="tims-distance-content">
-          <span className="tims-distance-label">Why Students Choose Us</span>
-          <h2 className="tims-distance-heading">
-            Best Distance Education Centre in Kerala &ndash; Building Futures with Flexible
-            Learning
-          </h2>
+          <span className="tims-distance-label">{settings.subheading}</span>
+          <h2 className="tims-distance-heading">{settings.heading}</h2>
 
           <p className="tims-distance-text">
             TIMS Education has grown by helping students and working professionals complete
@@ -97,15 +224,8 @@ export default function DistanceEducationSection() {
             .
           </p>
 
-          <p className="tims-distance-text">
-            We focus on simple admission procedures, clear support, and courses that
-            genuinely help in building a career. We try to make the process as easy as
-            possible for people who want to finish a degree they dropped years ago or get a
-            better job by getting a higher level of education.
-          </p>
-
           <ul className="tims-distance-highlight-list">
-            {highlights.map((item) => (
+            {settings.highlights.map((item) => (
               <li key={item} className="tims-distance-highlight-chip">
                 <span className="tims-distance-highlight-icon">
                   <CheckIcon />

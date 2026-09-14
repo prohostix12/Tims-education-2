@@ -42,6 +42,7 @@ const sourceLabels: Record<string, string> = {
   "advisor-modal": "Modal — Connect With an Advisor",
   "success-stories-advisor": "Success Stories — Connect With an Advisor",
   "popup-modal": "Popup Modal — Enquiry",
+  "credit-transfer-page": "Credit Transfer — Enquiry",
 };
 
 export default async function AdminEnquiriesPage() {
