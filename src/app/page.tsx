@@ -25,7 +25,7 @@ export default function Home() {
       <CoursesSection />
       {/* <UniversitiesSection /> */}
       <DirectorsSection />
-      <TeamMembersSection />
+      {/* <TeamMembersSection /> */}
       <TestimonialsSection />
       <StudentVideoStoriesSection />
       <PartnersSection />

@@ -471,7 +471,7 @@ export default function StudentVideoStoriesSection() {
         {/* Header Content */}
         <div className="tims-video-stories-header">
           <span className="tims-video-stories-eyebrow">REAL PEOPLE. REAL PROGRESS.</span>
-          <h2 className="tims-video-stories-title">Student Success Stories</h2>
+          <h2 className="tims-video-stories-title">Our Stories</h2>
           <p className="tims-video-stories-subtitle">
             Hear from our students about their journeys, achievements, and how TIMS helped them
             turn their dreams into reality.

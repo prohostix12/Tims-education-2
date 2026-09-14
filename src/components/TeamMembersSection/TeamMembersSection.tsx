@@ -90,32 +90,30 @@ export default function TeamMembersSection() {
   // Duplicate list for seamless infinite left-to-right marquee loop
   const loopMembers = [...teamMembers, ...teamMembers];
 
+  return null;
+  /*
   return (
     <section className="tims-team-section">
       <div className="tims-team-inner">
-        {/* Section Header */}
         <div className="tims-team-heading-wrap">
           <span className="tims-team-label">DEDICATED PROFESSIONALS</span>
           <h2 className="tims-team-heading">
-            Our <span>Team Members</span>
+            Our <span>Team Member</span>
           </h2>
           <p className="tims-team-subtitle">
             Meet the dedicated academic coordinators, career advisors, and student support specialists guiding your educational journey at TIMS.
           </p>
         </div>
 
-        {/* Infinite Left-to-Right Continuous Loop Marquee */}
         <div className="tims-team-marquee">
           <div className="tims-team-track">
             {loopMembers.map((member, index) => (
               <div className="tims-team-card" key={`${member.id}-${index}`}>
-                {/* Header (Role Pill + Name) */}
                 <div className="tims-team-card-header">
                   <span className="tims-team-card-role">{member.role}</span>
                   <h3 className="tims-team-card-name">{member.name}</h3>
                 </div>
 
-                {/* Team Member Photo Container */}
                 <div className="tims-team-photo-container">
                   {member.image ? (
                     <img
@@ -137,4 +135,5 @@ export default function TeamMembersSection() {
       </div>
     </section>
   );
+  */
 }

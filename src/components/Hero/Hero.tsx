@@ -120,7 +120,7 @@ export default function Hero() {
         <div className={styles.content}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowLine} aria-hidden="true" />
-            <span>YOUR NEXT ACADEMIC STEP STARTS HERE</span>
+            <span>BEST ONLINE DEGREE PLATFORM</span>
           </div>
           <h1 className={styles.title}>
             18+ Years of Experience.

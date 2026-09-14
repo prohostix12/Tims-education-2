@@ -16,14 +16,6 @@ const exploreLinks = [
   { label: "Privacy Policy", href: "/contact" },
 ];
 
-const universityLinks = [
-  { label: "Guru Kashi University", href: "/universities/degree-pg/guru-kashi-university" },
-  { label: "Andhra University", href: "/universities" },
-  { label: "Swami Vivekanand Subharti University", href: "/universities/degree-pg/swami-vivekanand-subharti-university" },
-  { label: "Mizoram University", href: "/universities/degree-pg/mizoram-university" },
-  { label: "Aligarh Muslim University", href: "/universities/degree-pg/aligarh-muslim-university" },
-];
-
 const socialLinks = [
   { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
   { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
@@ -221,17 +213,6 @@ export default function Footer() {
                   <Link href={link.href}>
                     {link.label}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className={styles.column}>
-            <h3 className={styles.columnTitle}>Universities</h3>
-            <ul>
-              {universityLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}
             </ul>
