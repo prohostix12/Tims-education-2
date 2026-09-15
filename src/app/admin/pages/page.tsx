@@ -9,7 +9,6 @@ const pages = [
   { name: "SSLC / Plus Two", path: "/courses/sslc-plus-two", editPath: "/admin/courses/sslc-plus-two", editLabel: "Manage Content" },
   { name: "Online Degree", path: "/courses/online-degree", editPath: "/admin/courses/online-degree", editLabel: "Manage Courses" },
   { name: "Post Graduation", path: "/courses/post-graduation", editPath: "/admin/courses/post-graduation", editLabel: "Manage Courses" },
-  { name: "B.Tech / M.Tech", path: "/courses/btech-mtech", editPath: "/admin/courses/btech-mtech", editLabel: "Manage Courses" },
   { name: "Diploma", path: "/courses/diploma", editPath: "/admin/courses/diploma", editLabel: "Manage Courses" },
   { name: "Contact", path: "/contact", editPath: "/admin/contact", editLabel: "Manage Contact" },
 ];

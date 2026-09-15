@@ -1,5 +1,6 @@
 import { getDb } from "@/lib/mongodb";
 import { preferenceLabel } from "@/lib/coursePreferences";
+import CrmRetryButton from "./CrmRetryButton";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +12,9 @@ type Enquiry = {
   preference: string;
   source: string;
   createdAt: Date;
+  crmSyncStatus: "pending" | "success" | "failed" | "disabled";
+  crmLeadId?: string | null;
+  crmLastSyncError?: string | null;
 };
 
 async function loadEnquiries(): Promise<{ enquiries: Enquiry[]; error: string | null }> {
@@ -26,6 +30,9 @@ async function loadEnquiries(): Promise<{ enquiries: Enquiry[]; error: string | 
         preference: doc.preference,
         source: doc.source,
         createdAt: doc.createdAt,
+        crmSyncStatus: doc.crmSyncStatus || "disabled",
+        crmLeadId: doc.crmLeadId || null,
+        crmLastSyncError: doc.crmLastSyncError || null,
       })),
       error: null,
     };
@@ -73,6 +80,7 @@ export default async function AdminEnquiriesPage() {
                   <th>Phone</th>
                   <th>Preference</th>
                   <th>Source</th>
+                  <th>CRM Sync</th>
                   <th>Received</th>
                 </tr>
               </thead>
@@ -88,6 +96,70 @@ export default async function AdminEnquiriesPage() {
                       </span>
                     </td>
                     <td>{sourceLabels[enquiry.source] || enquiry.source}</td>
+                    <td>
+                      {enquiry.crmSyncStatus === "success" ? (
+                        <span
+                          style={{
+                            padding: "0.2rem 0.55rem",
+                            borderRadius: "12px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            background: "rgba(34, 197, 94, 0.15)",
+                            color: "#15803d",
+                            display: "inline-block",
+                          }}
+                          title={enquiry.crmLeadId ? `Lead ID: ${enquiry.crmLeadId}` : "Synced to PypeCRM"}
+                        >
+                          ✓ Synced {enquiry.crmLeadId ? `(${enquiry.crmLeadId})` : ""}
+                        </span>
+                      ) : enquiry.crmSyncStatus === "failed" ? (
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                          <span
+                            style={{
+                              padding: "0.2rem 0.55rem",
+                              borderRadius: "12px",
+                              fontSize: "0.75rem",
+                              fontWeight: 700,
+                              background: "rgba(239, 68, 68, 0.15)",
+                              color: "#b91c1c",
+                              display: "inline-block",
+                            }}
+                            title={enquiry.crmLastSyncError || "CRM sync failed"}
+                          >
+                            ✕ Failed
+                          </span>
+                          <CrmRetryButton enquiryId={enquiry.id} />
+                        </div>
+                      ) : enquiry.crmSyncStatus === "pending" ? (
+                        <span
+                          style={{
+                            padding: "0.2rem 0.55rem",
+                            borderRadius: "12px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            background: "rgba(234, 179, 8, 0.15)",
+                            color: "#a16207",
+                            display: "inline-block",
+                          }}
+                        >
+                          ⏳ Pending
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            padding: "0.2rem 0.55rem",
+                            borderRadius: "12px",
+                            fontSize: "0.75rem",
+                            fontWeight: 600,
+                            background: "#f1f5f9",
+                            color: "#64748b",
+                            display: "inline-block",
+                          }}
+                        >
+                          Disabled
+                        </span>
+                      )}
+                    </td>
                     <td>{new Date(enquiry.createdAt).toLocaleString()}</td>
                   </tr>
                 ))}
@@ -99,3 +171,4 @@ export default async function AdminEnquiriesPage() {
     </div>
   );
 }
+

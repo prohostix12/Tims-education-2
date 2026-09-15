@@ -57,18 +57,6 @@ const categoryMap: Record<string, CategoryMeta> = {
       { id: "4", code: "MA-SOC", title: "MA Sociology / Psychology", duration: "2 Years", mode: "Distance", status: "Active", studentsEnrolled: 155 },
     ],
   },
-  "btech-mtech": {
-    title: "B-Tech / M-Tech Management",
-    subtitle: "Engineering & Technical Higher Education",
-    description: "Manage engineering programs, lateral entry options, credit transfers for working professionals, and university affiliations.",
-    badge: "Engineering",
-    courses: [
-      { id: "1", code: "BTECH-MECH", title: "B.Tech Mechanical Engineering (Working Exec)", duration: "3-4 Years", mode: "Work-Integrated", status: "Active", studentsEnrolled: 180 },
-      { id: "2", code: "BTECH-CIV", title: "B.Tech Civil Engineering", duration: "3-4 Years", mode: "Work-Integrated", status: "Active", studentsEnrolled: 140 },
-      { id: "3", code: "BTECH-EEE", title: "B.Tech Electrical & Electronics", duration: "3-4 Years", mode: "Work-Integrated", status: "Active", studentsEnrolled: 110 },
-      { id: "4", code: "MTECH-CS", title: "M.Tech Computer Science", duration: "2 Years", mode: "Hybrid", status: "Active", studentsEnrolled: 85 },
-    ],
-  },
   diploma: {
     title: "Diploma Management",
     subtitle: "Technical, Vocational & Professional Diplomas",
@@ -80,28 +68,17 @@ const categoryMap: Record<string, CategoryMeta> = {
       { id: "3", code: "DIP-AUTO", title: "Diploma in Automobile Engineering", duration: "2 Years", mode: "Hybrid", status: "Active", studentsEnrolled: 175 },
     ],
   },
-  apprenticeship: {
-    title: "Apprenticeship Management",
-    subtitle: "Practical Skill & Industry Training Programs",
-    description: "Manage industry partnership slots, apprenticeship stipends, skill certifications, and candidate placements.",
-    badge: "Industry Training",
-    courses: [
-      { id: "1", code: "APP-IND", title: "Industrial Apprentice Training Program", duration: "6-12 Months", mode: "On-site / Practical", status: "Active", studentsEnrolled: 310 },
-      { id: "2", code: "APP-TECH", title: "IT & Software Development Trainee", duration: "6 Months", mode: "Hybrid", status: "Active", studentsEnrolled: 245 },
-      { id: "3", code: "APP-ELEC", title: "Electrical Technician Apprentice", duration: "1 Year", mode: "On-site", status: "Active", studentsEnrolled: 190 },
-    ],
-  },
 };
 
 export default function AdminCategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const resolvedParams = use(params);
   const rawCategory = resolvedParams.category;
-  const categoryKey = rawCategory === "apprenticeship-program" ? "apprenticeship" : rawCategory;
+  const categoryKey = rawCategory;
   const meta = categoryMap[categoryKey] || {
     title: `${rawCategory.replace(/-/g, " ").toUpperCase()} Management`,
-    subtitle: "Course category management",
-    description: "Manage courses, programs, and specifications for this category.",
-    badge: "Category",
+    subtitle: "Category not managed in admin panel",
+    description: "This category is currently managed via static public content and does not require admin panel configuration.",
+    badge: "Unmanaged",
     courses: [],
   };
 

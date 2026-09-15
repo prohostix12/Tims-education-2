@@ -167,10 +167,8 @@ const navStructure: NavItem[] = [
       { label: "All Courses", href: "/admin/courses", description: "Overview of all course categories" },
       { label: "Online Degree", href: "/admin/courses/online-degree", description: "UGC Approved Online Degree programs" },
       { label: "Post graduation", href: "/admin/courses/post-graduation", description: "Postgraduate & Masters programs" },
-      { label: "B-Tech/M-Tech", href: "/admin/courses/btech-mtech", description: "Engineering & Technology degrees" },
       { label: "Diploma", href: "/admin/courses/diploma", description: "Polytechnic & Executive diplomas" },
       { label: "Skill Courses", href: "/admin/courses/skill-courses", description: "Job-oriented professional skill development programs" },
-      { label: "Apprenticeship", href: "/admin/courses/apprenticeship", description: "Industry apprenticeship & training" },
     ],
   },
   {

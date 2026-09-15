@@ -29,15 +29,6 @@ const courseCategories = [
     icon: "📜",
   },
   {
-    id: "btech-mtech",
-    name: "B-Tech / M-Tech",
-    href: "/admin/courses/btech-mtech",
-    description: "Engineering and technology degree programs with credit transfer and lateral entry options.",
-    count: "6 Streams",
-    badge: "Engineering",
-    icon: "⚙️",
-  },
-  {
     id: "diploma",
     name: "Diploma",
     href: "/admin/courses/diploma",
@@ -55,15 +46,6 @@ const courseCategories = [
     badge: "Skill Dev",
     icon: "🚀",
   },
-  {
-    id: "apprenticeship",
-    name: "Apprenticeship",
-    href: "/admin/courses/apprenticeship",
-    description: "Hands-on industry apprenticeship, workplace training, and stipend programs.",
-    count: "5 Tracks",
-    badge: "Industry",
-    icon: "🛠️",
-  },
 ];
 
 export default function AdminCoursesPage() {
@@ -80,7 +62,7 @@ export default function AdminCoursesPage() {
       <div className="tims-admin-stats">
         <div className="tims-admin-stat-card">
           <span className="tims-admin-stat-label">Total Categories</span>
-          <div className="tims-admin-stat-value">6</div>
+          <div className="tims-admin-stat-value">5</div>
         </div>
         <div className="tims-admin-stat-card">
           <span className="tims-admin-stat-label">Active Programs</span>

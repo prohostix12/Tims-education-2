@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState, type TouchEvent } from "react";
+import WriteReviewModal from "./WriteReviewModal";
 import "./tims-testimonials-section.css";
 
 type Testimonial = {
@@ -9,49 +9,64 @@ type Testimonial = {
   initial: string;
   timeAgo: string;
   text: string;
+  rating?: number;
+  image?: string | null;
 };
 
-const testimonials: Testimonial[] = [
+const defaultTestimonials: Testimonial[] = [
   {
     name: "Dheeraj Suresh",
     initial: "D",
     timeAgo: "4 months ago",
     text: "Excellent! 🎉",
+    rating: 5,
   },
   {
     name: "Shaiju",
     initial: "S",
     timeAgo: "4 months ago",
     text: "I must like in your customer service.",
+    rating: 5,
   },
   {
     name: "Munavvir Munavvir",
     initial: "M",
     timeAgo: "5 months ago",
     text: "This institute's 6-month online Plus Two course was very helpful, with clear teaching, regular classes, and great support throughout.",
+    rating: 5,
   },
   {
     name: "Fathima Nasrin",
     initial: "F",
     timeAgo: "6 months ago",
     text: "Great guidance for admissions abroad. The counselling team explained every step clearly and patiently.",
+    rating: 5,
   },
   {
     name: "Arjun Menon",
     initial: "A",
     timeAgo: "7 months ago",
     text: "Smooth credit transfer process and quick responses whenever I had questions. Highly recommended.",
+    rating: 5,
   },
 ];
 
 const AUTO_ADVANCE_MS = 5500;
 const CARD_GAP_PX = 24;
 
-function StarRow() {
+function StarRow({ rating = 5 }: { rating?: number }) {
+  const starsCount = Math.max(1, Math.min(5, Math.round(rating)));
   return (
-    <span className="tims-testi-stars" aria-label="5 out of 5 stars">
+    <span className="tims-testi-stars" aria-label={`${starsCount} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+        <svg
+          key={i}
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill={i < starsCount ? "currentColor" : "#cbd5e1"}
+          aria-hidden="true"
+        >
           <path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17.8 5.9 21l1.5-6.8-5.2-4.7 6.9-.7L12 2.5Z" />
         </svg>
       ))}
@@ -95,17 +110,29 @@ function ReviewCard({ testimonial }: { testimonial: Testimonial }) {
           <div className="tims-testimonials-review-meta">
             <span className="tims-testimonials-review-name">{testimonial.name}</span>
             <span className="tims-testimonials-review-time">{testimonial.timeAgo}</span>
-            <StarRow />
+            <StarRow rating={testimonial.rating} />
           </div>
         </div>
       </div>
 
-      <span className="tims-testimonials-review-avatar">{testimonial.initial}</span>
+      {testimonial.image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={testimonial.image}
+          alt={testimonial.name}
+          className="tims-testimonials-review-avatar"
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        <span className="tims-testimonials-review-avatar">{testimonial.initial}</span>
+      )}
     </>
   );
 }
 
 export default function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(defaultTestimonials);
+  const [showModal, setShowModal] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
   const [stageWidth, setStageWidth] = useState(0);
@@ -115,6 +142,35 @@ export default function TestimonialsSection() {
   const touchStartXRef = useRef<number | null>(null);
   const touchDeltaXRef = useRef(0);
   const suppressClickRef = useRef(false);
+
+  // Fetch selected reviews from backend API
+  const fetchSelectedReviews = async () => {
+    try {
+      const res = await fetch("/api/reviews");
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.reviews) && data.reviews.length > 0) {
+          const apiItems: Testimonial[] = data.reviews.map(
+            (r: { name: string; rating?: number; text?: string; date?: string; image?: string }) => ({
+              name: r.name || "Anonymous",
+              initial: (r.name || "A").trim().charAt(0).toUpperCase(),
+              timeAgo: r.date || "Recently",
+              text: r.text || "",
+              rating: r.rating || 5,
+              image: r.image || null,
+            })
+          );
+          setTestimonials(apiItems);
+        }
+      }
+    } catch {
+      // Fallback to default testimonials if API fails
+    }
+  };
+
+  useEffect(() => {
+    fetchSelectedReviews();
+  }, []);
 
   useEffect(() => {
     function measure() {
@@ -128,21 +184,23 @@ export default function TestimonialsSection() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [activeIndex]);
+  }, [activeIndex, testimonials]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
-    timerRef.current = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % testimonials.length);
-    }, AUTO_ADVANCE_MS);
+    if (testimonials.length > 0) {
+      timerRef.current = setInterval(() => {
+        setActiveIndex((i) => (i + 1) % testimonials.length);
+      }, AUTO_ADVANCE_MS);
+    }
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, []);
+  }, [testimonials]);
 
   function goTo(index: number) {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -150,6 +208,7 @@ export default function TestimonialsSection() {
   }
 
   function goRelative(delta: number) {
+    if (testimonials.length === 0) return;
     goTo((activeIndex + delta + testimonials.length) % testimonials.length);
   }
 
@@ -197,12 +256,17 @@ export default function TestimonialsSection() {
 
         <div className="tims-testimonials-rating-bar">
           <span className="tims-testimonials-rating-score">4.6</span>
-          <StarRow />
+          <StarRow rating={5} />
           <span className="tims-testimonials-rating-divider" aria-hidden="true" />
           <span className="tims-testimonials-rating-count">342 Google Reviews</span>
-          <Link href="#" className="tims-testimonials-write-btn">
+          <button
+            type="button"
+            className="tims-testimonials-write-btn"
+            onClick={() => setShowModal(true)}
+            style={{ cursor: "pointer", border: "none" }}
+          >
             Write a Review
-          </Link>
+          </button>
         </div>
 
         <div className="tims-testimonials-spotlight">
@@ -230,7 +294,7 @@ export default function TestimonialsSection() {
                 const isActive = index === activeIndex;
                 return (
                   <div
-                    key={testimonial.name}
+                    key={`${testimonial.name}-${index}`}
                     ref={isActive ? activeCardRef : undefined}
                     className={`tims-testimonials-review-card ${
                       isActive
@@ -259,7 +323,7 @@ export default function TestimonialsSection() {
         <div className="tims-testimonials-dots">
           {testimonials.map((testimonial, index) => (
             <button
-              key={testimonial.name}
+              key={`${testimonial.name}-dot-${index}`}
               type="button"
               className={`tims-testimonials-dot ${
                 index === activeIndex ? "tims-testimonials-dot--active" : ""
@@ -271,6 +335,14 @@ export default function TestimonialsSection() {
           ))}
         </div>
       </div>
+
+      {/* Student Write Review Modal */}
+      <WriteReviewModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSuccess={() => fetchSelectedReviews()}
+      />
     </section>
   );
 }
+

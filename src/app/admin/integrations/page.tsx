@@ -22,7 +22,9 @@ export default function AdminIntegrationsPage() {
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [testing, setTesting] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
   // Load CRM config on mount
   useEffect(() => {
@@ -82,10 +84,37 @@ export default function AdminIntegrationsPage() {
       } else {
         setMessage({ type: "error", text: data.error || "Failed to save CRM settings." });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: "error", text: "An error occurred while saving CRM configuration." });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleTestConnection = async () => {
+    setTesting(true);
+    setTestResult(null);
+    try {
+      const res = await fetch("/api/admin/integrations/crm/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          endpointUrl: crmConfig.endpointUrl,
+          apiKey: crmConfig.apiKey,
+        }),
+      });
+      const data = await res.json();
+      setTestResult({
+        success: Boolean(data.success),
+        message: data.message || (data.success ? "✓ CRM connection successful" : "✕ CRM connection failed"),
+      });
+    } catch {
+      setTestResult({
+        success: false,
+        message: "✕ CRM connection failed: Network error.",
+      });
+    } finally {
+      setTesting(false);
     }
   };
 
@@ -96,6 +125,8 @@ export default function AdminIntegrationsPage() {
       </div>
     );
   }
+
+  const isConfigured = crmConfig.hasApiKey || Boolean(crmConfig.apiKey);
 
   return (
     <div>
@@ -127,11 +158,50 @@ export default function AdminIntegrationsPage() {
 
       {/* CRM Integration Card */}
       <form className="tims-admin-card" onSubmit={handleSaveCrm}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <h2 className="tims-admin-card-title" style={{ margin: 0 }}>CRM Integration</h2>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <h2 className="tims-admin-card-title" style={{ margin: 0 }}>CRM Integration</h2>
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  padding: "0.2rem 0.6rem",
+                  borderRadius: "20px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  background: !isConfigured
+                    ? "#f1f5f9"
+                    : testResult
+                    ? testResult.success
+                      ? "rgba(34, 197, 94, 0.15)"
+                      : "rgba(239, 68, 68, 0.15)"
+                    : crmConfig.enabled
+                    ? "rgba(34, 197, 94, 0.15)"
+                    : "#f1f5f9",
+                  color: !isConfigured
+                    ? "#64748b"
+                    : testResult
+                    ? testResult.success
+                      ? "#15803d"
+                      : "#b91c1c"
+                    : crmConfig.enabled
+                    ? "#15803d"
+                    : "#64748b",
+                }}
+              >
+                {!isConfigured
+                  ? "○ Not configured"
+                  : testResult
+                  ? testResult.success
+                    ? "● Connected"
+                    : "⚠ Connection failed"
+                  : crmConfig.enabled
+                  ? "● Connected"
+                  : "○ Disabled"}
+              </span>
+            </div>
             <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", color: "#64748b" }}>
-              Forward student enquiry leads to PypeCRM &amp; authenticate CRM student accounts
+              Forward student enquiry leads securely to PypeCRM
             </p>
           </div>
 
@@ -160,7 +230,7 @@ export default function AdminIntegrationsPage() {
             required
           />
           <span style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "0.25rem", display: "block" }}>
-            The endpoint URL for forwarding student leads and CRM integration requests.
+            The endpoint URL for forwarding student leads to PypeCRM.
           </span>
         </div>
 
@@ -184,15 +254,53 @@ export default function AdminIntegrationsPage() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="tims-admin-save-button"
-          disabled={saving}
-          style={{ marginTop: "1rem" }}
-        >
-          {saving ? "Saving..." : "Save CRM Settings"}
-        </button>
+        {testResult && (
+          <div
+            style={{
+              marginTop: "1rem",
+              padding: "0.75rem 1rem",
+              borderRadius: "8px",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              background: testResult.success ? "rgba(34, 197, 94, 0.1)" : "rgba(239, 68, 68, 0.1)",
+              color: testResult.success ? "#15803d" : "#b91c1c",
+              border: testResult.success ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid rgba(239, 68, 68, 0.2)",
+            }}
+          >
+            {testResult.message}
+          </div>
+        )}
+
+        <div style={{ display: "flex", gap: "1rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
+          <button
+            type="submit"
+            className="tims-admin-save-button"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save CRM Settings"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleTestConnection}
+            disabled={testing || (!crmConfig.hasApiKey && !crmConfig.apiKey)}
+            style={{
+              padding: "0.65rem 1.25rem",
+              borderRadius: "8px",
+              fontWeight: 600,
+              fontSize: "0.875rem",
+              border: "1px solid #cbd5e1",
+              background: "#ffffff",
+              color: "#334155",
+              cursor: testing || (!crmConfig.hasApiKey && !crmConfig.apiKey) ? "not-allowed" : "pointer",
+              opacity: testing || (!crmConfig.hasApiKey && !crmConfig.apiKey) ? 0.6 : 1,
+            }}
+          >
+            {testing ? "Testing Connection..." : "Test Connection"}
+          </button>
+        </div>
       </form>
     </div>
   );
 }
+
