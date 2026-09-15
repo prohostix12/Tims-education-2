@@ -10,10 +10,112 @@ type GallerySection = {
   updatedAt?: string;
 };
 
+// Canvas helper to downscale/compress oversized images (> 1920px or > 1.2MB)
+async function compressImageFile(file: File): Promise<File> {
+  if (!file.type.startsWith("image/") || file.size < 1.2 * 1024 * 1024) {
+    return file;
+  }
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const maxDim = 1920;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve(file);
+
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob || blob.size >= file.size) return resolve(file);
+          const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          });
+          resolve(compressedFile);
+        },
+        "image/jpeg",
+        0.85
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+    img.src = url;
+  });
+}
+
+// Uploads a single file to MongoDB GridFS (/api/upload)
+async function uploadSingleFile(file: File): Promise<string> {
+  const compressed = await compressImageFile(file);
+  const body = new FormData();
+  body.append("file", compressed);
+
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    body,
+  });
+
+  const resText = await res.text();
+  let data: any = {};
+  try {
+    data = JSON.parse(resText);
+  } catch {
+    if (!res.ok) {
+      throw new Error(`Upload server error (${res.status}): ${resText.slice(0, 100)}`);
+    }
+  }
+
+  if (!res.ok || !data.url) {
+    throw new Error(data.error || `Upload failed with status ${res.status}`);
+  }
+
+  return data.url;
+}
+
+// Converts a base64 data URL to a File and uploads it to GridFS
+async function uploadBase64DataUrl(dataUrl: string): Promise<string> {
+  if (!dataUrl.startsWith("data:image/")) return dataUrl;
+  try {
+    const arr = dataUrl.split(",");
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : "image/jpeg";
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], `migrated_gallery_${Date.now()}.jpg`, { type: mime });
+    return await uploadSingleFile(file);
+  } catch (err) {
+    console.error("Failed to migrate base64 image:", err);
+    return dataUrl;
+  }
+}
+
 export default function AdminGalleryPage() {
   const [sections, setSections] = useState<GallerySection[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploadingProgress, setUploadingProgress] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Modal State
@@ -27,7 +129,13 @@ export default function AdminGalleryPage() {
   const fetchGallerySections = async () => {
     try {
       const res = await fetch("/api/gallery");
-      const data = await res.json();
+      const resText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(resText);
+      } catch {
+        throw new Error(`Server returned invalid JSON: ${resText.slice(0, 100)}`);
+      }
       if (data.sections) {
         setSections(data.sections);
       }
@@ -63,36 +171,45 @@ export default function AdminGalleryPage() {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingSection(null);
+    setUploadingProgress(null);
   };
 
-  // Convert uploaded files to base64 data URLs
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  // Upload selected image files directly to MongoDB GridFS (/api/upload)
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const fileList = Array.from(files);
+    const fileList = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    if (fileList.length === 0) return;
 
-    fileList.forEach((file) => {
-      if (!file.type.startsWith("image/")) return;
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result;
-        if (typeof result === "string") {
-          setEditingSection((prev) => {
-            if (!prev) return null;
-            return {
-              ...prev,
-              images: [...prev.images, result],
-            };
-          });
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Reset input value so same files can be re-selected if needed
+    // Reset input value
     e.target.value = "";
+
+    try {
+      const total = fileList.length;
+      const uploadedUrls: string[] = [];
+
+      for (let i = 0; i < total; i++) {
+        setUploadingProgress(`Uploading photo ${i + 1} of ${total} to GridFS...`);
+        const url = await uploadSingleFile(fileList[i]);
+        uploadedUrls.push(url);
+      }
+
+      setEditingSection((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          images: [...prev.images, ...uploadedUrls],
+        };
+      });
+
+      setStatusMessage({ type: "success", text: `Successfully uploaded ${total} image(s) to GridFS!` });
+    } catch (err: any) {
+      console.error("Image upload error:", err);
+      alert(err.message || "Failed to upload images. Please try again.");
+    } finally {
+      setUploadingProgress(null);
+    }
   };
 
   const handleRemoveImage = (indexToRemove: number) => {
@@ -117,24 +234,44 @@ export default function AdminGalleryPage() {
     setSaving(true);
     setStatusMessage(null);
 
-    const isEdit = Boolean(editingSection.id);
-    const endpoint = isEdit ? `/api/gallery/${editingSection.id}` : "/api/gallery";
-    const method = isEdit ? "PUT" : "POST";
-
     try {
+      // Auto-migrate any legacy base64 data URLs to GridFS before saving
+      const hasBase64 = editingSection.images.some((img) => img.startsWith("data:image/"));
+      let finalImages = editingSection.images;
+
+      if (hasBase64) {
+        setUploadingProgress("Migrating legacy base64 photos to GridFS storage...");
+        finalImages = await Promise.all(
+          editingSection.images.map((img) => uploadBase64DataUrl(img))
+        );
+      }
+
+      const isEdit = Boolean(editingSection.id);
+      const endpoint = isEdit ? `/api/gallery/${editingSection.id}` : "/api/gallery";
+      const method = isEdit ? "PUT" : "POST";
+
       const res = await fetch(endpoint, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          sectionName: editingSection.sectionName,
-          images: editingSection.images,
+          sectionName: editingSection.sectionName.trim(),
+          images: finalImages,
         }),
       });
 
-      const data = await res.json();
+      const resText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(resText);
+      } catch {
+        if (res.status === 413) {
+          throw new Error("Request payload is too large. Images were uploaded to GridFS; please try saving again.");
+        }
+        throw new Error(`Server returned error (${res.status}): ${resText.slice(0, 120)}`);
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to save gallery section.");
+        throw new Error(data.error || `Failed to save section (${res.status}).`);
       }
 
       setStatusMessage({
@@ -149,6 +286,7 @@ export default function AdminGalleryPage() {
       alert(error.message || "Failed to save. Please try again.");
     } finally {
       setSaving(false);
+      setUploadingProgress(null);
     }
   };
 
@@ -159,7 +297,13 @@ export default function AdminGalleryPage() {
 
     try {
       const res = await fetch(`/api/gallery/${id}`, { method: "DELETE" });
-      const data = await res.json();
+      const resText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(resText);
+      } catch {
+        throw new Error(`Server returned error (${res.status}): ${resText.slice(0, 100)}`);
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Failed to delete section.");
@@ -329,23 +473,40 @@ export default function AdminGalleryPage() {
 
               <div className="tims-admin-field">
                 <label className="tims-admin-label">Upload Images</label>
-                <label className="tims-admin-dropzone">
+                <label className="tims-admin-dropzone" style={{ opacity: uploadingProgress ? 0.6 : 1 }}>
                   <span style={{ display: "block", fontSize: "1.25rem", marginBottom: "0.3rem" }}>📁</span>
                   <span style={{ fontWeight: 600, color: "var(--aa-navy)" }}>
-                    Click to select multiple images from your computer
+                    {uploadingProgress || "Click to select multiple images from your computer"}
                   </span>
                   <span style={{ display: "block", fontSize: "0.8125rem", color: "var(--aa-muted)", marginTop: "0.2rem" }}>
-                    Supports PNG, JPG, JPEG, WEBP files
+                    Supports PNG, JPG, JPEG, WEBP files (Uploaded directly to GridFS)
                   </span>
                   <input
                     type="file"
                     multiple
                     accept="image/*"
                     onChange={handleImageUpload}
+                    disabled={Boolean(uploadingProgress) || saving}
                     style={{ display: "none" }}
                   />
                 </label>
               </div>
+
+              {uploadingProgress && (
+                <div
+                  style={{
+                    padding: "0.6rem 0.85rem",
+                    borderRadius: "8px",
+                    background: "#eff6ff",
+                    color: "#1d4ed8",
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    marginBottom: "1rem",
+                  }}
+                >
+                  ⏳ {uploadingProgress}
+                </div>
+              )}
 
               {/* Preview Grid */}
               {editingSection.images.length > 0 && (
@@ -383,16 +544,22 @@ export default function AdminGalleryPage() {
                   type="button"
                   className="tims-admin-secondary-button"
                   onClick={closeModal}
-                  disabled={saving}
+                  disabled={saving || Boolean(uploadingProgress)}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   className="tims-admin-save-button"
-                  disabled={saving}
+                  disabled={saving || Boolean(uploadingProgress)}
                 >
-                  {saving ? "Saving Section..." : editingSection.id ? "Update Section" : "Create Section"}
+                  {saving
+                    ? "Saving Section..."
+                    : uploadingProgress
+                    ? "Uploading Images..."
+                    : editingSection.id
+                    ? "Update Section"
+                    : "Create Section"}
                 </button>
               </div>
             </form>
@@ -402,3 +569,4 @@ export default function AdminGalleryPage() {
     </div>
   );
 }
+
