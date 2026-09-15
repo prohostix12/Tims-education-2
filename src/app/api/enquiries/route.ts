@@ -6,10 +6,17 @@ import { createLead, getCRMConfig, type TIMSEnquiryData } from "@/lib/crmService
 const COLLECTION = "enquiries";
 
 type EnquiryPayload = {
-  name?: unknown;
+  firstName?: unknown;
+  lastName?: unknown;
+  phoneNumber?: unknown;
   email?: unknown;
+  company?: unknown;
+  enquiry?: unknown;
+  // Fallbacks for legacy client requests
+  name?: unknown;
   phone?: unknown;
   preference?: unknown;
+  message?: unknown;
   source?: unknown;
   utm_source?: unknown;
   utm_medium?: unknown;
@@ -30,20 +37,69 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const { name, email, phone, preference, source, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = body;
+  // Resolve legacy payload fallbacks if needed
+  let rawFirstName = isNonEmptyString(body.firstName) ? body.firstName.trim() : "";
+  let rawLastName = isNonEmptyString(body.lastName) ? body.lastName.trim() : "";
 
-  if (!isNonEmptyString(name) || !isNonEmptyString(email) || !isNonEmptyString(phone)) {
-    return NextResponse.json({ error: "Name, email, and phone are required." }, { status: 400 });
+  if (!rawFirstName && isNonEmptyString(body.name)) {
+    const parts = body.name.trim().split(/\s+/);
+    rawFirstName = parts[0] || "";
+    rawLastName = parts.slice(1).join(" ") || "";
+  }
+
+  const rawPhone = isNonEmptyString(body.phoneNumber)
+    ? body.phoneNumber.trim()
+    : isNonEmptyString(body.phone)
+    ? body.phone.trim()
+    : "";
+
+  const rawEmail = isNonEmptyString(body.email) ? body.email.trim() : "";
+  const rawCompany = isNonEmptyString(body.company) ? body.company.trim() : "";
+
+  const rawEnquiry = isNonEmptyString(body.enquiry)
+    ? body.enquiry.trim()
+    : isNonEmptyString(body.message)
+    ? body.message.trim()
+    : isNonEmptyString(body.preference)
+    ? body.preference.trim()
+    : "";
+
+  const { source, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = body;
+
+  if (!rawFirstName) {
+    return NextResponse.json({ error: "First name is required." }, { status: 400 });
+  }
+
+  if (!rawLastName) {
+    return NextResponse.json({ error: "Last name is required." }, { status: 400 });
+  }
+
+  if (!rawPhone) {
+    return NextResponse.json({ error: "Phone number is required." }, { status: 400 });
+  }
+
+  if (!rawEmail) {
+    return NextResponse.json({ error: "Email address is required." }, { status: 400 });
+  }
+
+  if (!rawEnquiry) {
+    return NextResponse.json({ error: "Enquiry message is required." }, { status: 400 });
   }
 
   const now = new Date();
   const crmConfig = await getCRMConfig();
 
   const doc = {
-    name: name.trim(),
-    email: email.trim(),
-    phone: phone.trim(),
-    preference: isNonEmptyString(preference) ? preference.trim() : "",
+    firstName: rawFirstName,
+    lastName: rawLastName,
+    phoneNumber: rawPhone,
+    email: rawEmail,
+    company: rawCompany,
+    enquiry: rawEnquiry,
+    // Preserve legacy attributes for DB index/migration compatibility
+    name: `${rawFirstName} ${rawLastName}`.trim(),
+    phone: rawPhone,
+    preference: rawEnquiry,
     source: isNonEmptyString(source) ? source.trim() : "unknown",
     ...(isNonEmptyString(utm_source) ? { utm_source: utm_source.trim() } : {}),
     ...(isNonEmptyString(utm_medium) ? { utm_medium: utm_medium.trim() } : {}),
@@ -74,10 +130,12 @@ export async function POST(request: Request) {
     try {
       const enquiryData: TIMSEnquiryData = {
         id: insertedId,
-        name: doc.name,
+        firstName: doc.firstName,
+        lastName: doc.lastName,
+        phoneNumber: doc.phoneNumber,
         email: doc.email,
-        phone: doc.phone,
-        preference: doc.preference,
+        company: doc.company,
+        enquiry: doc.enquiry,
         source: doc.source,
         createdAt: now,
         ...(doc.utm_source ? { utm_source: doc.utm_source } : {}),
@@ -133,7 +191,7 @@ export async function POST(request: Request) {
     }
   }
 
-  return NextResponse.json({ id: insertedId }, { status: 201 });
+  return NextResponse.json({ id: insertedId, success: true }, { status: 201 });
 }
 
 export async function GET() {
@@ -141,20 +199,29 @@ export async function GET() {
     const db = await getDb();
     const enquiries = await db.collection(COLLECTION).find().sort({ createdAt: -1 }).limit(200).toArray();
     return NextResponse.json({
-      enquiries: enquiries.map((e) => ({
-        id: e._id.toString(),
-        name: e.name,
-        email: e.email,
-        phone: e.phone,
-        preference: e.preference,
-        source: e.source,
-        createdAt: e.createdAt,
-        crmSyncStatus: e.crmSyncStatus || "disabled",
-        crmLeadId: e.crmLeadId || null,
-        crmSyncedAt: e.crmSyncedAt || null,
-        crmSyncAttempts: e.crmSyncAttempts || 0,
-        crmLastSyncError: e.crmLastSyncError || null,
-      })),
+      enquiries: enquiries.map((e) => {
+        const rawName = typeof e.name === "string" ? e.name.trim() : "";
+        const nameParts = rawName.split(/\s+/);
+        const resolvedFirstName = e.firstName || nameParts[0] || "";
+        const resolvedLastName = e.lastName || nameParts.slice(1).join(" ") || "";
+
+        return {
+          id: e._id.toString(),
+          firstName: resolvedFirstName,
+          lastName: resolvedLastName,
+          phoneNumber: e.phoneNumber || e.phone || "",
+          email: e.email || "",
+          company: e.company || "",
+          enquiry: e.enquiry || e.preference || "",
+          source: e.source || "unknown",
+          createdAt: e.createdAt,
+          crmSyncStatus: e.crmSyncStatus || "disabled",
+          crmLeadId: e.crmLeadId || null,
+          crmSyncedAt: e.crmSyncedAt || null,
+          crmSyncAttempts: e.crmSyncAttempts || 0,
+          crmLastSyncError: e.crmLastSyncError || null,
+        };
+      }),
     });
   } catch (error) {
     console.error("Failed to load enquiries:", error);

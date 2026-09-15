@@ -1,5 +1,6 @@
 "use client";
 
+import { useEnquiryForm } from "@/lib/useEnquiryForm";
 import "./tims-apprenticeship-form.css";
 
 const perks = [
@@ -9,6 +10,8 @@ const perks = [
 ];
 
 export default function ApprenticeshipFormSection() {
+  const { status, errorMessage, handleSubmit } = useEnquiryForm("apprenticeship-page");
+
   return (
     <section className="tims-apprenticeship-form-section">
       <div className="tims-apprenticeship-form-card">
@@ -33,75 +36,91 @@ export default function ApprenticeshipFormSection() {
         </div>
 
         <div className="tims-apprenticeship-form-panel">
-          <form
-            className="tims-apprenticeship-form"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="tims-apprenticeship-form" onSubmit={handleSubmit}>
             <label className="tims-apprenticeship-form-group">
-              <span className="tims-apprenticeship-form-field-label">Your Name</span>
+              <span className="tims-apprenticeship-form-field-label">First Name *</span>
               <input
                 type="text"
-                name="name"
-                placeholder="John Doe"
+                name="firstName"
+                required
+                placeholder="Enter your first name"
                 className="tims-apprenticeship-form-field"
               />
             </label>
 
             <label className="tims-apprenticeship-form-group">
-              <span className="tims-apprenticeship-form-field-label">Your Phone Number</span>
+              <span className="tims-apprenticeship-form-field-label">Last Name *</span>
               <input
-                type="tel"
-                name="phone"
-                placeholder="+91 00000 00000"
+                type="text"
+                name="lastName"
+                required
+                placeholder="Enter your last name"
                 className="tims-apprenticeship-form-field"
               />
             </label>
 
             <label className="tims-apprenticeship-form-group tims-apprenticeship-form-group--full">
-              <span className="tims-apprenticeship-form-field-label">Your Email</span>
+              <span className="tims-apprenticeship-form-field-label">Phone Number *</span>
+              <input
+                type="tel"
+                name="phoneNumber"
+                required
+                placeholder="Enter your phone number"
+                className="tims-apprenticeship-form-field"
+              />
+            </label>
+
+            <label className="tims-apprenticeship-form-group tims-apprenticeship-form-group--full">
+              <span className="tims-apprenticeship-form-field-label">Email *</span>
               <input
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                required
+                placeholder="Enter your email address"
                 className="tims-apprenticeship-form-field"
               />
             </label>
 
             <label className="tims-apprenticeship-form-group tims-apprenticeship-form-group--full">
-              <span className="tims-apprenticeship-form-field-label">Program</span>
-              <select name="program" defaultValue="" className="tims-apprenticeship-form-field">
-                <option value="" disabled>
-                  Please Choose an Option
-                </option>
-                <option value="bba">BBA</option>
-                <option value="bcom">B.Com</option>
-                <option value="bca">BCA</option>
-                <option value="bsc-it">B.Sc IT</option>
-                <option value="btech">B.Tech</option>
-                <option value="ba">BA</option>
-                <option value="mba">MBA</option>
-                <option value="mcom">M.Com</option>
-                <option value="mca">MCA</option>
-                <option value="mtech">M.Tech</option>
-              </select>
+              <span className="tims-apprenticeship-form-field-label">Company</span>
+              <input
+                type="text"
+                name="company"
+                placeholder="Enter your company name"
+                className="tims-apprenticeship-form-field"
+              />
             </label>
 
             <label className="tims-apprenticeship-form-group tims-apprenticeship-form-group--full">
-              <span className="tims-apprenticeship-form-field-label">Message</span>
+              <span className="tims-apprenticeship-form-field-label">Enquiry *</span>
               <textarea
-                name="message"
-                placeholder="Tell us about your experience and goals..."
+                name="enquiry"
+                required
+                placeholder="Tell us how we can help you"
                 className="tims-apprenticeship-form-field"
+                rows={2}
               />
             </label>
 
-            <button type="submit" className="tims-apprenticeship-form-submit">
-              Submit Now
+            <button
+              type="submit"
+              className="tims-apprenticeship-form-submit"
+              disabled={status === "submitting"}
+            >
+              {status === "submitting" ? "Sending..." : "Submit Now"}
             </button>
 
-            <p className="tims-apprenticeship-form-note">
-              This form is for demonstration only and does not submit anywhere yet.
-            </p>
+            {status === "success" && (
+              <p style={{ color: "#16a34a", fontWeight: 700, fontSize: "0.875rem", margin: "0.5rem 0 0" }}>
+                ✓ Thanks! We&rsquo;ll get in touch with you shortly.
+              </p>
+            )}
+
+            {status === "error" && (
+              <p style={{ color: "#dc2626", fontWeight: 600, fontSize: "0.875rem", margin: "0.5rem 0 0" }}>
+                {errorMessage}
+              </p>
+            )}
           </form>
         </div>
       </div>

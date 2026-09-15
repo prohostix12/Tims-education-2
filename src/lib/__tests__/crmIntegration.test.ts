@@ -22,10 +22,12 @@ async function runCrmIntegrationTests() {
   // Sample enquiry data
   const sampleEnquiry: TIMSEnquiryData = {
     id: "enquiry_12345",
-    name: "John Doe",
+    firstName: "John",
+    lastName: "Doe",
     email: "john.doe@example.com",
-    phone: "+91 98765 43210",
-    preference: "mba",
+    phoneNumber: "+91 98765 43210",
+    company: "ABC Corporation",
+    enquiry: "Need details about Online MBA program",
     source: "home-hero",
     createdAt: new Date(),
     utm_source: "google",
@@ -128,8 +130,10 @@ async function runCrmIntegrationTests() {
       payload.first_name === "John" &&
       payload.last_name === "Doe" &&
       payload.email === "john.doe@example.com" &&
+      payload.company === "ABC Corporation" &&
+      payload.notes === "Need details about Online MBA program" &&
       payload.external_id === "enquiry_12345",
-      "Test 12: Payload mapping preserves full name, parts, email & external ID"
+      "Test 12: Payload mapping preserves full name, parts, email, company, notes & external ID"
     );
 
     // TEST 13: Successful CRM lead ID extraction
@@ -169,7 +173,7 @@ async function runCrmIntegrationTests() {
     );
 
     // TEST 18: Standard TIMS enquiry workflow still works
-    assert(Boolean(sampleEnquiry.name && sampleEnquiry.email && sampleEnquiry.phone), "Test 18: TIMS enquiry workflow validation untouched");
+    assert(Boolean(sampleEnquiry.firstName && sampleEnquiry.lastName && sampleEnquiry.email && sampleEnquiry.phoneNumber && sampleEnquiry.enquiry), "Test 18: TIMS enquiry workflow validation untouched");
 
     // TEST 19: CRM Admin Integration config preserved
     assert(validConfig.endpointUrl === "https://pypecrm.com/api/v1/leads", "Test 19: Admin CRM config defaults & preservation");

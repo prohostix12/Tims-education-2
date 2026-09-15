@@ -38,21 +38,51 @@ export default function CreditTransferEnquirySection() {
 
             <div className="tims-credit-form-wrap">
               <form onSubmit={handleSubmit} className="tims-credit-form">
-                <div className="tims-credit-form-field">
-                  <label htmlFor="ct-name" className="tims-credit-form-label">
-                    Full Name *
-                  </label>
-                  <input
-                    id="ct-name"
-                    name="name"
-                    type="text"
-                    required
-                    placeholder="Enter your full name"
-                    className="tims-credit-form-input"
-                  />
+                <div className="tims-credit-form-row">
+                  <div className="tims-credit-form-field">
+                    <label htmlFor="ct-firstName" className="tims-credit-form-label">
+                      First Name *
+                    </label>
+                    <input
+                      id="ct-firstName"
+                      name="firstName"
+                      type="text"
+                      required
+                      placeholder="Enter your first name"
+                      className="tims-credit-form-input"
+                    />
+                  </div>
+
+                  <div className="tims-credit-form-field">
+                    <label htmlFor="ct-lastName" className="tims-credit-form-label">
+                      Last Name *
+                    </label>
+                    <input
+                      id="ct-lastName"
+                      name="lastName"
+                      type="text"
+                      required
+                      placeholder="Enter your last name"
+                      className="tims-credit-form-input"
+                    />
+                  </div>
                 </div>
 
                 <div className="tims-credit-form-row">
+                  <div className="tims-credit-form-field">
+                    <label htmlFor="ct-phone" className="tims-credit-form-label">
+                      Phone Number *
+                    </label>
+                    <input
+                      id="ct-phone"
+                      name="phoneNumber"
+                      type="tel"
+                      required
+                      placeholder="Enter your phone number"
+                      className="tims-credit-form-input"
+                    />
+                  </div>
+
                   <div className="tims-credit-form-field">
                     <label htmlFor="ct-email" className="tims-credit-form-label">
                       Email Address *
@@ -62,44 +92,37 @@ export default function CreditTransferEnquirySection() {
                       name="email"
                       type="email"
                       required
-                      placeholder="you@example.com"
-                      className="tims-credit-form-input"
-                    />
-                  </div>
-
-                  <div className="tims-credit-form-field">
-                    <label htmlFor="ct-phone" className="tims-credit-form-label">
-                      Phone Number *
-                    </label>
-                    <input
-                      id="ct-phone"
-                      name="phone"
-                      type="tel"
-                      required
-                      placeholder="+91 00000 00000"
+                      placeholder="Enter your email address"
                       className="tims-credit-form-input"
                     />
                   </div>
                 </div>
 
                 <div className="tims-credit-form-field">
-                  <label htmlFor="ct-preference" className="tims-credit-form-label">
-                    Preferred Stream / Course *
+                  <label htmlFor="ct-company" className="tims-credit-form-label">
+                    Company Name
                   </label>
-                  <select
-                    id="ct-preference"
-                    name="preference"
+                  <input
+                    id="ct-company"
+                    name="company"
+                    type="text"
+                    placeholder="Enter your company name"
+                    className="tims-credit-form-input"
+                  />
+                </div>
+
+                <div className="tims-credit-form-field">
+                  <label htmlFor="ct-enquiry" className="tims-credit-form-label">
+                    Enquiry *
+                  </label>
+                  <textarea
+                    id="ct-enquiry"
+                    name="enquiry"
                     required
-                    className="tims-credit-form-select"
-                    defaultValue="credit-transfer"
-                  >
-                    <option value="credit-transfer">B.Tech / Degree Credit Transfer</option>
-                    <option value="btech-mtech">Btech / Mtech</option>
-                    <option value="online-degree">Online Degree</option>
-                    <option value="diploma">Diploma</option>
-                    <option value="post-graduation">Post Graduation</option>
-                    <option value="sslc-plus-two">SSLC / Plus Two</option>
-                  </select>
+                    placeholder="Tell us how we can help you"
+                    className="tims-credit-form-textarea"
+                    rows={2}
+                  />
                 </div>
 
                 <button

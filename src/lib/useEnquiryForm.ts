@@ -15,10 +15,12 @@ export function useEnquiryForm(source: string) {
     const formData = new FormData(form);
 
     const payload = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      preference: formData.get("preference"),
+      firstName: (formData.get("firstName") || formData.get("name") || "").toString().trim(),
+      lastName: (formData.get("lastName") || "").toString().trim(),
+      phoneNumber: (formData.get("phoneNumber") || formData.get("phone") || "").toString().trim(),
+      email: (formData.get("email") || "").toString().trim(),
+      company: (formData.get("company") || "").toString().trim(),
+      enquiry: (formData.get("enquiry") || formData.get("message") || formData.get("preference") || "").toString().trim(),
       source,
     };
 

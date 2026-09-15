@@ -113,8 +113,21 @@
   color: #ed1c24;
 }
 
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
 .input,
-.select {
+.select,
+.textarea {
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 12px;
@@ -127,12 +140,19 @@
   transition: all 0.2s ease;
 }
 
-.input::placeholder {
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
   color: #9ca3af;
 }
 
 .input:focus,
-.select:focus {
+.select:focus,
+.textarea:focus {
   border-color: #ed1c24;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.15);

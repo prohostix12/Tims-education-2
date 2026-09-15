@@ -109,71 +109,96 @@ export default function EnquiryModal() {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.fieldRow}>
+            <div className={styles.field}>
+              <label htmlFor="modal-firstName" className={styles.label}>
+                First Name <span className={styles.required}>*</span>
+              </label>
+              <input
+                id="modal-firstName"
+                name="firstName"
+                type="text"
+                placeholder="Enter your first name"
+                className={styles.input}
+                required
+                autoComplete="given-name"
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="modal-lastName" className={styles.label}>
+                Last Name <span className={styles.required}>*</span>
+              </label>
+              <input
+                id="modal-lastName"
+                name="lastName"
+                type="text"
+                placeholder="Enter your last name"
+                className={styles.input}
+                required
+                autoComplete="family-name"
+              />
+            </div>
+          </div>
+
+          <div className={styles.fieldRow}>
+            <div className={styles.field}>
+              <label htmlFor="modal-phone" className={styles.label}>
+                Phone Number <span className={styles.required}>*</span>
+              </label>
+              <input
+                id="modal-phone"
+                name="phoneNumber"
+                type="tel"
+                placeholder="Enter your phone number"
+                className={styles.input}
+                required
+                autoComplete="tel"
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="modal-email" className={styles.label}>
+                Email <span className={styles.required}>*</span>
+              </label>
+              <input
+                id="modal-email"
+                name="email"
+                type="email"
+                placeholder="Enter your email address"
+                className={styles.input}
+                required
+                autoComplete="email"
+              />
+            </div>
+          </div>
+
           <div className={styles.field}>
-            <label htmlFor="modal-name" className={styles.label}>
-              Name <span className={styles.required}>*</span>
+            <label htmlFor="modal-company" className={styles.label}>
+              Company
             </label>
             <input
-              id="modal-name"
-              name="name"
+              id="modal-company"
+              name="company"
               type="text"
-              placeholder="Your full name"
+              placeholder="Enter your company name"
               className={styles.input}
-              required
-              autoComplete="name"
+              autoComplete="organization"
             />
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="modal-email" className={styles.label}>
-              Email <span className={styles.required}>*</span>
+            <label htmlFor="modal-enquiry" className={styles.label}>
+              Enquiry <span className={styles.required}>*</span>
             </label>
-            <input
-              id="modal-email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              className={styles.input}
+            <textarea
+              id="modal-enquiry"
+              name="enquiry"
+              placeholder="Tell us how we can help you"
+              className={styles.textarea}
               required
-              autoComplete="email"
+              rows={2}
             />
-          </div>
-
-          <div className={styles.field}>
-            <label htmlFor="modal-phone" className={styles.label}>
-              Phone Number <span className={styles.required}>*</span>
-            </label>
-            <input
-              id="modal-phone"
-              name="phone"
-              type="tel"
-              placeholder="+91 00000 00000"
-              className={styles.input}
-              required
-              autoComplete="tel"
-            />
-          </div>
-
-          <div className={styles.field}>
-            <label htmlFor="modal-preference" className={styles.label}>
-              Preference <span className={styles.required}>*</span>
-            </label>
-            <select
-              id="modal-preference"
-              name="preference"
-              className={styles.select}
-              defaultValue=""
-              required
-            >
-              <option value="" disabled>
-                Select a course
-              </option>
-              <option value="sslc-plus-two">SSLC / Plus Two</option>
-              <option value="online-degree">Online Degree</option>
-              <option value="post-graduation">Post Graduation</option>
-              <option value="btech-mtech">Btech / Mtech</option>
-              <option value="diploma">Diploma</option>
-            </select>
           </div>
 
           <button

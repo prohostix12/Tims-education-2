@@ -291,7 +291,8 @@
 }
 
 .tims-credit-form-input,
-.tims-credit-form-select {
+.tims-credit-form-select,
+.tims-credit-form-textarea {
   width: 100%;
   padding: 0.75rem 0.9rem;
   font-size: 0.9rem;
@@ -304,8 +305,14 @@
   transition: all 0.2s ease;
 }
 
+.tims-credit-form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
 .tims-credit-form-input:focus,
-.tims-credit-form-select:focus {
+.tims-credit-form-select:focus,
+.tims-credit-form-textarea:focus {
   border-color: var(--ct-red);
   box-shadow: 0 0 0 3px rgba(233, 29, 36, 0.15);
 }

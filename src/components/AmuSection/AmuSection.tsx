@@ -85,9 +85,12 @@ export default function AmuSection() {
             </div>
 
             <div className="tims-amu-media">
-              <div className="tims-amu-media-placeholder">
-                <BuildingIcon />
-                <span className="tims-amu-media-hint">AMU campus image coming soon</span>
+              <div className="tims-amu-image-container">
+                <img
+                  src="/images/aligrh_image.png"
+                  alt="Aligarh Muslim University Campus"
+                  className="tims-amu-image"
+                />
               </div>
 
               <div className="tims-amu-badges">

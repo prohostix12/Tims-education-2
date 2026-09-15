@@ -20,10 +20,12 @@ export type CRMConfig = {
 
 export type TIMSEnquiryData = {
   id?: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   email: string;
-  phone: string;
-  preference?: string;
+  company?: string;
+  enquiry: string;
   source?: string;
   createdAt?: Date | string;
   utm_source?: string;
@@ -120,17 +122,19 @@ export async function getCRMConfig(): Promise<CRMConfig> {
  * Maps TIMS enquiry fields to the standard PypeCRM lead payload structure.
  */
 export function mapLeadPayload(enquiry: TIMSEnquiryData) {
-  const nameParts = (enquiry.name || "").trim().split(/\s+/);
-  const firstName = nameParts[0] || "";
-  const lastName = nameParts.slice(1).join(" ") || "";
+  const firstName = (enquiry.firstName || "").trim();
+  const lastName = (enquiry.lastName || "").trim();
+  const fullName = `${firstName} ${lastName}`.trim();
 
   return {
-    full_name: enquiry.name ? enquiry.name.trim() : "",
+    full_name: fullName,
     first_name: firstName,
     last_name: lastName,
     email: enquiry.email ? enquiry.email.trim() : "",
-    phone: enquiry.phone ? enquiry.phone.trim() : "",
-    course: enquiry.preference ? enquiry.preference.trim() : "",
+    phone: enquiry.phoneNumber ? enquiry.phoneNumber.trim() : "",
+    company: enquiry.company ? enquiry.company.trim() : "",
+    notes: enquiry.enquiry ? enquiry.enquiry.trim() : "",
+    course: enquiry.enquiry ? enquiry.enquiry.trim() : "",
     source: enquiry.source ? `TIMS Website (${enquiry.source})` : "TIMS Website",
     submittedAt: enquiry.createdAt
       ? new Date(enquiry.createdAt).toISOString()

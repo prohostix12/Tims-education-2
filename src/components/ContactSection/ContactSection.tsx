@@ -247,62 +247,96 @@ export default function ContactSection() {
             <h2 className={styles.formTitle}>Get In Touch</h2>
 
             <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.fieldRow}>
+                <div className={styles.field}>
+                  <label htmlFor="contact-firstName" className={styles.label}>
+                    First Name <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <input
+                    id="contact-firstName"
+                    name="firstName"
+                    type="text"
+                    placeholder="Enter your first name"
+                    className={styles.input}
+                    required
+                    autoComplete="given-name"
+                  />
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor="contact-lastName" className={styles.label}>
+                    Last Name <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <input
+                    id="contact-lastName"
+                    name="lastName"
+                    type="text"
+                    placeholder="Enter your last name"
+                    className={styles.input}
+                    required
+                    autoComplete="family-name"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.fieldRow}>
+                <div className={styles.field}>
+                  <label htmlFor="contact-phone" className={styles.label}>
+                    Phone Number <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <input
+                    id="contact-phone"
+                    name="phoneNumber"
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    className={styles.input}
+                    required
+                    autoComplete="tel"
+                  />
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor="contact-email" className={styles.label}>
+                    Email <span style={{ color: "#e11d48" }}>*</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email address"
+                    className={styles.input}
+                    required
+                    autoComplete="email"
+                  />
+                </div>
+              </div>
+
               <div className={styles.field}>
-                <label htmlFor="contact-name" className={styles.label}>
-                  Name
+                <label htmlFor="contact-company" className={styles.label}>
+                  Company
                 </label>
                 <input
-                  id="contact-name"
-                  name="name"
+                  id="contact-company"
+                  name="company"
                   type="text"
-                  placeholder="Your full name"
+                  placeholder="Enter your company name"
                   className={styles.input}
-                  autoComplete="name"
+                  autoComplete="organization"
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="contact-email" className={styles.label}>
-                  Email
+                <label htmlFor="contact-enquiry" className={styles.label}>
+                  Enquiry <span style={{ color: "#e11d48" }}>*</span>
                 </label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  className={styles.input}
-                  autoComplete="email"
+                <textarea
+                  id="contact-enquiry"
+                  name="enquiry"
+                  placeholder="Tell us how we can help you"
+                  className={styles.textarea}
+                  required
+                  rows={3}
                 />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="contact-phone" className={styles.label}>
-                  Phone Number
-                </label>
-                <input
-                  id="contact-phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="+91 00000 00000"
-                  className={styles.input}
-                  autoComplete="tel"
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="contact-preference" className={styles.label}>
-                  Preference
-                </label>
-                <select id="contact-preference" name="preference" className={styles.select} defaultValue="">
-                  <option value="" disabled>
-                    Select a course
-                  </option>
-                  <option value="sslc-plus-two">SSLC / Plus Two</option>
-                  <option value="online-degree">Online Degree</option>
-                  <option value="post-graduation">Post Graduation</option>
-                  <option value="btech-mtech">Btech / Mtech</option>
-                  <option value="diploma">Diploma</option>
-                </select>
               </div>
 
               <button type="submit" className={styles.submitButton} disabled={status === "submitting"}>

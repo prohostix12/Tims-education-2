@@ -26,12 +26,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Enquiry record not found." }, { status: 404 });
     }
 
+    const rawName = typeof doc.name === "string" ? doc.name.trim() : "";
+    const parts = rawName.split(/\s+/);
+    const firstName = doc.firstName || parts[0] || "";
+    const lastName = doc.lastName || parts.slice(1).join(" ") || "";
+
     const enquiryData: TIMSEnquiryData = {
       id: doc._id.toString(),
-      name: doc.name || "",
+      firstName,
+      lastName,
+      phoneNumber: doc.phoneNumber || doc.phone || "",
       email: doc.email || "",
-      phone: doc.phone || "",
-      preference: doc.preference || "",
+      company: doc.company || "",
+      enquiry: doc.enquiry || doc.preference || "",
       source: doc.source || "",
       createdAt: doc.createdAt,
     };

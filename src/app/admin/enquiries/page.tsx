@@ -6,10 +6,12 @@ export const dynamic = "force-dynamic";
 
 type Enquiry = {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   email: string;
-  phone: string;
-  preference: string;
+  company: string;
+  enquiry: string;
   source: string;
   createdAt: Date;
   crmSyncStatus: "pending" | "success" | "failed" | "disabled";
@@ -22,18 +24,27 @@ async function loadEnquiries(): Promise<{ enquiries: Enquiry[]; error: string | 
     const db = await getDb();
     const docs = await db.collection("enquiries").find().sort({ createdAt: -1 }).limit(200).toArray();
     return {
-      enquiries: docs.map((doc) => ({
-        id: doc._id.toString(),
-        name: doc.name,
-        email: doc.email,
-        phone: doc.phone,
-        preference: doc.preference,
-        source: doc.source,
-        createdAt: doc.createdAt,
-        crmSyncStatus: doc.crmSyncStatus || "disabled",
-        crmLeadId: doc.crmLeadId || null,
-        crmLastSyncError: doc.crmLastSyncError || null,
-      })),
+      enquiries: docs.map((doc) => {
+        const rawName = typeof doc.name === "string" ? doc.name.trim() : "";
+        const parts = rawName.split(/\s+/);
+        const firstName = doc.firstName || parts[0] || "";
+        const lastName = doc.lastName || parts.slice(1).join(" ") || "";
+
+        return {
+          id: doc._id.toString(),
+          firstName,
+          lastName,
+          phoneNumber: doc.phoneNumber || doc.phone || "",
+          email: doc.email || "",
+          company: doc.company || "—",
+          enquiry: doc.enquiry || preferenceLabel(doc.preference) || "—",
+          source: doc.source || "unknown",
+          createdAt: doc.createdAt,
+          crmSyncStatus: doc.crmSyncStatus || "disabled",
+          crmLeadId: doc.crmLeadId || null,
+          crmLastSyncError: doc.crmLastSyncError || null,
+        };
+      }),
       error: null,
     };
   } catch (error) {
@@ -50,6 +61,7 @@ const sourceLabels: Record<string, string> = {
   "success-stories-advisor": "Success Stories — Connect With an Advisor",
   "popup-modal": "Popup Modal — Enquiry",
   "credit-transfer-page": "Credit Transfer — Enquiry",
+  "apprenticeship-page": "Apprenticeship — EALP",
 };
 
 export default async function AdminEnquiriesPage() {
@@ -75,10 +87,12 @@ export default async function AdminEnquiriesPage() {
             <table className="tims-admin-table">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Phone Number</th>
                   <th>Email</th>
-                  <th>Phone</th>
-                  <th>Preference</th>
+                  <th>Company</th>
+                  <th>Enquiry</th>
                   <th>Source</th>
                   <th>CRM Sync</th>
                   <th>Received</th>
@@ -87,12 +101,14 @@ export default async function AdminEnquiriesPage() {
               <tbody>
                 {enquiries.map((enquiry) => (
                   <tr key={enquiry.id}>
-                    <td>{enquiry.name}</td>
+                    <td style={{ fontWeight: 700 }}>{enquiry.firstName}</td>
+                    <td style={{ fontWeight: 700 }}>{enquiry.lastName || "—"}</td>
+                    <td>{enquiry.phoneNumber}</td>
                     <td>{enquiry.email}</td>
-                    <td>{enquiry.phone}</td>
-                    <td>
-                      <span className="tims-admin-badge tims-admin-badge-muted">
-                        {preferenceLabel(enquiry.preference)}
+                    <td>{enquiry.company}</td>
+                    <td style={{ maxWidth: "260px", wordBreak: "break-word" }}>
+                      <span className="tims-admin-badge tims-admin-badge-muted" style={{ whiteSpace: "normal" }}>
+                        {enquiry.enquiry}
                       </span>
                     </td>
                     <td>{sourceLabels[enquiry.source] || enquiry.source}</td>
