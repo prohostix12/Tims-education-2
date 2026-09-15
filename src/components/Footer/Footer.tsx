@@ -12,8 +12,8 @@ const exploreLinks = [
   { label: "Blog", href: "/blog" },
   { label: "News", href: "/news" },
   { label: "Contact", href: "/contact" },
-  { label: "Terms and Conditions", href: "/contact" },
-  { label: "Privacy Policy", href: "/contact" },
+  { label: "Terms and Conditions", href: "/terms-and-conditions" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 const socialLinks = [
