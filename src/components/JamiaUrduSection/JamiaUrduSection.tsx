@@ -1,19 +1,5 @@
 import "./tims-jamia-urdu-section.css";
 
-function EmblemIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <path
-        d="M12 3.5 5.5 8v6c0 4 2.8 6.6 6.5 8 3.7-1.4 6.5-4 6.5-8V8L12 3.5Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <circle cx="12" cy="10.5" r="2.4" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
 function DocumentIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
@@ -91,9 +77,31 @@ export default function JamiaUrduSection() {
             </div>
 
             <div className="tims-jamia-urdu-media">
-              <div className="tims-jamia-urdu-media-placeholder">
-                <EmblemIcon />
-                <span className="tims-jamia-urdu-media-hint">Jamia Urdu Aligarh emblem coming soon</span>
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "280px",
+                  aspectRatio: "4 / 3",
+                  borderRadius: "16px",
+                  border: "1px solid #e5e7eb",
+                  background: "#ffffff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "1.75rem",
+                  boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/jua-logo.webp"
+                  alt="Jamia Urdu Aligarh Emblem Logo"
+                  style={{
+                    maxWidth: "90%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
             </div>
           </div>

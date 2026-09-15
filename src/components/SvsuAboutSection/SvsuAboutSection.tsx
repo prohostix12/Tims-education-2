@@ -1,15 +1,5 @@
 import "../MizoramSection/tims-mizoram-section.css";
 
-function EmblemIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M9 8.5h6v3a3 3 0 0 1-3 3 3 3 0 0 1-3-3v-3Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-      <path d="M12 14.5v3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export default function SvsuAboutSection() {
   return (
     <section className="tims-mizoram-section">
@@ -34,11 +24,28 @@ export default function SvsuAboutSection() {
         </div>
 
         <div className="tims-mizoram-media">
-          <div className="tims-mizoram-media-placeholder">
-            <span className="tims-mizoram-media-icon">
-              <EmblemIcon />
-            </span>
-            <span className="tims-mizoram-media-hint">SVSU emblem coming soon</span>
+          <div
+            style={{
+              aspectRatio: "4 / 3",
+              background: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "2rem",
+              border: "1px solid #e5e7eb",
+              borderRadius: "18px",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/swami-logo.webp"
+              alt="Swami Vivekanand Subharti University (SVSU) Emblem Logo"
+              style={{
+                maxWidth: "85%",
+                maxHeight: "85%",
+                objectFit: "contain",
+              }}
+            />
           </div>
         </div>
       </div>

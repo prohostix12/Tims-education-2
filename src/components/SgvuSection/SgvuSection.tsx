@@ -1,20 +1,5 @@
 import "../MizoramSection/tims-mizoram-section.css";
 
-function ImageIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
-      <rect x="3" y="4.5" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="m4.5 17 4.8-5 3.4 3.6 2.4-2.6 4.4 4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function SgvuSection() {
   return (
     <section className="tims-mizoram-section">
@@ -40,13 +25,13 @@ export default function SgvuSection() {
           </p>
         </div>
 
-        <div className="tims-mizoram-media">
-          <div className="tims-mizoram-media-placeholder">
-            <span className="tims-mizoram-media-icon">
-              <ImageIcon />
-            </span>
-            <span className="tims-mizoram-media-hint">Image coming soon</span>
-          </div>
+        <div className="tims-mizoram-media" style={{ background: "#ffffff" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://www.gyanvihar.org/media-library/uploads/158331894266081.jpg"
+            alt="Suresh Gyan Vihar University Campus"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
         </div>
       </div>
     </section>

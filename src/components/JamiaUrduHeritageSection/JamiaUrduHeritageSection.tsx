@@ -1,21 +1,6 @@
 import type { ReactNode } from "react";
 import "../SslcDistanceEducationSection/tims-sslc-distance.css";
 
-function ImageIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
-      <rect x="3" y="4.5" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="m4.5 17 4.8-5 3.4 3.6 2.4-2.6 4.4 4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function Highlight({ children }: { children: ReactNode }) {
   return <strong className="tims-sslc-distance-highlight">{children}</strong>;
 }
@@ -24,13 +9,13 @@ export default function JamiaUrduHeritageSection() {
   return (
     <section className="tims-sslc-distance-section">
       <div className="tims-sslc-distance-inner">
-        <div className="tims-sslc-distance-media">
-          <div className="tims-sslc-distance-media-placeholder">
-            <span className="tims-sslc-distance-media-icon">
-              <ImageIcon />
-            </span>
-            <span className="tims-sslc-distance-media-hint">Image coming soon</span>
-          </div>
+        <div className="tims-sslc-distance-media" style={{ background: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", padding: "0.75rem" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://juaonline.in/website-assets/web/approval-slider-2.webp"
+            alt="Jamia Urdu Aligarh Approval Letter"
+            style={{ width: "100%", height: "100%", aspectRatio: "4 / 5", objectFit: "contain", display: "block" }}
+          />
         </div>
 
         <div>

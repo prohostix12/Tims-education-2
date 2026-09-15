@@ -79,8 +79,13 @@ export default function GuruKashiSection() {
             with Gurukashi University
           </h1>
 
-          <div className="tims-guru-kashi-media">
-            <span className="tims-guru-kashi-media-hint">Affiliation ceremony photo coming soon</span>
+          <div className="tims-guru-kashi-media" style={{ background: "#ffffff", padding: 0, overflow: "hidden" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://classhud.com/assets/media/uploads/listing/cover_image/guru-kashi-university.jpg"
+              alt="Affiliation ceremony with Guru Kashi University"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
           </div>
 
           <div className="tims-guru-kashi-ribbon">Pride in Excellence</div>

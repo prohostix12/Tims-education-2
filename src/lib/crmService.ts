@@ -124,18 +124,18 @@ export async function getCRMConfig(): Promise<CRMConfig> {
 export function mapLeadPayload(enquiry: TIMSEnquiryData) {
   const firstName = (enquiry.firstName || "").trim();
   const lastName = (enquiry.lastName || "").trim();
-  const fullName = `${firstName} ${lastName}`.trim();
+  const fullName = `${firstName} ${lastName}`.trim() || firstName || lastName;
 
   return {
-    full_name: fullName,
-    first_name: firstName,
-    last_name: lastName,
+    firstName: firstName,
+    lastName: lastName,
+    name: fullName,
     email: enquiry.email ? enquiry.email.trim() : "",
     phone: enquiry.phoneNumber ? enquiry.phoneNumber.trim() : "",
     company: enquiry.company ? enquiry.company.trim() : "",
+    message: enquiry.enquiry ? enquiry.enquiry.trim() : "",
     notes: enquiry.enquiry ? enquiry.enquiry.trim() : "",
-    course: enquiry.enquiry ? enquiry.enquiry.trim() : "",
-    source: enquiry.source ? `TIMS Website (${enquiry.source})` : "TIMS Website",
+    source: enquiry.source && enquiry.source !== "unknown" ? enquiry.source.trim() : "TIMS Website Form",
     submittedAt: enquiry.createdAt
       ? new Date(enquiry.createdAt).toISOString()
       : new Date().toISOString(),
@@ -180,8 +180,9 @@ export async function createLead(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${config.apiKey}`,
+        "X-API-KEY": config.apiKey,
         "X-API-Key": config.apiKey,
+        "Authorization": `Bearer ${config.apiKey}`,
       },
       body: JSON.stringify(payload),
       signal: controller.signal,

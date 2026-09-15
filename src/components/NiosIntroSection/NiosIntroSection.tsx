@@ -1,19 +1,5 @@
 import "./tims-nios-intro.css";
 
-function EmblemIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" aria-hidden="true">
-      <path
-        d="M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <path d="M4.5 12h15" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-    </svg>
-  );
-}
-
 export default function NiosIntroSection() {
   return (
     <section className="tims-nios-intro-section">
@@ -29,9 +15,31 @@ export default function NiosIntroSection() {
         </p>
 
         <div className="tims-nios-intro-media">
-          <div className="tims-nios-intro-media-placeholder">
-            <EmblemIcon />
-            <span className="tims-nios-intro-media-hint">NIOS logo coming soon</span>
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "260px",
+              aspectRatio: "4 / 3",
+              borderRadius: "16px",
+              border: "1px solid #e5e7eb",
+              background: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1.5rem",
+              boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/NIOS.png"
+              alt="National Institute of Open Schooling (NIOS) Logo"
+              style={{
+                maxWidth: "90%",
+                maxHeight: "90%",
+                objectFit: "contain",
+              }}
+            />
           </div>
         </div>
       </div>

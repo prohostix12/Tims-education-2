@@ -1,20 +1,5 @@
 import "../JamiaUrduSection/tims-jamia-urdu-section.css";
 
-function EmblemIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M8 15v-3c0-2.2 1.8-4 4-4s4 1.8 4 4v3"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-      <path d="M8 15h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export default function BosseSection() {
   return (
     <section className="tims-jamia-urdu-section">
@@ -43,9 +28,31 @@ export default function BosseSection() {
             </div>
 
             <div className="tims-jamia-urdu-media">
-              <div className="tims-jamia-urdu-media-placeholder">
-                <EmblemIcon />
-                <span className="tims-jamia-urdu-media-hint">BOSSE logo coming soon</span>
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "280px",
+                  aspectRatio: "4 / 3",
+                  borderRadius: "16px",
+                  border: "1px solid #e5e7eb",
+                  background: "#ffffff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "1.75rem",
+                  boxShadow: "0 4px 14px rgba(0, 0, 0, 0.06)",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/bosse-logo.webp"
+                  alt="Board of Open Schooling & Skill Education (BOSSE) Logo"
+                  style={{
+                    maxWidth: "90%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
             </div>
           </div>

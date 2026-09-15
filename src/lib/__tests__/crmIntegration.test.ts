@@ -126,14 +126,15 @@ async function runCrmIntegrationTests() {
     // TEST 12: TIMS Payload Mapping correctness
     const payload = mapLeadPayload(sampleEnquiry);
     assert(
-      payload.full_name === "John Doe" &&
-      payload.first_name === "John" &&
-      payload.last_name === "Doe" &&
+      payload.name === "John Doe" &&
+      payload.firstName === "John" &&
+      payload.lastName === "Doe" &&
       payload.email === "john.doe@example.com" &&
       payload.company === "ABC Corporation" &&
+      payload.message === "Need details about Online MBA program" &&
       payload.notes === "Need details about Online MBA program" &&
       payload.external_id === "enquiry_12345",
-      "Test 12: Payload mapping preserves full name, parts, email, company, notes & external ID"
+      "Test 12: Payload mapping preserves name, firstName, lastName, email, company, message, notes & external ID"
     );
 
     // TEST 13: Successful CRM lead ID extraction
