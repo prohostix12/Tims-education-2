@@ -164,7 +164,7 @@ export default function DistanceEducationSection() {
                 src={getEmbedSrc()}
                 title="Distance Education Video"
                 className="tims-distance-video-iframe"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                allow="autoplay; encrypted-media; picture-in-picture; compute-pressure"
                 allowFullScreen
               />
             ) : (

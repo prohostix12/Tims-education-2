@@ -197,7 +197,7 @@ function VideoCardMedia({ story, isCenter }: { story: StudentVideoStory; isCente
             ref={iframeRef}
             src={`https://www.youtube-nocookie.com/embed/${ytId}?autoplay=0&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`}
             title="Video Reel Player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compute-pressure"
             allowFullScreen
             className="tims-video-clean-embed"
           />
