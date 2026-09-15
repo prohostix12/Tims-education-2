@@ -50,7 +50,7 @@ const defaultUniversityData: University[] = [
     name: "Guru Kashi University",
     slug: "guru-kashi-university",
     href: "/universities/degree-pg/guru-kashi-university",
-    image: "/images/universities/guru-kashi-university.jpg",
+    image: "/images/GuruKashiUniversity.png",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
     description:
@@ -62,7 +62,7 @@ const defaultUniversityData: University[] = [
     name: "Mizoram University",
     slug: "mizoram-university",
     href: "/universities/degree-pg/mizoram-university",
-    image: "/images/andhra_image.png",
+    image: "/images/mizoramUniversity.png",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
     description:
@@ -74,7 +74,7 @@ const defaultUniversityData: University[] = [
     name: "Suresh Gyan Vihar University",
     slug: "suresh-gyan-vihar-university",
     href: "/universities/degree-pg/suresh-gyan-vihar-university",
-    image: "/images/bg-1.png",
+    image: "/images/sureshviharuniversity.png",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
     description:
@@ -98,7 +98,7 @@ const defaultUniversityData: University[] = [
     name: "National Institute of Open Schooling",
     slug: "national-institute-of-open-schooling",
     href: "/universities/10th-plus-two/national-institute-of-open-schooling",
-    image: "/images/aligrh_image.png",
+    image: "/images/NIOS.png",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
     description:
@@ -110,7 +110,7 @@ const defaultUniversityData: University[] = [
     name: "Jamia Urdu Aligarh",
     slug: "jamia-urdu-aligarh",
     href: "/universities/10th-plus-two/jamia-urdu-aligarh",
-    image: "/images/swami-logo.webp",
+    image: "/images/jua-logo.webp",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
     description:
@@ -122,7 +122,7 @@ const defaultUniversityData: University[] = [
     name: "BOSSE Board",
     slug: "bosse",
     href: "/universities/10th-plus-two/bosse",
-    image: "/images/andra-logo.webp",
+    image: "/images/bosse-logo.webp",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
     description:

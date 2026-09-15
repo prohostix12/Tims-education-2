@@ -29,13 +29,13 @@ const defaultUniversities: University[] = [
     name: "Guru Kashi University",
     slug: "guru-kashi-university",
     href: "/universities?search=Guru%20Kashi%20University",
-    image: "/images/aligrh_image.png",
+    image: "/images/GuruKashiUniversity.png",
   },
   {
     name: "Mizoram University",
     slug: "mizoram-university",
     href: "/universities?search=Mizoram%20University",
-    image: "/images/andhra_image.png",
+    image: "/images/mizoramUniversity.png",
   },
 
   // Bottom Row (5 items)
@@ -43,7 +43,7 @@ const defaultUniversities: University[] = [
     name: "Suresh Gyan Vihar University",
     slug: "suresh-gyan-vihar-university",
     href: "/universities?search=Suresh%20Gyan%20Vihar%20University",
-    image: "/images/bg-1.png",
+    image: "/images/sureshviharuniversity.png",
   },
   {
     name: "Andhra University",
@@ -67,7 +67,7 @@ const defaultUniversities: University[] = [
     name: "National Institute of Open Schooling",
     slug: "nios",
     href: "/universities/10th-plus-two/national-institute-of-open-schooling",
-    image: "/images/bosse-logo.webp",
+    image: "/images/NIOS.png",
   },
 ];
 

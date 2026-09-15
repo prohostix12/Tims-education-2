@@ -52,8 +52,8 @@ const defaultUniversities = [
     href: "/universities/degree-pg/guru-kashi-university",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
-    logo: "/images/universities/guru-kashi-university.jpg",
-    image: "/images/universities/guru-kashi-university.jpg",
+    logo: "/images/GuruKashiUniversity.png",
+    image: "/images/GuruKashiUniversity.png",
     description:
       "Guru Kashi University: Prominent institution offering accredited distance degree, credit transfer, and PG courses.",
     about:
@@ -73,8 +73,8 @@ const defaultUniversities = [
     href: "/universities/degree-pg/mizoram-university",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
-    logo: "/images/andhra_image.png",
-    image: "/images/andhra_image.png",
+    logo: "/images/mizoramUniversity.png",
+    image: "/images/mizoramUniversity.png",
     description:
       "Mizoram University: Premier Central University offering UGC entitled online degree and post graduation programs.",
     about:
@@ -94,8 +94,8 @@ const defaultUniversities = [
     href: "/universities/degree-pg/suresh-gyan-vihar-university",
     category: "degree-pg",
     categoryLabel: "Degree & PG",
-    logo: "/images/bg-1.png",
-    image: "/images/bg-1.png",
+    logo: "/images/sureshviharuniversity.png",
+    image: "/images/sureshviharuniversity.png",
     description:
       "Suresh Gyan Vihar University: NAAC A+ accredited university offering flexible recognized distance education degrees.",
     about:
@@ -136,8 +136,8 @@ const defaultUniversities = [
     href: "/universities/10th-plus-two/national-institute-of-open-schooling",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
-    logo: "/images/aligrh_image.png",
-    image: "/images/aligrh_image.png",
+    logo: "/images/NIOS.png",
+    image: "/images/NIOS.png",
     description:
       "National Institute of Open Schooling (NIOS): Globally recognized secondary (10th) and senior secondary (12th) open school board.",
     about:
@@ -157,8 +157,8 @@ const defaultUniversities = [
     href: "/universities/10th-plus-two/jamia-urdu-aligarh",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
-    logo: "/images/swami-logo.webp",
-    image: "/images/swami-logo.webp",
+    logo: "/images/jua-logo.webp",
+    image: "/images/jua-logo.webp",
     description:
       "Jamia Urdu Aligarh: Historical educational institution offering secondary & senior secondary equivalency programs.",
     about:
@@ -178,8 +178,8 @@ const defaultUniversities = [
     href: "/universities/10th-plus-two/bosse",
     category: "10th-plus-two",
     categoryLabel: "10th & Plus Two",
-    logo: "/images/andra-logo.webp",
-    image: "/images/andra-logo.webp",
+    logo: "/images/bosse-logo.webp",
+    image: "/images/bosse-logo.webp",
     description:
       "Board of Open Schooling and Skill Education (BOSSE): Recognized open schooling board for 10th, 12th & skill certifications.",
     about:

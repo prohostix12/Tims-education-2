@@ -23,17 +23,17 @@ const defaultPartners: Partner[] = [
   },
   {
     name: "Guru Kashi University",
-    logo: "/images/universities/guru-kashi-university.jpg",
+    logo: "/images/GuruKashiUniversity.png",
     href: "/universities/degree-pg/guru-kashi-university",
   },
   {
     name: "Mizoram University",
-    logo: "/images/andhra_image.png",
+    logo: "/images/mizoramUniversity.png",
     href: "/universities/degree-pg/mizoram-university",
   },
   {
     name: "Suresh Gyan Vihar University",
-    logo: "/images/bg-1.png",
+    logo: "/images/sureshviharuniversity.png",
     href: "/universities/degree-pg/suresh-gyan-vihar-university",
   },
   {
@@ -53,7 +53,7 @@ const defaultPartners: Partner[] = [
   },
   {
     name: "National Institute of Open Schooling",
-    logo: "/images/bosse-logo.webp",
+    logo: "/images/NIOS.png",
     href: "/universities/10th-plus-two/national-institute-of-open-schooling",
   },
 ];
