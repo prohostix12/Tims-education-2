@@ -85,36 +85,48 @@ export function isValidCrmEndpointUrl(urlStr: string): { valid: boolean; reason?
   return { valid: true };
 }
 
+let cachedCRMConfig: CRMConfig | null = null;
+
 /**
  * Retrieves the CRM configuration from the database securely.
+ * Caches the last valid active config in memory to prevent accidental disconnections during transient database delays.
  */
 export async function getCRMConfig(): Promise<CRMConfig> {
-  let doc: CRMConfigDoc | null = null;
-  let rawApiKey = "";
-
   try {
-    const db = await Promise.race([
-      getDb(),
-      new Promise<null>((resolve) => setTimeout(() => resolve(null), 1500)),
-    ]);
-
+    const db = await getDb();
     if (db) {
-      doc = await db.collection<CRMConfigDoc>("integrations").findOne({ type: "crm" });
+      const doc = await db.collection<CRMConfigDoc>("integrations").findOne({ type: "crm" });
+      if (doc) {
+        let rawApiKey = "";
+        if (doc.encryptedApiKey) {
+          rawApiKey = decryptSecret(doc.encryptedApiKey);
+        }
+
+        cachedCRMConfig = {
+          enabled: Boolean(rawApiKey),
+          endpointUrl: doc.endpointUrl?.trim() || DEFAULT_ENDPOINT,
+          apiKey: rawApiKey,
+          hasApiKey: Boolean(rawApiKey),
+          updatedAt: doc.updatedAt,
+        };
+
+        return cachedCRMConfig;
+      }
     }
   } catch (error) {
     console.error("Failed to load CRM config from database:", error);
   }
 
-  if (doc && doc.encryptedApiKey) {
-    rawApiKey = decryptSecret(doc.encryptedApiKey);
+  // Fallback to memory cache if DB is transiently unreachable, ensuring active connection remains connected
+  if (cachedCRMConfig) {
+    return cachedCRMConfig;
   }
 
   return {
-    enabled: doc?.enabled ?? false,
-    endpointUrl: doc?.endpointUrl?.trim() || DEFAULT_ENDPOINT,
-    apiKey: rawApiKey,
-    hasApiKey: Boolean(rawApiKey),
-    updatedAt: doc?.updatedAt,
+    enabled: false,
+    endpointUrl: DEFAULT_ENDPOINT,
+    apiKey: "",
+    hasApiKey: false,
   };
 }
 
@@ -156,10 +168,6 @@ export async function createLead(
   configOverride?: CRMConfig
 ): Promise<CRMResponse> {
   const config = configOverride || (await getCRMConfig());
-
-  if (!config.enabled) {
-    return { success: false, skipped: true, error: "CRM integration is disabled in settings." };
-  }
 
   if (!config.apiKey) {
     return { success: false, skipped: true, error: "CRM API key is missing or not configured." };

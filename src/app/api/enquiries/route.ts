@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { createLead, getCRMConfig, type TIMSEnquiryData } from "@/lib/crmService";
+import { isValidPhoneNumber } from "@/lib/phoneValidation";
 
 const COLLECTION = "enquiries";
 
@@ -74,8 +75,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Last name is required." }, { status: 400 });
   }
 
-  if (!rawPhone) {
-    return NextResponse.json({ error: "Phone number is required." }, { status: 400 });
+  const phoneCheck = isValidPhoneNumber(rawPhone);
+  if (!phoneCheck.valid) {
+    return NextResponse.json({ error: phoneCheck.reason || "Invalid phone number." }, { status: 400 });
   }
 
   if (!rawEmail) {
@@ -107,7 +109,7 @@ export async function POST(request: Request) {
     ...(isNonEmptyString(utm_term) ? { utm_term: utm_term.trim() } : {}),
     ...(isNonEmptyString(utm_content) ? { utm_content: utm_content.trim() } : {}),
     createdAt: now,
-    crmSyncStatus: crmConfig.enabled ? "pending" : "disabled",
+    crmSyncStatus: crmConfig.hasApiKey ? "pending" : "disabled",
     crmSyncAttempts: 0,
   };
 
@@ -126,7 +128,7 @@ export async function POST(request: Request) {
   }
 
   // Execute CRM Integration server-to-server (fail-safe)
-  if (crmConfig.enabled) {
+  if (crmConfig.hasApiKey) {
     try {
       const enquiryData: TIMSEnquiryData = {
         id: insertedId,

@@ -78,9 +78,11 @@ export default function DistanceEducationSection() {
     async function loadSettings() {
       try {
         const res = await fetch("/api/distance-education");
-        const data = await res.json();
-        if (data.settings) {
-          setSettings(data.settings);
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data.settings) {
+            setSettings(data.settings);
+          }
         }
       } catch (err) {
         console.error("Failed to load distance education section settings:", err);

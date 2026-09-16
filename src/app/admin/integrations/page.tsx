@@ -175,18 +175,14 @@ export default function AdminIntegrationsPage() {
                     ? testResult.success
                       ? "rgba(34, 197, 94, 0.15)"
                       : "rgba(239, 68, 68, 0.15)"
-                    : crmConfig.enabled
-                    ? "rgba(34, 197, 94, 0.15)"
-                    : "#f1f5f9",
+                    : "rgba(34, 197, 94, 0.15)",
                   color: !isConfigured
                     ? "#64748b"
                     : testResult
                     ? testResult.success
                       ? "#15803d"
                       : "#b91c1c"
-                    : crmConfig.enabled
-                    ? "#15803d"
-                    : "#64748b",
+                    : "#15803d",
                 }}
               >
                 {!isConfigured
@@ -195,25 +191,13 @@ export default function AdminIntegrationsPage() {
                   ? testResult.success
                     ? "● Connected"
                     : "⚠ Connection failed"
-                  : crmConfig.enabled
-                  ? "● Connected"
-                  : "○ Disabled"}
+                  : "● Connected"}
               </span>
             </div>
             <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", color: "#64748b" }}>
               Forward student enquiry leads securely to PypeCRM
             </p>
           </div>
-
-          <label style={{ display: "flex", alignItems: "center", gap: "0.6rem", cursor: "pointer", fontWeight: 700, fontSize: "0.875rem" }}>
-            <span>{crmConfig.enabled ? "ENABLED" : "DISABLED"}</span>
-            <input
-              type="checkbox"
-              checked={crmConfig.enabled}
-              onChange={(e) => setCrmConfig({ ...crmConfig, enabled: e.target.checked })}
-              style={{ width: "20px", height: "20px", accentColor: "#E91D24", cursor: "pointer" }}
-            />
-          </label>
         </div>
 
         <div className="tims-admin-field">

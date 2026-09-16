@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { isValidPhoneNumber } from "@/lib/phoneValidation";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -23,6 +24,13 @@ export function useEnquiryForm(source: string) {
       enquiry: (formData.get("enquiry") || formData.get("message") || formData.get("preference") || "").toString().trim(),
       source,
     };
+
+    const phoneCheck = isValidPhoneNumber(payload.phoneNumber);
+    if (!phoneCheck.valid) {
+      setStatus("error");
+      setErrorMessage(phoneCheck.reason || "Please enter a valid phone number.");
+      return;
+    }
 
     setStatus("submitting");
     setErrorMessage("");

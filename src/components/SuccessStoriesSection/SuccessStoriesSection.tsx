@@ -103,25 +103,27 @@ export default function SuccessStoriesSection() {
     async function loadBackendStories() {
       try {
         const res = await fetch("/api/success-stories");
-        const data = await res.json();
-        if (data.stories && Array.isArray(data.stories) && data.stories.length > 0) {
-          const publishedStories = data.stories.filter((s: any) => s.isPublished);
-          if (publishedStories.length > 0) {
-            setCards(
-              publishedStories.map((item: any) => ({
-                id: item.id,
-                title: item.title,
-                caption: item.caption,
-                imageSrc: item.imageSrc,
-                imageAlt: item.imageAlt || item.title,
-                category: item.category || "EVENT",
-                tagBg: item.tagBg || "#ffe4e2",
-                tagColor: item.tagColor || "#dc2626",
-                dateLocation: item.dateLocation || "",
-                studentName: item.studentName || undefined,
-                role: item.role || undefined,
-              }))
-            );
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data.stories && Array.isArray(data.stories) && data.stories.length > 0) {
+            const publishedStories = data.stories.filter((s: any) => s.isPublished);
+            if (publishedStories.length > 0) {
+              setCards(
+                publishedStories.map((item: any) => ({
+                  id: item.id,
+                  title: item.title,
+                  caption: item.caption,
+                  imageSrc: item.imageSrc,
+                  imageAlt: item.imageAlt || item.title,
+                  category: item.category || "EVENT",
+                  tagBg: item.tagBg || "#ffe4e2",
+                  tagColor: item.tagColor || "#dc2626",
+                  dateLocation: item.dateLocation || "",
+                  studentName: item.studentName || undefined,
+                  role: item.role || undefined,
+                }))
+              );
+            }
           }
         }
       } catch (err) {

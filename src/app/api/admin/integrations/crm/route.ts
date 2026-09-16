@@ -19,11 +19,7 @@ let inMemoryCrmConfig: CrmConfigDoc = {
 
 export async function GET() {
   try {
-    const db = await Promise.race([
-      getDb(),
-      new Promise<null>((resolve) => setTimeout(() => resolve(null), 1500)),
-    ]);
-
+    const db = await getDb();
     let config: CrmConfigDoc | null = null;
     let rawApiKey = "";
 
@@ -31,6 +27,7 @@ export async function GET() {
       const doc = await db.collection<CrmConfigDoc>("integrations").findOne({ type: "crm" });
       if (doc) {
         config = doc;
+        inMemoryCrmConfig = doc;
         if (doc.encryptedApiKey) {
           rawApiKey = decryptSecret(doc.encryptedApiKey);
         }
@@ -78,20 +75,20 @@ export async function POST(request: Request) {
       encryptedApiKey = encryptSecret(apiKey.trim());
     }
 
+    const rawApiKey = encryptedApiKey ? decryptSecret(encryptedApiKey) : "";
+    const isEnabled = Boolean(rawApiKey);
+
     const now = new Date();
     inMemoryCrmConfig = {
       type: "crm",
-      enabled: Boolean(enabled),
+      enabled: isEnabled,
       endpointUrl: finalEndpoint,
       ...(encryptedApiKey ? { encryptedApiKey } : {}),
       updatedAt: now,
       createdAt: inMemoryCrmConfig.createdAt || now,
     };
 
-    const db = await Promise.race([
-      getDb(),
-      new Promise<null>((resolve) => setTimeout(() => resolve(null), 1500)),
-    ]);
+    const db = await getDb();
 
     if (db) {
       await db.collection("integrations").updateOne(
@@ -99,7 +96,7 @@ export async function POST(request: Request) {
         {
           $set: {
             type: "crm",
-            enabled: Boolean(enabled),
+            enabled: isEnabled,
             endpointUrl: finalEndpoint,
             ...(encryptedApiKey ? { encryptedApiKey } : {}),
             updatedAt: now,
@@ -112,13 +109,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const rawApiKey = encryptedApiKey ? decryptSecret(encryptedApiKey) : "";
-
     return NextResponse.json({
       success: true,
       message: "CRM integration settings saved successfully.",
       config: {
-        enabled: Boolean(enabled),
+        enabled: isEnabled,
         endpointUrl: finalEndpoint,
         hasApiKey: Boolean(rawApiKey),
         apiKeyMasked: rawApiKey ? maskSecret(rawApiKey) : "",

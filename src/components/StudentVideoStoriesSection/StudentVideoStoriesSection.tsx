@@ -398,21 +398,23 @@ export default function StudentVideoStoriesSection() {
     async function loadStories() {
       try {
         const res = await fetch("/api/video-stories");
-        const data = await res.json();
-        if (data.stories && Array.isArray(data.stories) && data.stories.length > 0) {
-          const published = data.stories.filter((s: any) => s.isPublished);
-          if (published.length > 0) {
-            setStories(
-              published.map((s: any) => ({
-                id: s.id,
-                videoUrl: s.videoUrl,
-                videoType: s.videoType || "file",
-                thumbnailUrl: s.thumbnailUrl || "",
-                imageSrc: s.thumbnailUrl || (s.videoType === "file" ? s.videoUrl : "/images/students/student1.jpg"),
-                duration: s.duration || "0:30",
-              }))
-            );
-            setActiveIndex(Math.floor(published.length / 2));
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data.stories && Array.isArray(data.stories) && data.stories.length > 0) {
+            const published = data.stories.filter((s: any) => s.isPublished);
+            if (published.length > 0) {
+              setStories(
+                published.map((s: any) => ({
+                  id: s.id,
+                  videoUrl: s.videoUrl,
+                  videoType: s.videoType || "file",
+                  thumbnailUrl: s.thumbnailUrl || "",
+                  imageSrc: s.thumbnailUrl || (s.videoType === "file" ? s.videoUrl : "/images/students/student1.jpg"),
+                  duration: s.duration || "0:30",
+                }))
+              );
+              setActiveIndex(Math.floor(published.length / 2));
+            }
           }
         }
       } catch (err) {

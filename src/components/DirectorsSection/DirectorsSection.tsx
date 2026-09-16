@@ -69,19 +69,21 @@ export default function DirectorsSection() {
     async function loadBackendDirectors() {
       try {
         const res = await fetch("/api/directors");
-        const data = await res.json();
-        if (data.directors && Array.isArray(data.directors) && data.directors.length > 0) {
-          const published = data.directors.filter((d: any) => d.isPublished);
-          if (published.length > 0) {
-            setDirectors(
-              published.map((item: any) => ({
-                id: item.id,
-                name: item.name,
-                role: item.role,
-                image: item.image || undefined,
-                accentBg: item.accentBg || "#14161c",
-              }))
-            );
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data.directors && Array.isArray(data.directors) && data.directors.length > 0) {
+            const published = data.directors.filter((d: any) => d.isPublished);
+            if (published.length > 0) {
+              setDirectors(
+                published.map((item: any) => ({
+                  id: item.id,
+                  name: item.name,
+                  role: item.role,
+                  image: item.image || undefined,
+                  accentBg: item.accentBg || "#14161c",
+                }))
+              );
+            }
           }
         }
       } catch (err) {

@@ -22,17 +22,19 @@ export default function Hero() {
     async function loadMarqueeItems() {
       try {
         const res = await fetch("/api/news-events?marquee=true");
-        const data = await res.json();
-        if (data.items && Array.isArray(data.items)) {
-          setNewsItems(
-            data.items.map((item: any) => ({
-              id: item.id,
-              tag: item.tag || "UPDATE",
-              title: item.title || "",
-              description: item.description || "",
-              link: item.link || "/students/news",
-            }))
-          );
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data.items && Array.isArray(data.items)) {
+            setNewsItems(
+              data.items.map((item: any) => ({
+                id: item.id,
+                tag: item.tag || "UPDATE",
+                title: item.title || "",
+                description: item.description || "",
+                link: item.link || "/students/news",
+              }))
+            );
+          }
         }
       } catch (err) {
         console.error("Failed to load marquee news items:", err);

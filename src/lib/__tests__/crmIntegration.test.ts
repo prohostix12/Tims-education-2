@@ -55,10 +55,10 @@ async function runCrmIntegrationTests() {
     const res1 = await createLead(sampleEnquiry, validConfig);
     assert(res1.success && res1.leadId === "CRM_LEAD_999", "Test 1: Valid enquiry successfully sent to PypeCRM");
 
-    // TEST 2: CRM integration disabled
-    const disabledConfig: CRMConfig = { ...validConfig, enabled: false };
-    const res2 = await createLead(sampleEnquiry, disabledConfig);
-    assert(!res2.success && res2.skipped === true, "Test 2: CRM integration disabled behavior");
+    // TEST 2: CRM integration always attempts delivery when API key is present
+    const configWithApiKey: CRMConfig = { ...validConfig, enabled: true };
+    const res2 = await createLead(sampleEnquiry, configWithApiKey);
+    assert(res2.success && res2.leadId === "CRM_LEAD_999", "Test 2: CRM integration always attempts lead delivery when API key is present");
 
     // TEST 3: CRM not configured (missing API Key)
     const unconfiguredConfig: CRMConfig = { ...validConfig, apiKey: "", hasApiKey: false };
