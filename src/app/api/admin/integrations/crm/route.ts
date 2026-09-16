@@ -63,13 +63,20 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { enabled, endpointUrl, apiKey } = body;
+    const { endpointUrl, apiKey } = body;
 
     const finalEndpoint = typeof endpointUrl === "string" && endpointUrl.trim()
       ? endpointUrl.trim()
       : "https://pypecrm.com/api/v1/leads";
 
-    let encryptedApiKey: EncryptedData | undefined = inMemoryCrmConfig.encryptedApiKey;
+    const db = await getDb();
+    let existingDoc: CrmConfigDoc | null = null;
+    if (db) {
+      existingDoc = await db.collection<CrmConfigDoc>("integrations").findOne({ type: "crm" });
+    }
+
+    let encryptedApiKey: EncryptedData | undefined =
+      existingDoc?.encryptedApiKey || inMemoryCrmConfig.encryptedApiKey;
 
     if (typeof apiKey === "string" && apiKey.trim() !== "" && !apiKey.includes("••••")) {
       encryptedApiKey = encryptSecret(apiKey.trim());
@@ -77,18 +84,16 @@ export async function POST(request: Request) {
 
     const rawApiKey = encryptedApiKey ? decryptSecret(encryptedApiKey) : "";
     const isEnabled = Boolean(rawApiKey);
-
     const now = new Date();
+
     inMemoryCrmConfig = {
       type: "crm",
       enabled: isEnabled,
       endpointUrl: finalEndpoint,
       ...(encryptedApiKey ? { encryptedApiKey } : {}),
       updatedAt: now,
-      createdAt: inMemoryCrmConfig.createdAt || now,
+      createdAt: existingDoc?.createdAt || inMemoryCrmConfig.createdAt || now,
     };
-
-    const db = await getDb();
 
     if (db) {
       await db.collection("integrations").updateOne(
