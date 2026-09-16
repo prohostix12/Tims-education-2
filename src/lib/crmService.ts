@@ -189,7 +189,6 @@ export async function createLead(
       headers: {
         "Content-Type": "application/json",
         "X-API-KEY": config.apiKey,
-        "X-API-Key": config.apiKey,
         "Authorization": `Bearer ${config.apiKey}`,
       },
       body: JSON.stringify(payload),
