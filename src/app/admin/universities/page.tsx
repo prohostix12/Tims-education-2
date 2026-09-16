@@ -54,11 +54,114 @@ const initialForm: FormState = {
   status: "published",
 };
 
+// Canvas helper to downscale/compress oversized images (> 1920px or > 1.2MB)
+async function compressImageFile(file: File): Promise<File> {
+  if (!file.type.startsWith("image/") || file.size < 1.2 * 1024 * 1024) {
+    return file;
+  }
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const maxDim = 1920;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve(file);
+
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob || blob.size >= file.size) return resolve(file);
+          const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          });
+          resolve(compressedFile);
+        },
+        "image/jpeg",
+        0.85
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+    img.src = url;
+  });
+}
+
+// Uploads a file (image or PDF) to MongoDB GridFS (/api/upload)
+async function uploadSingleFile(file: File): Promise<string> {
+  const compressed = await compressImageFile(file);
+  const body = new FormData();
+  body.append("file", compressed);
+
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    body,
+  });
+
+  const resText = await res.text();
+  let data: any = {};
+  try {
+    data = JSON.parse(resText);
+  } catch {
+    if (!res.ok) {
+      throw new Error(`Upload server error (${res.status}): ${resText.slice(0, 100)}`);
+    }
+  }
+
+  if (!res.ok || !data.url) {
+    throw new Error(data.error || `Upload failed with status ${res.status}`);
+  }
+
+  return data.url;
+}
+
+// Converts a base64 data URL to a File and uploads it to GridFS
+async function uploadBase64DataUrl(dataUrl: string): Promise<string> {
+  if (!dataUrl || !dataUrl.startsWith("data:")) return dataUrl;
+  try {
+    const arr = dataUrl.split(",");
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : "image/jpeg";
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const ext = mime.includes("pdf") ? "pdf" : "jpg";
+    const file = new File([u8arr], `uploaded_university_${Date.now()}.${ext}`, { type: mime });
+    return await uploadSingleFile(file);
+  } catch (err) {
+    console.error("Failed to migrate base64 file:", err);
+    return dataUrl;
+  }
+}
+
 export default function AdminUniversitiesPage() {
   const [universities, setUniversities] = useState<University[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [uploadingField, setUploadingField] = useState<"logo" | "image" | "brochure" | null>(null);
 
   // Filter & Search States
   const [searchQuery, setSearchQuery] = useState("");
@@ -180,20 +283,22 @@ export default function AdminUniversitiesPage() {
     });
   };
 
-  // File to Base64 helper
-  const handleFileUpload = (field: "logo" | "image" | "brochure") => (
+  // File to GridFS upload helper
+  const handleFileUpload = (field: "logo" | "image" | "brochure") => async (
     e: ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (typeof reader.result === "string") {
-        setFormData((prev) => ({ ...prev, [field]: reader.result as string }));
-      }
-    };
-    reader.readAsDataURL(file);
+    setUploadingField(field);
+    try {
+      const url = await uploadSingleFile(file);
+      setFormData((prev) => ({ ...prev, [field]: url }));
+    } catch (err: any) {
+      alert(err.message || "Failed to upload file.");
+    } finally {
+      setUploadingField(null);
+    }
   };
 
   // Save / Update Submit Handler
@@ -206,29 +311,37 @@ export default function AdminUniversitiesPage() {
 
     setIsSubmitting(true);
 
-    const payload = {
-      name: formData.name.trim(),
-      slug: formData.slug.trim(),
-      href: formData.href.trim(),
-      category: formData.category,
-      categoryLabel: formData.categoryLabel.trim(),
-      logo: formData.logo.trim(),
-      image: formData.image.trim(),
-      description: formData.description.trim(),
-      about: formData.about.trim(),
-      brochure: formData.brochure.trim(),
-      accreditations: formData.accreditationsInput
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
-      courses: formData.coursesInput
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
-      status: formData.status,
-    };
-
     try {
+      let logoUrl = formData.logo.trim();
+      let imageUrl = formData.image.trim();
+      let brochureUrl = formData.brochure.trim();
+
+      if (logoUrl.startsWith("data:")) logoUrl = await uploadBase64DataUrl(logoUrl);
+      if (imageUrl.startsWith("data:")) imageUrl = await uploadBase64DataUrl(imageUrl);
+      if (brochureUrl.startsWith("data:")) brochureUrl = await uploadBase64DataUrl(brochureUrl);
+
+      const payload = {
+        name: formData.name.trim(),
+        slug: formData.slug.trim(),
+        href: formData.href.trim(),
+        category: formData.category,
+        categoryLabel: formData.categoryLabel.trim(),
+        logo: logoUrl,
+        image: imageUrl,
+        description: formData.description.trim(),
+        about: formData.about.trim(),
+        brochure: brochureUrl,
+        accreditations: formData.accreditationsInput
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        courses: formData.coursesInput
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        status: formData.status,
+      };
+
       const url = isEditing ? `/api/universities/${formData.id}` : "/api/universities";
       const method = isEditing ? "PUT" : "POST";
 
@@ -703,7 +816,7 @@ export default function AdminUniversitiesPage() {
                 {/* Logo Image */}
                 <div>
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    University Logo (URL or Upload)
+                    University Logo (URL or Upload) {uploadingField === "logo" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading...)</span>}
                   </label>
                   <input
                     type="text"
@@ -713,13 +826,13 @@ export default function AdminUniversitiesPage() {
                     onChange={handleFormChange}
                     style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
                   />
-                  <input type="file" accept="image/*" onChange={handleFileUpload("logo")} style={{ fontSize: "0.8rem" }} />
+                  <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("logo")} style={{ fontSize: "0.8rem" }} />
                 </div>
 
                 {/* Campus Banner Image */}
                 <div>
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Campus / Banner Image (URL or Upload)
+                    Campus / Banner Image (URL or Upload) {uploadingField === "image" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading...)</span>}
                   </label>
                   <input
                     type="text"
@@ -729,13 +842,13 @@ export default function AdminUniversitiesPage() {
                     onChange={handleFormChange}
                     style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
                   />
-                  <input type="file" accept="image/*" onChange={handleFileUpload("image")} style={{ fontSize: "0.8rem" }} />
+                  <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("image")} style={{ fontSize: "0.8rem" }} />
                 </div>
 
                 {/* Brochure PDF File / Link */}
                 <div style={{ gridColumn: "1 / -1" }}>
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    University Brochure PDF (Document URL or PDF Upload)
+                    University Brochure PDF (Document URL or PDF Upload) {uploadingField === "brochure" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading PDF...)</span>}
                   </label>
                   <input
                     type="text"
@@ -745,7 +858,7 @@ export default function AdminUniversitiesPage() {
                     onChange={handleFormChange}
                     style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
                   />
-                  <input type="file" accept="application/pdf" onChange={handleFileUpload("brochure")} style={{ fontSize: "0.8rem" }} />
+                  <input type="file" accept="application/pdf,image/*" disabled={uploadingField !== null} onChange={handleFileUpload("brochure")} style={{ fontSize: "0.8rem" }} />
                 </div>
 
                 {/* Short Description */}
@@ -850,10 +963,10 @@ export default function AdminUniversitiesPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || uploadingField !== null}
                   className="tims-admin-btn tims-admin-btn-primary"
                 >
-                  {isSubmitting ? "Saving..." : isEditing ? "Update University" : "Create University"}
+                  {uploadingField ? "Uploading File..." : isSubmitting ? "Saving..." : isEditing ? "Update University" : "Create University"}
                 </button>
               </div>
             </form>
