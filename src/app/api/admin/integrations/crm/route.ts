@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { encryptSecret, decryptSecret, maskSecret, type EncryptedData } from "@/lib/cryptoUtils";
+import { testConnection } from "@/lib/crmService";
 
 type CrmConfigDoc = {
   type: "crm";
@@ -85,6 +86,20 @@ export async function POST(request: Request) {
     const rawApiKey = encryptedApiKey ? decryptSecret(encryptedApiKey) : "";
     const isEnabled = Boolean(rawApiKey);
     const now = new Date();
+
+    // Auto-validate API key against CRM server before persisting
+    if (rawApiKey) {
+      const testRes = await testConnection({ endpointUrl: finalEndpoint, apiKey: rawApiKey });
+      if (!testRes.success) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `CRM Connection Test Failed: ${testRes.message}. Invalid API key was not saved.`,
+          },
+          { status: 400 }
+        );
+      }
+    }
 
     inMemoryCrmConfig = {
       type: "crm",

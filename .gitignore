@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 implementation_plan.md
 lib/__tests__/crmIntegration.test.ts
+scratch/test_crm_key.js
+scratch/sync_failed_leads.js
+scratch/list_failed.js
+scratch/test_conn_func.js
