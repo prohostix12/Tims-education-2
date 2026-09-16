@@ -54,14 +54,14 @@ async function loadEnquiries(): Promise<{ enquiries: Enquiry[]; error: string | 
 }
 
 const sourceLabels: Record<string, string> = {
-  "home-hero": "Home — Make Your Enquiry",
-  "contact-page": "Contact — Get In Touch",
-  "hero-advisor": "Hero — Connect With an Advisor",
-  "advisor-modal": "Modal — Connect With an Advisor",
-  "success-stories-advisor": "Success Stories — Connect With an Advisor",
-  "popup-modal": "Popup Modal — Enquiry",
-  "credit-transfer-page": "Credit Transfer — Enquiry",
-  "apprenticeship-page": "Apprenticeship — EALP",
+  "home-hero": "Website",
+  "contact-page": "Website — Contact Page",
+  "hero-advisor": "Website — Talk to Advisor",
+  "advisor-modal": "Website — Advisor Modal",
+  "success-stories-advisor": "Website — Success Stories Advisor",
+  "popup-modal": "Website — Popup Modal",
+  "credit-transfer-page": "Website — Credit Transfer",
+  "apprenticeship-page": "Website — Apprenticeship EALP",
 };
 
 export default async function AdminEnquiriesPage() {

@@ -147,7 +147,7 @@ export function mapLeadPayload(enquiry: TIMSEnquiryData) {
     company: enquiry.company ? enquiry.company.trim() : "",
     message: enquiry.enquiry ? enquiry.enquiry.trim() : "",
     notes: enquiry.enquiry ? enquiry.enquiry.trim() : "",
-    source: enquiry.source && enquiry.source !== "unknown" ? enquiry.source.trim() : "TIMS Website Form",
+    source: "Website",
     submittedAt: enquiry.createdAt
       ? new Date(enquiry.createdAt).toISOString()
       : new Date().toISOString(),
