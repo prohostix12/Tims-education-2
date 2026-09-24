@@ -299,3 +299,94 @@
     max-width: 480px;
   }
 }
+
+/* ---------- Section-wise Department Contacts (Reference Image 1) ---------- */
+
+.deptContactsSection {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 2.5rem);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 6px 24px rgba(20, 22, 28, 0.06);
+  border: 1px solid rgba(227, 230, 238, 0.8);
+}
+
+.deptHeader {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.deptTitle {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  color: #101828;
+  letter-spacing: -0.01em;
+}
+
+.deptTitleUnderline {
+  width: 54px;
+  height: 4px;
+  background-color: #c6a378;
+  border-radius: 2px;
+  margin: 10px auto 0 auto;
+}
+
+.deptGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  justify-content: center;
+}
+
+.deptCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.deptCardTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #101828;
+}
+
+.deptCardDesc {
+  margin: 0 0 1.25rem 0;
+  font-size: 0.9375rem;
+  color: #64748b;
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+.deptCardDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.deptDetailRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.deptDetailRow a {
+  color: #1e293b;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.deptDetailRow a:hover {
+  color: #c6a378;
+  text-decoration: underline;
+}
+

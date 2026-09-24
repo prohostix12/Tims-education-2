@@ -10,7 +10,13 @@ interface Message {
 }
 
 const INITIAL_GREETING =
-  "Hello! Welcome to TIMS Education. I'm your AI advisor. How can I assist you today with our distance courses, SSLC/Plus Two (10th/12th), degree/PG admissions, or credit transfer guidance?";
+  "Hi! I'm TIMS AI — your advisor for TIMS Education. How can I assist you today?";
+
+const QUICK_ACTIONS = [
+  "Distance Education",
+  "SSLC / Plus Two",
+  "Degree & PG Admissions",
+];
 
 function BotIcon({ size = 32 }: { size?: number }) {
   return (
@@ -23,24 +29,16 @@ function BotIcon({ size = 32 }: { size?: number }) {
       aria-hidden="true"
     >
       <g filter="url(#bubble-shadow)">
-        {/* White Speech Bubble Body with Pointer Tail */}
         <path
           d="M 28 19 H 72 C 79.7 19 86 25.3 86 33 V 55 C 86 62.7 79.7 69 72 69 H 68 L 74.8 82.5 C 75.3 83.5 74.2 84.3 73.4 83.6 L 59.5 69 H 28 C 20.3 69 14 62.7 14 55 V 33 C 14 25.3 20.3 19 28 19 Z"
           fill="#ffffff"
         />
       </g>
-
-      {/* Left Eye */}
       <circle cx="37" cy="42" r="8" fill="#6b21a8" />
       <circle cx="40" cy="39" r="2.8" fill="#ffffff" />
-
-      {/* Right Eye */}
       <circle cx="63" cy="42" r="8" fill="#6b21a8" />
       <circle cx="66" cy="39" r="2.8" fill="#ffffff" />
-
-      {/* Mouth */}
       <rect x="43" y="55" width="14" height="5" rx="2.5" fill="#6b21a8" />
-
       <defs>
         <filter id="bubble-shadow" x="-20%" y="-20%" width="150%" height="150%">
           <feDropShadow dx="1" dy="3" stdDeviation="2" floodColor="#3b0764" floodOpacity="0.25" />
@@ -50,17 +48,17 @@ function BotIcon({ size = 32 }: { size?: number }) {
   );
 }
 
-function CloseIcon({ size = 20 }: { size?: number }) {
+function MinimizeIcon({ size = 18 }: { size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="none" aria-hidden="true">
-      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M5 12h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 function SendIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
       <path
         d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
         fill="currentColor"
@@ -69,10 +67,6 @@ function SendIcon() {
   );
 }
 
-/**
- * Lightweight formatting helper for assistant messages:
- * Parses **bold** inline tags and renders paragraphs or bullet points.
- */
 function renderFormattedText(rawText: string) {
   const lines = rawText.split("\n");
 
@@ -82,11 +76,9 @@ function renderFormattedText(rawText: string) {
       return <div key={`empty-${lineIndex}`} style={{ height: "6px" }} />;
     }
 
-    // Check if line is a bullet item (- or * or 1. etc)
     const isBullet = /^(?:[\-*•]|(?:\d+\.))\s+/.test(trimmed);
     const cleanContent = isBullet ? trimmed.replace(/^(?:[\-*•]|(?:\d+\.))\s+/, "") : trimmed;
 
-    // Parse **bold** parts
     const parts = cleanContent.split(/(\*\*.*?\*\*)/g);
     const formattedParts = parts.map((part, pIndex) => {
       if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
@@ -112,7 +104,8 @@ function renderFormattedText(rawText: string) {
 }
 
 export default function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  // Initially open by default when page opens
+  const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "init-1",
@@ -132,15 +125,11 @@ export default function ChatWidget() {
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
-      // Focus input when opened
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
     }
   }, [isOpen, messages, isLoading]);
 
-  const handleSend = async () => {
-    const trimmed = inputValue.trim();
+  const sendMessageText = async (textToSend: string) => {
+    const trimmed = textToSend.trim();
     if (!trimmed || isLoading) return;
 
     const userMessage: Message = {
@@ -154,7 +143,6 @@ export default function ChatWidget() {
     setInputValue("");
     setIsLoading(true);
 
-    // Prepare running history (excluding the greeting seed or sending relevant history)
     const historyPayload = updatedMessages.map((m) => ({
       role: m.role,
       text: m.text,
@@ -168,7 +156,7 @@ export default function ChatWidget() {
         },
         body: JSON.stringify({
           message: trimmed,
-          history: historyPayload.slice(0, -1), // Send past history excluding the latest user message
+          history: historyPayload.slice(0, -1),
         }),
       });
 
@@ -179,7 +167,7 @@ export default function ChatWidget() {
       const data = await res.json();
       const assistantReplyText =
         data.reply ||
-        "I'm having trouble reaching the assistant right now — please try again in a moment, or contact us directly for now.";
+        "I'm having trouble reaching the assistant right now — please try again in a moment.";
 
       const assistantMessage: Message = {
         id: `assistant-${Date.now()}`,
@@ -194,12 +182,16 @@ export default function ChatWidget() {
         id: `assistant-${Date.now()}`,
         role: "assistant",
         text:
-          "I'm having trouble reaching the assistant right now — please try again in a moment, or contact us directly for now.",
+          "I'm having trouble reaching the assistant right now — please try again in a moment.",
       };
       setMessages((prev) => [...prev, fallbackMessage]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSend = () => {
+    sendMessageText(inputValue);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -219,7 +211,7 @@ export default function ChatWidget() {
         aria-label={isOpen ? "Close TIMS Chat" : "Open TIMS Chat"}
       >
         <div className={styles.launcherIconWrapper}>
-          {isOpen ? <CloseIcon size={24} /> : <BotIcon size={48} />}
+          {isOpen ? <MinimizeIcon size={22} /> : <BotIcon size={46} />}
         </div>
       </button>
 
@@ -229,13 +221,16 @@ export default function ChatWidget() {
           {/* Header */}
           <div className={styles.header}>
             <div className={styles.headerInfo}>
-              <div className={styles.avatar}>
-                <BotIcon size={24} />
+              <div className={styles.avatarWrapper}>
+                <div className={styles.avatar}>
+                  <BotIcon size={22} />
+                </div>
+                <span className={styles.onlineBadge} />
               </div>
               <div className={styles.headerText}>
-                <span className={styles.headerTitle}>TIMS AI Advisor</span>
+                <span className={styles.headerTitle}>TIMS AI</span>
                 <span className={styles.headerSubtitle}>
-                  AI-powered · may occasionally be inaccurate
+                  AI guide · usually replies instantly
                 </span>
               </div>
             </div>
@@ -243,31 +238,49 @@ export default function ChatWidget() {
               type="button"
               className={styles.closeButton}
               onClick={() => setIsOpen(false)}
-              aria-label="Close Chat"
+              aria-label="Minimize Chat"
             >
-              <CloseIcon />
+              <MinimizeIcon />
             </button>
           </div>
 
           {/* Messages Scroll Area */}
           <div className={styles.messagesList}>
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`${styles.messageRow} ${
-                  msg.role === "user" ? styles.userRow : styles.assistantRow
-                }`}
-              >
+            {messages.map((msg, idx) => (
+              <React.Fragment key={msg.id}>
                 <div
-                  className={`${styles.messageBubble} ${
-                    msg.role === "user" ? styles.userBubble : styles.assistantBubble
+                  className={`${styles.messageRow} ${
+                    msg.role === "user" ? styles.userRow : styles.assistantRow
                   }`}
                 >
-                  {msg.role === "assistant"
-                    ? renderFormattedText(msg.text)
-                    : msg.text}
+                  <div
+                    className={`${styles.messageBubble} ${
+                      msg.role === "user" ? styles.userBubble : styles.assistantBubble
+                    }`}
+                  >
+                    {msg.role === "assistant"
+                      ? renderFormattedText(msg.text)
+                      : msg.text}
+                  </div>
                 </div>
-              </div>
+
+                {/* Quick Action Suggestion Pills shown under initial assistant message */}
+                {idx === 0 && msg.role === "assistant" && (
+                  <div className={styles.quickActionsRow}>
+                    {QUICK_ACTIONS.map((actionText) => (
+                      <button
+                        key={actionText}
+                        type="button"
+                        className={styles.quickActionPill}
+                        onClick={() => sendMessageText(actionText)}
+                        disabled={isLoading}
+                      >
+                        {actionText}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </React.Fragment>
             ))}
 
             {/* Typing Indicator */}
@@ -286,29 +299,32 @@ export default function ChatWidget() {
 
           {/* Input Footer */}
           <div className={styles.inputArea}>
-            <input
-              ref={inputRef}
-              type="text"
-              className={styles.input}
-              placeholder="Ask TIMS AI Assistant..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={isLoading}
-              maxLength={2000}
-            />
-            <button
-              type="button"
-              className={styles.sendButton}
-              onClick={handleSend}
-              disabled={isLoading || !inputValue.trim()}
-              aria-label="Send Message"
-            >
-              <SendIcon />
-            </button>
+            <div className={styles.inputWrapper}>
+              <input
+                ref={inputRef}
+                type="text"
+                className={styles.input}
+                placeholder="Ask TIMS AI..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={isLoading}
+                maxLength={2000}
+              />
+              <button
+                type="button"
+                className={styles.sendButton}
+                onClick={handleSend}
+                disabled={isLoading || !inputValue.trim()}
+                aria-label="Send Message"
+              >
+                <SendIcon />
+              </button>
+            </div>
           </div>
         </div>
       )}
     </>
   );
 }
+

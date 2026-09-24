@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
 import { useEnquiryForm } from "@/lib/useEnquiryForm";
+import type { DepartmentContact } from "@/lib/departmentContactsDb";
 
 type Office = {
   title: string;
@@ -87,6 +88,39 @@ function MailIcon() {
   );
 }
 
+// Gold icons matching Image 1 design
+function GoldPhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path
+        d="M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2a1 1 0 0 1 1-.3c1.1.4 2.3.6 3.5.6a1 1 0 0 1 1 1V19.5a1 1 0 0 1-1 1C9.9 20.5 3.5 14.1 3.5 6a1 1 0 0 1 1-1H7.6a1 1 0 0 1 1 1c0 1.2.2 2.4.6 3.5a1 1 0 0 1-.3 1l-2 1.3Z"
+        stroke="#c6a378"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function GoldMobileIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <rect x="6.5" y="3.5" width="11" height="17" rx="2" stroke="#c6a378" strokeWidth="1.6" />
+      <line x1="10" y1="17.5" x2="14" y2="17.5" stroke="#c6a378" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function GoldMailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="#c6a378" strokeWidth="1.6" />
+      <path d="M4 7l8 5.5L20 7" stroke="#c6a378" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function FacebookIcon() {
   return (
     <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
@@ -142,15 +176,20 @@ export default function ContactSection() {
   const { status, errorMessage, handleSubmit } = useEnquiryForm("contact-page");
   const [offices, setOffices] = useState<Office[]>(defaultOffices);
   const [socials, setSocials] = useState<Socials>(defaultSocials);
+  const [departmentContacts, setDepartmentContacts] = useState<DepartmentContact[]>([]);
 
   useEffect(() => {
     async function loadContactInfo() {
       try {
-        const res = await fetch("/api/contact-info");
-        if (res.ok) {
-          const contentType = res.headers.get("content-type");
+        const [contactRes, deptRes] = await Promise.all([
+          fetch("/api/contact-info", { cache: "no-store" }),
+          fetch("/api/department-contacts", { cache: "no-store" }),
+        ]);
+
+        if (contactRes.ok) {
+          const contentType = contactRes.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
-            const data = await res.json();
+            const data = await contactRes.json();
             if (data && data.contactInfo) {
               if (Array.isArray(data.contactInfo.offices) && data.contactInfo.offices.length > 0) {
                 setOffices(data.contactInfo.offices);
@@ -161,8 +200,15 @@ export default function ContactSection() {
             }
           }
         }
+
+        if (deptRes.ok) {
+          const deptData = await deptRes.json();
+          if (Array.isArray(deptData.contacts)) {
+            setDepartmentContacts(deptData.contacts);
+          }
+        }
       } catch (err) {
-        console.error("Could not fetch contact info, using defaults:", err);
+        console.error("Could not fetch contact info:", err);
       }
     }
     loadContactInfo();
@@ -350,6 +396,56 @@ export default function ContactSection() {
             </form>
           </div>
         </div>
+
+        {/* Section-wise Department Contacts (Matching Reference Image 1) */}
+        {departmentContacts.length > 0 && (
+          <div className={styles.deptContactsSection}>
+            <div className={styles.deptHeader}>
+              <h2 className={styles.deptTitle}>Contacts</h2>
+              <div className={styles.deptTitleUnderline} />
+            </div>
+
+            <div className={styles.deptGrid}>
+              {departmentContacts.map((contact, idx) => (
+                <div key={contact.id || contact._id || idx} className={styles.deptCard}>
+                  <h3 className={styles.deptCardTitle}>{contact.departmentName}</h3>
+                  {contact.description && (
+                    <p className={styles.deptCardDesc}>{contact.description}</p>
+                  )}
+
+                  <div className={styles.deptCardDetails}>
+                    {contact.landline && (
+                      <div className={styles.deptDetailRow}>
+                        <GoldPhoneIcon />
+                        <a href={`tel:${contact.landline.replace(/[^+\d]/g, "")}`}>
+                          {contact.landline}
+                        </a>
+                      </div>
+                    )}
+
+                    {contact.mobile && (
+                      <div className={styles.deptDetailRow}>
+                        <GoldMobileIcon />
+                        <a href={`tel:${contact.mobile.replace(/[^+\d]/g, "")}`}>
+                          {contact.mobile}
+                        </a>
+                      </div>
+                    )}
+
+                    {contact.email && (
+                      <div className={styles.deptDetailRow}>
+                        <GoldMailIcon />
+                        <a href={`mailto:${contact.email}`}>
+                          {contact.email}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
