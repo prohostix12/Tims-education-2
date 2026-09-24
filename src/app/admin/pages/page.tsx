@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 const pages = [
-  { name: "Home", path: "/", editPath: "/admin/distance-education", editLabel: "Edit Section Video" },
+  { name: "Home (Hero Section)", path: "/", editPath: "/admin/hero", editLabel: "Edit Hero Content" },
+  { name: "Home (Section Video)", path: "/", editPath: "/admin/distance-education", editLabel: "Edit Section Video" },
   { name: "Directors", path: "/directors", editPath: "/admin/directors", editLabel: "Manage Directors" },
   { name: "Our Team Members", path: "/#team", editPath: "/admin/team-members", editLabel: "Manage Team" },
   { name: "Blog", path: "/blog", editPath: "/admin/blog", editLabel: "Manage Blog" },

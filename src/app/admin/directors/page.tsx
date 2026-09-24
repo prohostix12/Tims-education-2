@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, FormEvent, DragEvent, ChangeEvent } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 type DirectorItem = {
@@ -269,12 +270,32 @@ export default function AdminDirectorsPage() {
             Manage director names, roles, photo uploads, card background colors, and order.
           </p>
         </div>
-        <button type="button" className={styles.createBtn} onClick={openCreateModal}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Add New Director
-        </button>
+        <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+          <Link
+            href="/admin/mission-vision"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.65rem 1.1rem",
+              borderRadius: "10px",
+              background: "#eff6ff",
+              color: "#1d4ed8",
+              border: "1px solid #bfdbfe",
+              fontWeight: 700,
+              fontSize: "0.875rem",
+              textDecoration: "none",
+            }}
+          >
+            🎯 Edit Mission &amp; Vision
+          </Link>
+          <button type="button" className={styles.createBtn} onClick={openCreateModal}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Add New Director
+          </button>
+        </div>
       </div>
 
       {/* Status Alert Message */}

@@ -33,18 +33,22 @@ export default function StudentLoginPage() {
       });
 
       const data = await response.json();
+      console.log("Data:", data);
 
       if (response.ok && data.success) {
-        setSuccessMessage("Signed in successfully! Redirecting...");
+        setSuccessMessage("Signed in successfully! Redirecting to student portal...");
         setTimeout(() => {
-          router.push("/");
-          router.refresh();
-        }, 800);
+          if (data.redirectUrl) {
+            window.location.href = data.redirectUrl;
+          } else {
+            // router.push("/students/dashboard");
+          }
+        }, 500);
       } else {
-        setErrorMessage(data.error || "Login service is temporarily unavailable.");
+        setErrorMessage(data.error || data.message || "Invalid credentials");
       }
     } catch (err) {
-      setErrorMessage("Login service is temporarily unavailable. Please try again later.");
+      setErrorMessage("An error occurred during login. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -179,10 +183,6 @@ export default function StudentLoginPage() {
               />
               <span>Remember me</span>
             </label>
-
-            <a href="#" className={styles.forgotLink} onClick={(e) => e.preventDefault()}>
-              Forgot Password?
-            </a>
           </div>
 
           <button type="submit" className={styles.submitBtn} disabled={isLoading}>

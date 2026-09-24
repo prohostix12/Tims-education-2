@@ -6,6 +6,7 @@ type GallerySection = {
   id: string;
   sectionName: string;
   images: string[];
+  homeImages?: string[];
   createdAt?: string;
   updatedAt?: string;
 };
@@ -124,6 +125,7 @@ export default function AdminGalleryPage() {
     id?: string;
     sectionName: string;
     images: string[];
+    homeImages: string[];
   } | null>(null);
 
   const fetchGallerySections = async () => {
@@ -155,6 +157,7 @@ export default function AdminGalleryPage() {
     setEditingSection({
       sectionName: "",
       images: [],
+      homeImages: [],
     });
     setIsModalOpen(true);
   };
@@ -164,6 +167,7 @@ export default function AdminGalleryPage() {
       id: section.id,
       sectionName: section.sectionName,
       images: [...section.images],
+      homeImages: [...(section.homeImages || [])],
     });
     setIsModalOpen(true);
   };
@@ -172,6 +176,45 @@ export default function AdminGalleryPage() {
     setIsModalOpen(false);
     setEditingSection(null);
     setUploadingProgress(null);
+  };
+
+  // Quick toggle landing page status for an image directly from section view
+  const toggleHomeImage = async (sectionId: string, imgUrl: string) => {
+    const sec = sections.find((s) => s.id === sectionId);
+    if (!sec) return;
+
+    const currentHomeImages = sec.homeImages || [];
+    const isMarked = currentHomeImages.includes(imgUrl);
+    const newHomeImages = isMarked
+      ? currentHomeImages.filter((url) => url !== imgUrl)
+      : [...currentHomeImages, imgUrl];
+
+    // Optimistic UI update
+    setSections((prev) =>
+      prev.map((s) => (s.id === sectionId ? { ...s, homeImages: newHomeImages } : s))
+    );
+
+    try {
+      const res = await fetch(`/api/gallery/${sectionId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ homeImages: newHomeImages }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update landing page selection");
+      }
+      setStatusMessage({
+        type: "success",
+        text: isMarked
+          ? "Image removed from Landing Page gallery."
+          : "⭐ Image marked to be shown on Landing Page gallery!",
+      });
+    } catch (err) {
+      console.error("Failed to update home image:", err);
+      // Revert state
+      fetchGallerySections();
+    }
   };
 
   // Upload selected image files directly to MongoDB GridFS (/api/upload)
@@ -215,9 +258,24 @@ export default function AdminGalleryPage() {
   const handleRemoveImage = (indexToRemove: number) => {
     setEditingSection((prev) => {
       if (!prev) return null;
+      const removedUrl = prev.images[indexToRemove];
       return {
         ...prev,
         images: prev.images.filter((_, idx) => idx !== indexToRemove),
+        homeImages: prev.homeImages.filter((url) => url !== removedUrl),
+      };
+    });
+  };
+
+  const handleToggleModalHomeImage = (imgUrl: string) => {
+    setEditingSection((prev) => {
+      if (!prev) return null;
+      const isMarked = prev.homeImages.includes(imgUrl);
+      return {
+        ...prev,
+        homeImages: isMarked
+          ? prev.homeImages.filter((url) => url !== imgUrl)
+          : [...prev.homeImages, imgUrl],
       };
     });
   };
@@ -238,11 +296,15 @@ export default function AdminGalleryPage() {
       // Auto-migrate any legacy base64 data URLs to GridFS before saving
       const hasBase64 = editingSection.images.some((img) => img.startsWith("data:image/"));
       let finalImages = editingSection.images;
+      let finalHomeImages = editingSection.homeImages;
 
       if (hasBase64) {
         setUploadingProgress("Migrating legacy base64 photos to GridFS storage...");
         finalImages = await Promise.all(
           editingSection.images.map((img) => uploadBase64DataUrl(img))
+        );
+        finalHomeImages = await Promise.all(
+          editingSection.homeImages.map((img) => uploadBase64DataUrl(img))
         );
       }
 
@@ -256,6 +318,7 @@ export default function AdminGalleryPage() {
         body: JSON.stringify({
           sectionName: editingSection.sectionName.trim(),
           images: finalImages,
+          homeImages: finalHomeImages,
         }),
       });
 
@@ -329,6 +392,12 @@ export default function AdminGalleryPage() {
     );
   }
 
+  // Count total landing page marked images across all sections
+  const totalLandingImages = sections.reduce(
+    (sum, sec) => sum + (sec.homeImages ? sec.homeImages.length : 0),
+    0
+  );
+
   return (
     <div>
       <div className="tims-admin-page-header">
@@ -337,16 +406,31 @@ export default function AdminGalleryPage() {
             <span className="tims-admin-eyebrow">Content & Events</span>
             <h1 className="tims-admin-heading">Gallery Management</h1>
             <p className="tims-admin-subtitle">
-              Organize gallery events, upload multiple images under each section, and manage media content.
+              Organize gallery events, upload photos, and click <strong>&quot;⭐ Landing Page&quot;</strong> on any image to feature it on the home page gallery.
             </p>
           </div>
-          <button
-            type="button"
-            className="tims-admin-save-button"
-            onClick={openCreateModal}
-          >
-            + Add New Event Section
-          </button>
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <span
+              className="tims-admin-badge"
+              style={{
+                background: "#dcfce7",
+                color: "#166534",
+                padding: "0.5rem 0.85rem",
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                border: "1px solid #86efac",
+              }}
+            >
+              ✓ {totalLandingImages} Featured on Landing Page
+            </span>
+            <button
+              type="button"
+              className="tims-admin-save-button"
+              onClick={openCreateModal}
+            >
+              + Add New Event Section
+            </button>
+          </div>
         </div>
       </div>
 
@@ -372,52 +456,106 @@ export default function AdminGalleryPage() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          {sections.map((section) => (
-            <div className="tims-admin-card" key={section.id}>
-              <div className="tims-admin-card-header">
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <h2 className="tims-admin-card-title" style={{ margin: 0 }}>
-                      {section.sectionName}
-                    </h2>
-                    <span className="tims-admin-badge" style={{ background: "#eff6ff", color: "#2563eb" }}>
-                      {section.images.length} {section.images.length === 1 ? "Image" : "Images"}
-                    </span>
+          {sections.map((section) => {
+            const homeImagesList = section.homeImages || [];
+            return (
+              <div className="tims-admin-card" key={section.id}>
+                <div className="tims-admin-card-header">
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                      <h2 className="tims-admin-card-title" style={{ margin: 0 }}>
+                        {section.sectionName}
+                      </h2>
+                      <span className="tims-admin-badge" style={{ background: "#eff6ff", color: "#2563eb" }}>
+                        {section.images.length} {section.images.length === 1 ? "Image" : "Images"}
+                      </span>
+                      {homeImagesList.length > 0 && (
+                        <span
+                          className="tims-admin-badge"
+                          style={{ background: "#dcfce7", color: "#166534", border: "1px solid #86efac" }}
+                        >
+                          ✓ {homeImagesList.length} on Landing Page
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <button
+                      type="button"
+                      className="tims-admin-secondary-button"
+                      onClick={() => openEditModal(section)}
+                    >
+                      Edit / Add Images
+                    </button>
+                    <button
+                      type="button"
+                      className="tims-admin-danger-button"
+                      onClick={() => handleDeleteSection(section.id, section.sectionName)}
+                    >
+                      Delete Section
+                    </button>
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  <button
-                    type="button"
-                    className="tims-admin-secondary-button"
-                    onClick={() => openEditModal(section)}
-                  >
-                    Edit / Add Images
-                  </button>
-                  <button
-                    type="button"
-                    className="tims-admin-danger-button"
-                    onClick={() => handleDeleteSection(section.id, section.sectionName)}
-                  >
-                    Delete Section
-                  </button>
-                </div>
-              </div>
 
-              {section.images.length === 0 ? (
-                <p className="tims-admin-subtitle" style={{ fontStyle: "italic" }}>
-                  No images uploaded in this section yet. Click &quot;Edit / Add Images&quot; to upload photos.
-                </p>
-              ) : (
-                <div className="tims-admin-gallery-grid">
-                  {section.images.map((imgUrl, idx) => (
-                    <div className="tims-admin-gallery-thumb" key={idx}>
-                      <img src={imgUrl} alt={`${section.sectionName} image ${idx + 1}`} loading="lazy" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                {section.images.length === 0 ? (
+                  <p className="tims-admin-subtitle" style={{ fontStyle: "italic" }}>
+                    No images uploaded in this section yet. Click &quot;Edit / Add Images&quot; to upload photos.
+                  </p>
+                ) : (
+                  <div className="tims-admin-gallery-grid">
+                    {section.images.map((imgUrl, idx) => {
+                      const isLanding = homeImagesList.includes(imgUrl);
+                      return (
+                        <div
+                          className="tims-admin-gallery-thumb"
+                          key={idx}
+                          style={{
+                            position: "relative",
+                            border: isLanding ? "3px solid #22c55e" : "1px solid var(--aa-border)",
+                            borderRadius: "8px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <img src={imgUrl} alt={`${section.sectionName} image ${idx + 1}`} loading="lazy" />
+
+                          {/* Landing Page Toggle Button (+ or green ✓) */}
+                          <button
+                            type="button"
+                            onClick={() => toggleHomeImage(section.id, imgUrl)}
+                            title={isLanding ? "Remove from Landing Page" : "Add to Landing Page"}
+                            style={{
+                              position: "absolute",
+                              top: "6px",
+                              left: "6px",
+                              width: "28px",
+                              height: "28px",
+                              borderRadius: "50%",
+                              border: isLanding ? "2px solid #ffffff" : "1px solid rgba(255, 255, 255, 0.5)",
+                              background: isLanding
+                                ? "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
+                                : "rgba(15, 23, 42, 0.75)",
+                              color: "#ffffff",
+                              fontSize: isLanding ? "0.85rem" : "1rem",
+                              fontWeight: 900,
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              backdropFilter: "blur(4px)",
+                              boxShadow: isLanding ? "0 2px 8px rgba(22, 163, 74, 0.5)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+                              zIndex: 5,
+                            }}
+                          >
+                            {isLanding ? "✓" : "+"}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -513,21 +651,68 @@ export default function AdminGalleryPage() {
                 <div style={{ marginTop: "1rem" }}>
                   <label className="tims-admin-label">
                     Section Photos ({editingSection.images.length}):
+                    <span style={{ fontWeight: 400, color: "var(--aa-muted)", marginLeft: "0.5rem", fontSize: "0.8125rem" }}>
+                      (Click + or ✓ button on any image to toggle Landing Page feature)
+                    </span>
                   </label>
                   <div className="tims-admin-gallery-grid">
-                    {editingSection.images.map((imgUrl, idx) => (
-                      <div className="tims-admin-gallery-thumb" key={idx}>
-                        <img src={imgUrl} alt={`Preview ${idx + 1}`} />
-                        <button
-                          type="button"
-                          className="tims-admin-gallery-remove"
-                          title="Remove image"
-                          onClick={() => handleRemoveImage(idx)}
+                    {editingSection.images.map((imgUrl, idx) => {
+                      const isLanding = editingSection.homeImages.includes(imgUrl);
+                      return (
+                        <div
+                          className="tims-admin-gallery-thumb"
+                          key={idx}
+                          style={{
+                            position: "relative",
+                            border: isLanding ? "3px solid #22c55e" : "1px solid var(--aa-border)",
+                            borderRadius: "8px",
+                            overflow: "hidden",
+                          }}
                         >
-                          &times;
-                        </button>
-                      </div>
-                    ))}
+                          <img src={imgUrl} alt={`Preview ${idx + 1}`} />
+
+                          {/* Landing Page Toggle Button (+ or green ✓) */}
+                          <button
+                            type="button"
+                            onClick={() => handleToggleModalHomeImage(imgUrl)}
+                            title={isLanding ? "Remove from Landing Page" : "Add to Landing Page"}
+                            style={{
+                              position: "absolute",
+                              top: "6px",
+                              left: "6px",
+                              width: "28px",
+                              height: "28px",
+                              borderRadius: "50%",
+                              border: isLanding ? "2px solid #ffffff" : "1px solid rgba(255, 255, 255, 0.5)",
+                              background: isLanding
+                                ? "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
+                                : "rgba(15, 23, 42, 0.75)",
+                              color: "#ffffff",
+                              fontSize: isLanding ? "0.85rem" : "1rem",
+                              fontWeight: 900,
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              backdropFilter: "blur(4px)",
+                              boxShadow: isLanding ? "0 2px 8px rgba(22, 163, 74, 0.5)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+                              zIndex: 5,
+                            }}
+                          >
+                            {isLanding ? "✓" : "+"}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="tims-admin-gallery-remove"
+                            title="Remove image"
+                            onClick={() => handleRemoveImage(idx)}
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -569,4 +754,3 @@ export default function AdminGalleryPage() {
     </div>
   );
 }
-

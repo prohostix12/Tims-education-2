@@ -4,6 +4,7 @@ import StatsMarqueeSection from "@/components/StatsMarqueeSection/StatsMarqueeSe
 // import NewAboutSection from "@/components/NewAboutSection/NewAboutSection";
 import CoursesSection from "@/components/CoursesSection/CoursesSection";
 import UniversitiesSection from "@/components/UniversitiesSection/UniversitiesSection";
+import MissionVisionSection from "@/components/MissionVisionSection/MissionVisionSection";
 import DirectorsSection from "@/components/DirectorsSection/DirectorsSection";
 import TeamMembersSection from "@/components/TeamMembersSection/TeamMembersSection";
 import TestimonialsSection from "@/components/TestimonialsSection/TestimonialsSection";
@@ -24,6 +25,7 @@ export default function Home() {
       {/* <NewAboutSection /> */}
       <CoursesSection />
       {/* <UniversitiesSection /> */}
+      <MissionVisionSection />
       <DirectorsSection />
       {/* <TeamMembersSection /> */}
       <TestimonialsSection />

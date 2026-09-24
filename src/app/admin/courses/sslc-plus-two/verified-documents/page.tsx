@@ -55,7 +55,7 @@ function VerifiedDocumentsAdminPage() {
     fetch("/api/verified-documents")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data.documents) && data.documents.length > 0) {
+        if (Array.isArray(data.documents)) {
           setDocuments(data.documents);
           try {
             localStorage.setItem("tims_verified_documents", JSON.stringify(data.documents));

@@ -17,6 +17,35 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { status, errorMessage, handleSubmit } = useEnquiryForm("home-hero");
   const [newsItems, setNewsItems] = useState<MarqueeNewsItem[]>([]);
+  const [heroContent, setHeroContent] = useState({
+    eyebrow: "BEST ONLINE DEGREE PLATFORM",
+    headingMain: "18+ Years of Experience.",
+    headingHighlight: "One Commitment to Your Future.",
+    subtitle:
+      "Explore 10th & Plus Two, degree, postgraduate, diploma and skill programs with expert guidance to help you choose the right course and university.",
+  });
+
+  useEffect(() => {
+    async function loadHeroData() {
+      try {
+        const res = await fetch("/api/hero-content");
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          const data = await res.json();
+          if (data) {
+            setHeroContent((prev) => ({
+              eyebrow: data.eyebrow || prev.eyebrow,
+              headingMain: data.headingMain || prev.headingMain,
+              headingHighlight: data.headingHighlight || prev.headingHighlight,
+              subtitle: data.subtitle || prev.subtitle,
+            }));
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load hero content:", err);
+      }
+    }
+    loadHeroData();
+  }, []);
 
   useEffect(() => {
     async function loadMarqueeItems() {
@@ -122,15 +151,15 @@ export default function Hero() {
         <div className={styles.content}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowLine} aria-hidden="true" />
-            <span>BEST ONLINE DEGREE PLATFORM</span>
+            <span>{heroContent.eyebrow}</span>
           </div>
           <h1 className={styles.title}>
-            18+ Years of Experience.
+            {heroContent.headingMain}
             <br />
-            <span className={styles.titleTeal}>One Commitment to Your Future.</span>
+            <span className={styles.titleTeal}>{heroContent.headingHighlight}</span>
           </h1>
           <p className={styles.subtitle}>
-            Explore 10th &amp; Plus Two, degree, postgraduate, diploma and skill programs with expert guidance to help you choose the right course and university.
+            {heroContent.subtitle}
           </p>
 
           <div className={styles.actions}>

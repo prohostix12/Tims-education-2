@@ -25,12 +25,12 @@ export default function SgvuSection() {
           </p>
         </div>
 
-        <div className="tims-mizoram-media" style={{ background: "#ffffff" }}>
+        <div className="tims-mizoram-media" style={{ background: "#ffffff", width: "100%", minHeight: "380px" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://www.gyanvihar.org/media-library/uploads/158331894266081.jpg"
             alt="Suresh Gyan Vihar University Campus"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            style={{ width: "100%", height: "100%", minHeight: "380px", maxHeight: "500px", objectFit: "cover", display: "block" }}
           />
         </div>
       </div>

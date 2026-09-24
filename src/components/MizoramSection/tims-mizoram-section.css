@@ -21,11 +21,11 @@
 }
 
 .tims-mizoram-inner {
-  max-width: 1140px;
+  max-width: 1220px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 5vw, 3rem);
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
   align-items: center;
 }
 
@@ -46,9 +46,11 @@
 /* ---------- Media ---------- */
 
 .tims-mizoram-media {
-  border-radius: 18px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 7px 7px 0 #14161c;
+  box-shadow: 8px 8px 0 #14161c;
+  min-height: 380px;
+  width: 100%;
 }
 
 .tims-mizoram-media-placeholder {

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import EnquiryModal from "@/components/EnquiryModal/EnquiryModal";
+import ChatWidget from "@/components/ChatWidget/ChatWidget";
 
 /**
  * The admin panel has its own header/nav (see AdminHeader), so the public
@@ -24,6 +25,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       {children}
       <Footer />
       <EnquiryModal />
+      <ChatWidget />
     </>
   );
 }

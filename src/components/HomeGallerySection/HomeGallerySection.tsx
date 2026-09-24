@@ -43,26 +43,32 @@ export default function HomeGallerySection() {
   useEffect(() => {
     async function fetchGalleryImages() {
       try {
-        const res = await fetch("/api/gallery");
+        const res = await fetch("/api/gallery?home=true");
         if (res.ok) {
           const contentType = res.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
             const data = await res.json();
-            if (data && Array.isArray(data.sections)) {
-              const allFetchedImages: string[] = [];
-              data.sections.forEach((sec: { images?: string[] }) => {
-                if (Array.isArray(sec.images)) {
-                  allFetchedImages.push(...sec.images);
+            let selectedHomeImages: string[] = [];
+
+            if (data && Array.isArray(data.homeImages) && data.homeImages.length > 0) {
+              selectedHomeImages = data.homeImages;
+            } else if (data && Array.isArray(data.sections)) {
+              // Fallback to all section images if no specific home images marked yet
+              data.sections.forEach((sec: { images?: string[]; homeImages?: string[] }) => {
+                if (Array.isArray(sec.homeImages) && sec.homeImages.length > 0) {
+                  selectedHomeImages.push(...sec.homeImages);
+                } else if (Array.isArray(sec.images)) {
+                  selectedHomeImages.push(...sec.images);
                 }
               });
+            }
 
-              if (allFetchedImages.length > 0) {
-                let combined = [...allFetchedImages];
-                while (combined.length < 5) {
-                  combined = combined.concat(fallbackImages);
-                }
-                setImages(combined);
+            if (selectedHomeImages.length > 0) {
+              let combined = [...selectedHomeImages];
+              while (combined.length < 5) {
+                combined = combined.concat(fallbackImages);
               }
+              setImages(combined);
             }
           }
         }

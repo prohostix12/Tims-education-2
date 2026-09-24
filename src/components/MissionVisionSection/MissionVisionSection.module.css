@@ -1,0 +1,208 @@
+.section {
+  position: relative;
+  width: 100%;
+  padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+  background-color: #FEFCED;
+  background-image: 
+    linear-gradient(to right, rgba(185, 170, 145, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 170, 145, 0.26) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: #14161c;
+  font-family: var(--font-nav, "Segoe UI", sans-serif);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.label {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #E91D24;
+  margin-bottom: 0.85rem;
+}
+
+.heading {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.2;
+  color: #14161c;
+}
+
+.heading span {
+  color: #E91D24;
+  font-weight: 900;
+}
+
+.subtitle {
+  margin: 0 auto;
+  font-size: clamp(0.95rem, 1.8vw, 1.0625rem);
+  line-height: 1.65;
+  color: #4a5568;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  align-items: stretch;
+}
+
+/* ---------- Torn Paper Container (Matching Blog Card Design) ---------- */
+
+.paperWrapper {
+  position: relative;
+  filter: drop-shadow(0 10px 16px rgba(20, 22, 28, 0.12)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.06));
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease;
+  height: 100%;
+  display: flex;
+}
+
+.paperWrapper:hover {
+  transform: translateY(-6px) rotate(-0.5deg);
+  filter: drop-shadow(0 16px 28px rgba(20, 22, 28, 0.18)) drop-shadow(0 6px 12px rgba(233, 29, 36, 0.12));
+}
+
+.paperCard {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0),
+    linear-gradient(180deg, #ffffff 0%, #fdfbf7 100%);
+  background-size: 8px 8px, 100% 100%;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  box-sizing: border-box;
+}
+
+/* Torn Edge Polygons (Same as Blog Card Variants) */
+.tornVariant1 .paperCard {
+  clip-path: polygon(
+    0% 1.5%, 3% 0.5%, 7% 2%, 12% 0.3%, 17% 1.8%, 23% 0.5%, 29% 2.1%, 34% 0.4%, 40% 1.6%, 46% 0.2%, 52% 2%, 58% 0.6%, 64% 1.8%, 70% 0.3%, 76% 2.2%, 82% 0.5%, 88% 1.9%, 93% 0.4%, 97% 2%, 100% 0.8%,
+    99.2% 4%, 98.4% 9%, 99.6% 14%, 98.1% 20%, 99.5% 26%, 98.3% 32%, 99.8% 38%, 98.2% 44%, 99.6% 50%, 98.5% 56%, 99.7% 62%, 98.1% 68%, 99.4% 74%, 98.3% 80%, 99.6% 86%, 98.2% 92%, 99.5% 97%, 100% 100%,
+    97% 99.2%, 92% 98.3%, 86% 99.6%, 80% 98.1%, 74% 99.5%, 68% 98.2%, 62% 99.7%, 56% 98.4%, 50% 99.6%, 44% 98.1%, 38% 99.5%, 32% 98.3%, 26% 99.8%, 20% 98.2%, 14% 99.6%, 8% 98.4%, 3% 99.7%, 0% 98.5%,
+    0.8% 94%, 1.7% 88%, 0.3% 82%, 1.6% 76%, 0.4% 70%, 1.8% 64%, 0.2% 58%, 1.5% 52%, 0.5% 46%, 1.9% 40%, 0.3% 34%, 1.6% 28%, 0.4% 22%, 1.8% 16%, 0.2% 10%, 1.5% 5%
+  );
+}
+
+.tornVariant2 .paperCard {
+  clip-path: polygon(
+    0.5% 0.8%, 5% 2.1%, 10% 0.4%, 15% 1.9%, 20% 0.3%, 26% 2.2%, 32% 0.6%, 38% 1.8%, 44% 0.4%, 50% 2.1%, 56% 0.5%, 62% 1.9%, 68% 0.3%, 74% 2.2%, 80% 0.7%, 86% 1.8%, 92% 0.4%, 97% 2.1%, 100% 0.5%,
+    98.5% 5%, 99.7% 11%, 98.2% 17%, 99.6% 23%, 98.4% 29%, 99.8% 35%, 98.1% 41%, 99.5% 47%, 98.3% 53%, 99.7% 59%, 98.2% 65%, 99.6% 71%, 98.4% 77%, 99.8% 83%, 98.1% 89%, 99.5% 95%, 98.8% 99%,
+    95% 98.2%, 89% 99.6%, 83% 98.1%, 77% 99.5%, 71% 98.3%, 65% 99.7%, 59% 98.2%, 53% 99.6%, 47% 98.4%, 41% 99.8%, 35% 98.1%, 29% 99.5%, 23% 98.3%, 17% 99.7%, 11% 98.2%, 5% 99.6%, 0% 99%,
+    1.5% 93%, 0.3% 87%, 1.8% 81%, 0.4% 75%, 1.7% 69%, 0.2% 63%, 1.6% 57%, 0.5% 51%, 1.9% 45%, 0.3% 39%, 1.7% 33%, 0.4% 27%, 1.8% 21%, 0.2% 15%, 1.6% 9%, 0.5% 3%
+  );
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 0.65rem;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.badgeMission {
+  color: #E91D24;
+}
+
+.badgeVision {
+  color: #142b72;
+}
+
+.cardTitle {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1.3;
+  color: #14161c;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.cardDesc {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #374151;
+  font-weight: 500;
+  text-align: center;
+}
+
+.pointsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px dashed rgba(20, 22, 28, 0.18);
+  padding-top: 1.25rem;
+}
+
+.pointItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.5;
+}
+
+.checkIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.checkMission {
+  background: #E91D24;
+  color: #ffffff;
+}
+
+.checkVision {
+  background: #142b72;
+  color: #ffffff;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

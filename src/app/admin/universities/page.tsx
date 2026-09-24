@@ -1,6 +1,14 @@
 "use client";
 
 import { useEffect, useState, useMemo, ChangeEvent, FormEvent } from "react";
+import UniversityDetailPage, { type UniversityPageDetails, type ProgramRowData } from "@/components/UniversityDetailPage/UniversityDetailPage";
+
+type ProgramRow = {
+  sl: number;
+  course: string;
+  specialization: string;
+  fees: string;
+};
 
 type University = {
   id: string;
@@ -12,7 +20,15 @@ type University = {
   logo: string;
   image: string;
   description: string;
+  aboutHeading?: string;
   about: string;
+  achievementsTitle?: string;
+  achievementsText?: string;
+  affiliationsText?: string;
+  cdoeTitle?: string;
+  cdoeText?: string;
+  programsHeading?: string;
+  programsTable?: ProgramRow[];
   brochure: string;
   accreditations: string[];
   courses: string[];
@@ -31,7 +47,15 @@ type FormState = {
   logo: string;
   image: string;
   description: string;
+  aboutHeading: string;
   about: string;
+  achievementsTitle: string;
+  achievementsText: string;
+  affiliationsText: string;
+  cdoeTitle: string;
+  cdoeText: string;
+  programsHeading: string;
+  programsTable: ProgramRow[];
   brochure: string;
   accreditationsInput: string;
   coursesInput: string;
@@ -47,7 +71,20 @@ const initialForm: FormState = {
   logo: "",
   image: "",
   description: "",
+  aboutHeading: "About University",
   about: "",
+  achievementsTitle: "University Achievements",
+  achievementsText: "",
+  affiliationsText: "",
+  cdoeTitle: "Centre For Distance and Online Education (CDOE)",
+  cdoeText: "",
+  programsHeading: "Course Fees & Eligibility",
+  programsTable: [
+    { sl: 1, course: "BA General", specialization: "Economics, History, English Literature, Psychology, Political Science", fees: "10+2 or its equivalent" },
+    { sl: 2, course: "BBA", specialization: "General Management, Marketing, HR", fees: "10+2 or its equivalent" },
+    { sl: 3, course: "B.COM", specialization: "Accountancy, Finance, Commerce", fees: "10+2 or its equivalent" },
+    { sl: 4, course: "MBA", specialization: "Human Resource, Finance, Marketing, Operations", fees: "Graduation with 50% score" },
+  ],
   brochure: "",
   accreditationsInput: "",
   coursesInput: "",
@@ -106,7 +143,7 @@ async function compressImageFile(file: File): Promise<File> {
   });
 }
 
-// Uploads a file (image or PDF) to MongoDB GridFS (/api/upload)
+// Uploads a file to MongoDB GridFS (/api/upload)
 async function uploadSingleFile(file: File): Promise<string> {
   const compressed = await compressImageFile(file);
   const body = new FormData();
@@ -134,28 +171,6 @@ async function uploadSingleFile(file: File): Promise<string> {
   return data.url;
 }
 
-// Converts a base64 data URL to a File and uploads it to GridFS
-async function uploadBase64DataUrl(dataUrl: string): Promise<string> {
-  if (!dataUrl || !dataUrl.startsWith("data:")) return dataUrl;
-  try {
-    const arr = dataUrl.split(",");
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : "image/jpeg";
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    const ext = mime.includes("pdf") ? "pdf" : "jpg";
-    const file = new File([u8arr], `uploaded_university_${Date.now()}.${ext}`, { type: mime });
-    return await uploadSingleFile(file);
-  } catch (err) {
-    console.error("Failed to migrate base64 file:", err);
-    return dataUrl;
-  }
-}
-
 export default function AdminUniversitiesPage() {
   const [universities, setUniversities] = useState<University[]>([]);
   const [loading, setLoading] = useState(true);
@@ -168,11 +183,15 @@ export default function AdminUniversitiesPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
-  // Modal Form States
+  // Modal Form & Tab States
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"basic" | "about" | "cdoe" | "programs">("basic");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<FormState>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Live Page Preview Modal Overlay State
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   // Delete Modal States
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -230,11 +249,26 @@ export default function AdminUniversitiesPage() {
   const handleOpenCreate = () => {
     setFormData(initialForm);
     setIsEditing(false);
+    setActiveTab("basic");
     setIsModalOpen(true);
   };
 
   // Handle open modal for edit
   const handleOpenEdit = (uni: University) => {
+    const table: ProgramRow[] =
+      Array.isArray(uni.programsTable) && uni.programsTable.length > 0
+        ? uni.programsTable.map((r, i) => ({
+            sl: r.sl || i + 1,
+            course: r.course || "",
+            specialization: Array.isArray(r.specialization)
+              ? r.specialization.join(", ")
+              : typeof r.specialization === "string"
+              ? r.specialization
+              : "",
+            fees: r.fees || "",
+          }))
+        : initialForm.programsTable;
+
     setFormData({
       id: uni.id,
       name: uni.name,
@@ -245,13 +279,22 @@ export default function AdminUniversitiesPage() {
       logo: uni.logo,
       image: uni.image,
       description: uni.description,
-      about: uni.about,
+      aboutHeading: uni.aboutHeading || "About University",
+      about: uni.about || "",
+      achievementsTitle: uni.achievementsTitle || "University Achievements",
+      achievementsText: uni.achievementsText || "",
+      affiliationsText: uni.affiliationsText || uni.accreditations.join(", "),
+      cdoeTitle: uni.cdoeTitle || "Centre For Distance and Online Education (CDOE)",
+      cdoeText: uni.cdoeText || "",
+      programsHeading: uni.programsHeading || "Course Fees & Eligibility",
+      programsTable: table,
       brochure: uni.brochure,
       accreditationsInput: uni.accreditations.join(", "),
       coursesInput: uni.courses.join(", "),
       status: uni.status,
     });
     setIsEditing(true);
+    setActiveTab("basic");
     setIsModalOpen(true);
   };
 
@@ -280,6 +323,38 @@ export default function AdminUniversitiesPage() {
         }
       }
       return updated;
+    });
+  };
+
+  // Program Table Row Handlers
+  const handleAddProgramRow = () => {
+    setFormData((prev) => {
+      const nextSl = prev.programsTable.length + 1;
+      return {
+        ...prev,
+        programsTable: [
+          ...prev.programsTable,
+          { sl: nextSl, course: "", specialization: "", fees: "" },
+        ],
+      };
+    });
+  };
+
+  const handleRemoveProgramRow = (index: number) => {
+    setFormData((prev) => {
+      const updated = prev.programsTable.filter((_, i) => i !== index);
+      return {
+        ...prev,
+        programsTable: updated.map((row, i) => ({ ...row, sl: i + 1 })),
+      };
+    });
+  };
+
+  const handleProgramRowChange = (index: number, field: keyof ProgramRow, value: string) => {
+    setFormData((prev) => {
+      const updated = [...prev.programsTable];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, programsTable: updated };
     });
   };
 
@@ -316,10 +391,6 @@ export default function AdminUniversitiesPage() {
       let imageUrl = formData.image.trim();
       let brochureUrl = formData.brochure.trim();
 
-      if (logoUrl.startsWith("data:")) logoUrl = await uploadBase64DataUrl(logoUrl);
-      if (imageUrl.startsWith("data:")) imageUrl = await uploadBase64DataUrl(imageUrl);
-      if (brochureUrl.startsWith("data:")) brochureUrl = await uploadBase64DataUrl(brochureUrl);
-
       const payload = {
         name: formData.name.trim(),
         slug: formData.slug.trim(),
@@ -329,7 +400,23 @@ export default function AdminUniversitiesPage() {
         logo: logoUrl,
         image: imageUrl,
         description: formData.description.trim(),
+        aboutHeading: formData.aboutHeading.trim(),
         about: formData.about.trim(),
+        achievementsTitle: formData.achievementsTitle.trim(),
+        achievementsText: formData.achievementsText.trim(),
+        affiliationsText: formData.affiliationsText.trim(),
+        cdoeTitle: formData.cdoeTitle.trim(),
+        cdoeText: formData.cdoeText.trim(),
+        programsHeading: formData.programsHeading.trim(),
+        programsTable: formData.programsTable.map((r) => ({
+          sl: r.sl,
+          course: r.course.trim(),
+          specialization: r.specialization
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          fees: r.fees.trim(),
+        })),
         brochure: brochureUrl,
         accreditations: formData.accreditationsInput
           .split(",")
@@ -414,6 +501,39 @@ export default function AdminUniversitiesPage() {
     }
   };
 
+  // Construct Live Preview Data Object from Form State
+  const previewData: UniversityPageDetails = useMemo(() => {
+    const rows: ProgramRowData[] = formData.programsTable.map((r) => ({
+      sl: r.sl,
+      course: r.course,
+      specialization: r.specialization
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+      fees: r.fees,
+    }));
+
+    return {
+      name: formData.name || "University Name",
+      slug: formData.slug,
+      image: formData.image || formData.logo || "/images/sureshviharuniversity.png",
+      logo: formData.logo,
+      description: formData.description,
+      aboutHeading: formData.aboutHeading,
+      about: formData.about,
+      achievementsTitle: formData.achievementsTitle,
+      achievementsText: formData.achievementsText,
+      affiliationsText: formData.affiliationsText,
+      cdoeTitle: formData.cdoeTitle,
+      cdoeText: formData.cdoeText,
+      programsHeading: formData.programsHeading,
+      programsTable: rows,
+      brochure: formData.brochure,
+      accreditations: formData.accreditationsInput.split(",").map((s) => s.trim()).filter(Boolean),
+      courses: formData.coursesInput.split(",").map((s) => s.trim()).filter(Boolean),
+    };
+  }, [formData]);
+
   return (
     <div>
       {/* Header Section */}
@@ -423,7 +543,7 @@ export default function AdminUniversitiesPage() {
           <div>
             <h1 className="tims-admin-heading">Universities &amp; Boards Management</h1>
             <p className="tims-admin-subtitle">
-              Manage all partner university details, logos, campus banners, descriptions, brochures (PDF), and course offerings.
+              Manage partner university pages, campus images, affiliations, CDOE details, course programs &amp; fees tables, and brochures.
             </p>
           </div>
 
@@ -666,9 +786,6 @@ export default function AdminUniversitiesPage() {
                         ) : (
                           <span style={{ fontSize: "0.8rem", color: "#94a3b8" }}>None</span>
                         )}
-                        {uni.accreditations.length > 3 && (
-                          <span style={{ fontSize: "0.72rem", color: "#64748b" }}>+{uni.accreditations.length - 3}</span>
-                        )}
                       </div>
                     </td>
 
@@ -701,7 +818,7 @@ export default function AdminUniversitiesPage() {
                           style={{ padding: "0.35rem 0.65rem", fontSize: "0.8rem" }}
                           onClick={() => handleOpenEdit(uni)}
                         >
-                          Edit
+                          Edit &amp; Manage
                         </button>
                         <button
                           type="button"
@@ -730,230 +847,498 @@ export default function AdminUniversitiesPage() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(15, 23, 42, 0.65)",
-            backdropFilter: "blur(4px)",
+            background: "rgba(15, 23, 42, 0.75)",
+            backdropFilter: "blur(5px)",
             zIndex: 1000,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "1.5rem",
+            padding: "1rem",
           }}
         >
           <div
             style={{
               background: "#ffffff",
               borderRadius: "16px",
-              maxWidth: "800px",
+              maxWidth: "960px",
               width: "100%",
-              maxHeight: "90vh",
+              maxHeight: "92vh",
               overflowY: "auto",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-              padding: "2rem",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.3)",
+              padding: "1.75rem",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "1rem" }}>
-              <h2 style={{ fontSize: "1.35rem", fontWeight: 800, margin: 0, color: "#0f172a" }}>
-                {isEditing ? "Edit University: " + formData.name : "Add New University"}
-              </h2>
+            {/* Modal Header Bar */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "1rem" }}>
+              <div>
+                <h2 style={{ fontSize: "1.35rem", fontWeight: 800, margin: 0, color: "#0f172a" }}>
+                  {isEditing ? "Edit University Page: " + formData.name : "Create University Page"}
+                </h2>
+                <p style={{ margin: "3px 0 0 0", fontSize: "0.82rem", color: "#64748b" }}>
+                  Fill in section details matching the SGVU page template format.
+                </p>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                {/* Live Preview Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsPreviewOpen(true)}
+                  style={{
+                    background: "#6b21a8",
+                    color: "#ffffff",
+                    border: "none",
+                    padding: "0.5rem 0.9rem",
+                    borderRadius: "8px",
+                    fontWeight: 700,
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  👁️ Live Preview Page
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  style={{ background: "none", border: "none", fontSize: "1.6rem", cursor: "pointer", color: "#64748b" }}
+                >
+                  {"\u00d7"}
+                </button>
+              </div>
+            </div>
+
+            {/* Form Section Tabs Navigation */}
+            <div style={{ display: "flex", gap: "0.5rem", borderBottom: "1px solid #e2e8f0", marginBottom: "1.5rem" }}>
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
-                style={{ background: "none", border: "none", fontSize: "1.5rem", cursor: "pointer", color: "#64748b" }}
+                onClick={() => setActiveTab("basic")}
+                style={{
+                  padding: "0.6rem 1rem",
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
+                  borderBottom: activeTab === "basic" ? "3px solid #6b21a8" : "3px solid transparent",
+                  color: activeTab === "basic" ? "#6b21a8" : "#64748b",
+                }}
               >
-                {"\u00d7"}
+                1. Basic Details &amp; Branding
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("about")}
+                style={{
+                  padding: "0.6rem 1rem",
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
+                  borderBottom: activeTab === "about" ? "3px solid #6b21a8" : "3px solid transparent",
+                  color: activeTab === "about" ? "#6b21a8" : "#64748b",
+                }}
+              >
+                2. About &amp; Achievements
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("cdoe")}
+                style={{
+                  padding: "0.6rem 1rem",
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
+                  borderBottom: activeTab === "cdoe" ? "3px solid #6b21a8" : "3px solid transparent",
+                  color: activeTab === "cdoe" ? "#6b21a8" : "#64748b",
+                }}
+              >
+                3. Affiliations &amp; CDOE
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("programs")}
+                style={{
+                  padding: "0.6rem 1rem",
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
+                  borderBottom: activeTab === "programs" ? "3px solid #6b21a8" : "3px solid transparent",
+                  color: activeTab === "programs" ? "#6b21a8" : "#64748b",
+                }}
+              >
+                4. Programs Table &amp; Brochure
               </button>
             </div>
 
             <form onSubmit={handleSubmit}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem", marginBottom: "1.25rem" }}>
-                {/* Name */}
-                <div style={{ gridColumn: "1 / -1" }}>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    University Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="e.g. Aligarh Muslim University"
-                    value={formData.name}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
-                </div>
+              {/* TAB 1: BASIC DETAILS & BRANDING */}
+              {activeTab === "basic" && (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      University / Institution Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="e.g. Suresh Gyan Vihar University"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
 
-                {/* Slug */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    URL Slug
-                  </label>
-                  <input
-                    type="text"
-                    name="slug"
-                    placeholder="e.g. aligarh-muslim-university"
-                    value={formData.slug}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
-                </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      URL Slug
+                    </label>
+                    <input
+                      type="text"
+                      name="slug"
+                      placeholder="e.g. suresh-gyan-vihar-university"
+                      value={formData.slug}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
 
-                {/* Category */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Category
-                  </label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  >
-                    <option value="degree-pg">Degree &amp; PG</option>
-                    <option value="10th-plus-two">10th &amp; Plus Two Board</option>
-                  </select>
-                </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Category
+                    </label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    >
+                      <option value="degree-pg">Degree &amp; PG</option>
+                      <option value="10th-plus-two">10th &amp; Plus Two Board</option>
+                    </select>
+                  </div>
 
-                {/* Logo Image */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    University Logo (URL or Upload) {uploadingField === "logo" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading...)</span>}
-                  </label>
-                  <input
-                    type="text"
-                    name="logo"
-                    placeholder="/images/aligrh_image.png or https://..."
-                    value={formData.logo}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
-                  />
-                  <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("logo")} style={{ fontSize: "0.8rem" }} />
-                </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      University Logo {uploadingField === "logo" && <span style={{ color: "#2563eb" }}>(Uploading...)</span>}
+                    </label>
+                    <input
+                      type="text"
+                      name="logo"
+                      placeholder="/images/sureshviharuniversity.png"
+                      value={formData.logo}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
+                    />
+                    <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("logo")} style={{ fontSize: "0.8rem" }} />
+                  </div>
 
-                {/* Campus Banner Image */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Campus / Banner Image (URL or Upload) {uploadingField === "image" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading...)</span>}
-                  </label>
-                  <input
-                    type="text"
-                    name="image"
-                    placeholder="/images/aligrh_image.png or https://..."
-                    value={formData.image}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
-                  />
-                  <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("image")} style={{ fontSize: "0.8rem" }} />
-                </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Campus / Banner Image {uploadingField === "image" && <span style={{ color: "#2563eb" }}>(Uploading...)</span>}
+                    </label>
+                    <input
+                      type="text"
+                      name="image"
+                      placeholder="https://.../campus.jpg"
+                      value={formData.image}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
+                    />
+                    <input type="file" accept="image/*" disabled={uploadingField !== null} onChange={handleFileUpload("image")} style={{ fontSize: "0.8rem" }} />
+                  </div>
 
-                {/* Brochure PDF File / Link */}
-                <div style={{ gridColumn: "1 / -1" }}>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    University Brochure PDF (Document URL or PDF Upload) {uploadingField === "brochure" && <span style={{ color: "#2563eb", fontWeight: 600 }}>(Uploading PDF...)</span>}
-                  </label>
-                  <input
-                    type="text"
-                    name="brochure"
-                    placeholder="https://.../brochure.pdf or upload PDF below"
-                    value={formData.brochure}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
-                  />
-                  <input type="file" accept="application/pdf,image/*" disabled={uploadingField !== null} onChange={handleFileUpload("brochure")} style={{ fontSize: "0.8rem" }} />
-                </div>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Short Overview (Showcased on University Cards)
+                    </label>
+                    <textarea
+                      name="description"
+                      rows={2}
+                      placeholder="Short summary of university accreditations and distance degree offerings..."
+                      value={formData.description}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
 
-                {/* Short Description */}
-                <div style={{ gridColumn: "1 / -1" }}>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Short Description (Showcased on Cards)
-                  </label>
-                  <textarea
-                    name="description"
-                    rows={2}
-                    placeholder="Short summary of university accreditations and distance degree offerings..."
-                    value={formData.description}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
-                </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Accreditations (Comma Separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="accreditationsInput"
+                      placeholder="e.g. NAAC A+, UGC Approved, DEB Entitled"
+                      value={formData.accreditationsInput}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
 
-                {/* Detailed About */}
-                <div style={{ gridColumn: "1 / -1" }}>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Detailed About Information
-                  </label>
-                  <textarea
-                    name="about"
-                    rows={3}
-                    placeholder="Full detailed introduction and background about the university..."
-                    value={formData.about}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Status
+                    </label>
+                    <select
+                      name="status"
+                      value={formData.status}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    >
+                      <option value="published">Published</option>
+                      <option value="draft">Draft</option>
+                    </select>
+                  </div>
                 </div>
+              )}
 
-                {/* Accreditations */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Accreditations (Comma Separated)
-                  </label>
-                  <input
-                    type="text"
-                    name="accreditationsInput"
-                    placeholder="e.g. UGC Entitled, DEB Approved, NAAC A+"
-                    value={formData.accreditationsInput}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
+              {/* TAB 2: ABOUT & ACHIEVEMENTS */}
+              {activeTab === "about" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Detailed About Paragraph
+                    </label>
+                    <textarea
+                      name="about"
+                      rows={5}
+                      placeholder="Full historical background, establishment, and vision of the university..."
+                      value={formData.about}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", lineHeight: 1.6 }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Achievements Subheading
+                    </label>
+                    <input
+                      type="text"
+                      name="achievementsTitle"
+                      placeholder="e.g. University Achievements"
+                      value={formData.achievementsTitle}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Achievements &amp; Accreditation Details Text
+                    </label>
+                    <textarea
+                      name="achievementsText"
+                      rows={3}
+                      placeholder="e.g. In 2017, the university was awarded an 'A' grade by NAAC..."
+                      value={formData.achievementsText}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
                 </div>
+              )}
 
-                {/* Offered Courses */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Offered Courses (Comma Separated)
-                  </label>
-                  <input
-                    type="text"
-                    name="coursesInput"
-                    placeholder="e.g. BA, B.Com, MA, MBA, M.Com"
-                    value={formData.coursesInput}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
+              {/* TAB 3: AFFILIATIONS & CDOE */}
+              {activeTab === "cdoe" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Affiliations Summary Text
+                    </label>
+                    <input
+                      type="text"
+                      name="affiliationsText"
+                      placeholder="e.g. NAAC 'A' grade, UGC, AICTE, NBA, AIU, PCI, NCTE."
+                      value={formData.affiliationsText}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      CDOE Section Title
+                    </label>
+                    <input
+                      type="text"
+                      name="cdoeTitle"
+                      placeholder="e.g. Centre For Distance and Online Education (CDOE)"
+                      value={formData.cdoeTitle}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      CDOE Details &amp; Mission Text
+                    </label>
+                    <textarea
+                      name="cdoeText"
+                      rows={5}
+                      placeholder="Center for Distance and Online Education (CDOE), Suresh GyanVihar University has set out its journey..."
+                      value={formData.cdoeText}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", lineHeight: 1.6 }}
+                    />
+                  </div>
                 </div>
+              )}
 
-                {/* Detail Page Link Href */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Detail Page URL Route
-                  </label>
-                  <input
-                    type="text"
-                    name="href"
-                    placeholder="/universities/degree-pg/..."
-                    value={formData.href}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  />
+              {/* TAB 4: PROGRAMS & FEES TABLE BUILDER + BROCHURE */}
+              {activeTab === "programs" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Programs Section Title
+                    </label>
+                    <input
+                      type="text"
+                      name="programsHeading"
+                      placeholder="e.g. Course Fees &amp; Eligibility"
+                      value={formData.programsHeading}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                    />
+                  </div>
+
+                  {/* Programs Table Builder */}
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+                      <label style={{ fontSize: "0.9rem", fontWeight: 800, color: "#0f172a" }}>
+                        Online Programs &amp; Fees Table ({formData.programsTable.length} Courses)
+                      </label>
+                      <button
+                        type="button"
+                        onClick={handleAddProgramRow}
+                        style={{
+                          background: "#0f172a",
+                          color: "#ffffff",
+                          border: "none",
+                          padding: "0.35rem 0.75rem",
+                          borderRadius: "6px",
+                          fontSize: "0.8rem",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                        }}
+                      >
+                        + Add Course Row
+                      </button>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+                      {formData.programsTable.map((row, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            background: "#f8fafc",
+                            border: "1px solid #e2e8f0",
+                            borderRadius: "10px",
+                            padding: "0.85rem",
+                            display: "grid",
+                            gridTemplateColumns: "50px 180px 1fr 200px 40px",
+                            gap: "0.75rem",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>S.No</span>
+                            <input
+                              type="number"
+                              value={row.sl}
+                              onChange={(e) => handleProgramRowChange(index, "sl", e.target.value)}
+                              style={{ width: "100%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.85rem" }}
+                            />
+                          </div>
+
+                          <div>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>Course</span>
+                            <input
+                              type="text"
+                              placeholder="e.g. BA, MBA"
+                              value={row.course}
+                              onChange={(e) => handleProgramRowChange(index, "course", e.target.value)}
+                              style={{ width: "100%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.85rem" }}
+                            />
+                          </div>
+
+                          <div>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>Specialization (Comma Separated)</span>
+                            <input
+                              type="text"
+                              placeholder="e.g. Marketing, HR, Finance"
+                              value={row.specialization}
+                              onChange={(e) => handleProgramRowChange(index, "specialization", e.target.value)}
+                              style={{ width: "100%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.85rem" }}
+                            />
+                          </div>
+
+                          <div>
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#64748b" }}>Fees / Eligibility</span>
+                            <input
+                              type="text"
+                              placeholder="e.g. 10+2 or Graduation"
+                              value={row.fees}
+                              onChange={(e) => handleProgramRowChange(index, "fees", e.target.value)}
+                              style={{ width: "100%", padding: "0.4rem", borderRadius: "6px", border: "1px solid #cbd5e1", fontSize: "0.85rem" }}
+                            />
+                          </div>
+
+                          <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveProgramRow(index)}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                color: "#dc2626",
+                                fontSize: "1.2rem",
+                                cursor: "pointer",
+                              }}
+                              title="Delete Row"
+                            >
+                              {"\u00d7"}
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Brochure PDF Upload */}
+                  <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "1rem" }}>
+                    <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
+                      Official Brochure PDF (URL or File Upload) {uploadingField === "brochure" && <span style={{ color: "#2563eb" }}>(Uploading PDF...)</span>}
+                    </label>
+                    <input
+                      type="text"
+                      name="brochure"
+                      placeholder="https://.../brochure.pdf"
+                      value={formData.brochure}
+                      onChange={handleFormChange}
+                      style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1", marginBottom: "0.35rem" }}
+                    />
+                    <input type="file" accept="application/pdf,image/*" disabled={uploadingField !== null} onChange={handleFileUpload("brochure")} style={{ fontSize: "0.8rem" }} />
+                  </div>
                 </div>
+              )}
 
-                {/* Status */}
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#334155" }}>
-                    Publication Status
-                  </label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleFormChange}
-                    style={{ width: "100%", padding: "0.65rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                  >
-                    <option value="published">Published</option>
-                    <option value="draft">Draft</option>
-                  </select>
-                </div>
-              </div>
-
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", borderTop: "1px solid #e2e8f0", paddingTop: "1.25rem" }}>
+              {/* Form Footer Buttons */}
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", borderTop: "1px solid #e2e8f0", paddingTop: "1.25rem", marginTop: "1.5rem" }}>
                 <button
                   type="button"
                   className="tims-admin-btn"
@@ -966,10 +1351,70 @@ export default function AdminUniversitiesPage() {
                   disabled={isSubmitting || uploadingField !== null}
                   className="tims-admin-btn tims-admin-btn-primary"
                 >
-                  {uploadingField ? "Uploading File..." : isSubmitting ? "Saving..." : isEditing ? "Update University" : "Create University"}
+                  {uploadingField ? "Uploading File..." : isSubmitting ? "Saving..." : isEditing ? "Update University Page" : "Create University Page"}
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ---------- LIVE PAGE PREVIEW MODAL OVERLAY ---------- */}
+      {isPreviewOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "#ffffff",
+            zIndex: 2000,
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Sticky Preview Header Control Bar */}
+          <div
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 2100,
+              background: "#0f172a",
+              color: "#ffffff",
+              padding: "0.85rem 1.5rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ background: "#22c55e", color: "#ffffff", padding: "2px 8px", borderRadius: "12px", fontSize: "0.75rem", fontWeight: 700 }}>
+                LIVE PREVIEW MODE
+              </span>
+              <strong style={{ fontSize: "1rem" }}>{formData.name || "University Page Preview"}</strong>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsPreviewOpen(false)}
+              style={{
+                background: "#dc2626",
+                color: "#ffffff",
+                border: "none",
+                padding: "0.45rem 1rem",
+                borderRadius: "6px",
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                cursor: "pointer",
+              }}
+            >
+              Close Live Preview
+            </button>
+          </div>
+
+          {/* Render Full Live Student Page Component */}
+          <div style={{ flex: 1, background: "#ffffff" }}>
+            <UniversityDetailPage data={previewData} />
           </div>
         </div>
       )}

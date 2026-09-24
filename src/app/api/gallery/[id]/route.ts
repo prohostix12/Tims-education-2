@@ -7,6 +7,7 @@ const COLLECTION = "gallery";
 type UpdateGalleryPayload = {
   sectionName?: unknown;
   images?: unknown;
+  homeImages?: unknown;
 };
 
 export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -23,7 +24,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const { sectionName, images } = body;
+  const { sectionName, images, homeImages } = body;
   const updateData: Record<string, unknown> = {
     updatedAt: new Date(),
   };
@@ -33,7 +34,16 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
   }
 
   if (Array.isArray(images)) {
-    updateData.images = images.filter((img): img is string => typeof img === "string" && img.trim().length > 0);
+    const cleanedImages = images.filter((img): img is string => typeof img === "string" && img.trim().length > 0);
+    updateData.images = cleanedImages;
+
+    if (Array.isArray(homeImages)) {
+      updateData.homeImages = homeImages.filter(
+        (img): img is string => typeof img === "string" && img.trim().length > 0 && cleanedImages.includes(img)
+      );
+    }
+  } else if (Array.isArray(homeImages)) {
+    updateData.homeImages = homeImages.filter((img): img is string => typeof img === "string" && img.trim().length > 0);
   }
 
   try {

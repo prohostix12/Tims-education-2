@@ -34,7 +34,15 @@ export async function GET(request: Request, { params }: RouteParams) {
         logo: item.logo || "",
         image: item.image || "",
         description: item.description || "",
+        aboutHeading: item.aboutHeading || "",
         about: item.about || "",
+        achievementsTitle: item.achievementsTitle || "",
+        achievementsText: item.achievementsText || "",
+        affiliationsText: item.affiliationsText || "",
+        cdoeTitle: item.cdoeTitle || "",
+        cdoeText: item.cdoeText || "",
+        programsHeading: item.programsHeading || "Course Fees",
+        programsTable: Array.isArray(item.programsTable) ? item.programsTable : [],
         brochure: item.brochure || "",
         accreditations: Array.isArray(item.accreditations) ? item.accreditations : [],
         courses: Array.isArray(item.courses) ? item.courses : [],
@@ -92,8 +100,17 @@ export async function PUT(request: Request, { params }: RouteParams) {
   const logo = typeof body.logo === "string" ? body.logo.trim() : "";
   const image = typeof body.image === "string" ? body.image.trim() : "";
   const description = typeof body.description === "string" ? body.description.trim() : "";
+  const aboutHeading = typeof body.aboutHeading === "string" ? body.aboutHeading.trim() : "";
   const about = typeof body.about === "string" ? body.about.trim() : "";
+  const achievementsTitle = typeof body.achievementsTitle === "string" ? body.achievementsTitle.trim() : "";
+  const achievementsText = typeof body.achievementsText === "string" ? body.achievementsText.trim() : "";
+  const affiliationsText = typeof body.affiliationsText === "string" ? body.affiliationsText.trim() : "";
+  const cdoeTitle = typeof body.cdoeTitle === "string" ? body.cdoeTitle.trim() : "";
+  const cdoeText = typeof body.cdoeText === "string" ? body.cdoeText.trim() : "";
+  const programsHeading = typeof body.programsHeading === "string" && body.programsHeading.trim() ? body.programsHeading.trim() : "Course Fees";
   const brochure = typeof body.brochure === "string" ? body.brochure.trim() : "";
+
+  const programsTable = Array.isArray(body.programsTable) ? body.programsTable : [];
 
   const accreditations = Array.isArray(body.accreditations)
     ? body.accreditations.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
@@ -126,7 +143,15 @@ export async function PUT(request: Request, { params }: RouteParams) {
     logo,
     image,
     description,
+    aboutHeading,
     about,
+    achievementsTitle,
+    achievementsText,
+    affiliationsText,
+    cdoeTitle,
+    cdoeText,
+    programsHeading,
+    programsTable,
     brochure,
     accreditations,
     courses,

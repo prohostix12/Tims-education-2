@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
+import { verifyAdminPassword } from "@/lib/adminAuthDb";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { password } = body;
 
-    const expectedPassword = process.env.ADMIN_PASSWORD?.trim() || "mytims";
+    const isValid = await verifyAdminPassword(password);
 
-    if (password && password.trim() === expectedPassword) {
+    if (isValid) {
       const response = NextResponse.json({ success: true });
       response.cookies.set("admin_session", "authenticated", {
         httpOnly: true,

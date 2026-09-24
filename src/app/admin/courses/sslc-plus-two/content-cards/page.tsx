@@ -94,7 +94,7 @@ function SslcContentCardsAdminPage() {
     fetch("/api/sslc-content-cards")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data.cards) && data.cards.length > 0) {
+        if (Array.isArray(data.cards)) {
           setCards(data.cards);
           try {
             localStorage.setItem("tims_sslc_cards", JSON.stringify(data.cards));

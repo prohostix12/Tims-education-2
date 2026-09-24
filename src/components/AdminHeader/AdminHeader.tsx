@@ -140,9 +140,11 @@ const navStructure: NavItem[] = [
     label: "Content & Media",
     icon: ContentIcon,
     children: [
+      { label: "Hero Banner Content", href: "/admin/hero", description: "Edit homepage Hero heading & intro text" },
       { label: "Blog Posts", href: "/admin/blog", description: "Manage articles & news content" },
       { label: "Student Video Reels", href: "/admin/video-stories", description: "Manage Student Success Video Reels" },
       { label: "Distance Education Video", href: "/admin/distance-education", description: "Manage Distance Education section video" },
+      { label: "Mission & Vision", href: "/admin/mission-vision", description: "Manage Mission & Vision statements" },
       { label: "Directors & Leadership", href: "/admin/directors", description: "Manage director profiles & photos" },
       { label: "Our Team Members", href: "/admin/team-members", description: "Manage staff & team member profiles" },
       { label: "Success Stories", href: "/admin/success-stories", description: "Manage Real Impact cards" },
@@ -190,6 +192,7 @@ const navStructure: NavItem[] = [
     icon: SettingsIcon,
     children: [
       { label: "User Accounts", href: "/admin/users", description: "Manage admin users & permissions" },
+      { label: "Change Password", href: "/admin/change-password", description: "Update admin sign-in password in MongoDB" },
       { label: "Integrations & Auth", href: "/admin/integrations", description: "CRM API configuration & Integrations" },
       { label: "Global Settings", href: "/admin/settings", description: "Site configuration & SEO" },
     ],
@@ -213,7 +216,7 @@ export default function AdminHeader() {
   };
 
   const isLinkActive = (href: string) => {
-    if (href === "/admin" || href === "/admin/courses") return pathname === href;
+    if (href === "/admin" || href === "/admin/courses" || href === "/admin/courses/sslc-plus-two") return pathname === href;
     return pathname === href || pathname.startsWith(href + "/");
   };
 
